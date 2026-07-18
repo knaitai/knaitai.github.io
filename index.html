@@ -14,12 +14,14 @@
   <style>
     :root {
       --background: #f7f8fa;
-      --surface: rgba(255, 255, 255, 0.82);
+      --surface: rgba(255, 255, 255, 0.84);
       --text: #10213f;
       --muted: #5d687b;
       --accent: #1473e6;
       --accent-dark: #0c4fa3;
+      --teal: #24a99a;
       --border: rgba(16, 33, 63, 0.1);
+      --shadow: 0 24px 70px rgba(16, 33, 63, 0.14);
     }
 
     * {
@@ -39,13 +41,13 @@
       color: var(--text);
       background:
         radial-gradient(
-          circle at 75% 25%,
+          circle at 75% 20%,
           rgba(20, 115, 230, 0.12),
           transparent 32rem
         ),
         radial-gradient(
-          circle at 20% 85%,
-          rgba(39, 174, 150, 0.08),
+          circle at 18% 80%,
+          rgba(39, 174, 150, 0.09),
           transparent 28rem
         ),
         var(--background);
@@ -63,7 +65,7 @@
     }
 
     header {
-      width: min(1120px, calc(100% - 48px));
+      width: min(1180px, calc(100% - 48px));
       margin: 0 auto;
       padding: 30px 0;
       display: flex;
@@ -80,7 +82,7 @@
     .github-link {
       color: var(--muted);
       font-size: 0.95rem;
-      font-weight: 600;
+      font-weight: 650;
       transition: color 160ms ease;
     }
 
@@ -90,15 +92,14 @@
 
     main {
       flex: 1;
-      width: min(1120px, calc(100% - 48px));
+      width: min(1180px, calc(100% - 48px));
       margin: 0 auto;
-      display: grid;
-      place-items: center;
-      padding: 70px 0 110px;
+      padding: 64px 0 110px;
     }
 
     .hero {
-      max-width: 850px;
+      max-width: 900px;
+      margin: 0 auto;
       text-align: center;
     }
 
@@ -158,53 +159,36 @@
     }
 
     .actions {
-      margin-top: 42px;
+      margin-top: 40px;
       display: flex;
       justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
     }
 
     .button {
-      min-width: 155px;
-      padding: 14px 22px;
+      padding: 14px 23px;
       border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
       font-size: 0.95rem;
       font-weight: 700;
+      backdrop-filter: blur(12px);
       transition:
         transform 160ms ease,
+        border-color 160ms ease,
         box-shadow 160ms ease,
-        background 160ms ease;
+        color 160ms ease;
     }
 
     .button:hover {
       transform: translateY(-2px);
-    }
-
-    .button-primary {
-      color: white;
-      background: var(--text);
-      box-shadow: 0 12px 30px rgba(16, 33, 63, 0.16);
-    }
-
-    .button-primary:hover {
-      background: var(--accent-dark);
-    }
-
-    .button-secondary {
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--text);
-      backdrop-filter: blur(12px);
-    }
-
-    .button-secondary:hover {
+      color: var(--accent-dark);
       border-color: rgba(20, 115, 230, 0.3);
       box-shadow: 0 10px 25px rgba(16, 33, 63, 0.08);
     }
 
     .principles {
-      margin: 58px auto 0;
+      margin: 56px auto 0;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
@@ -222,8 +206,113 @@
       color: var(--accent);
     }
 
+    .preview {
+      margin-top: 105px;
+    }
+
+    .preview-heading {
+      max-width: 790px;
+      margin: 0 auto 38px;
+      text-align: center;
+    }
+
+    .section-label {
+      margin: 0 0 14px;
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .preview-heading h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+      font-weight: 500;
+    }
+
+    .preview-heading p {
+      max-width: 720px;
+      margin: 20px auto 0;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
+    }
+
+    .demo-frame {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #061723;
+      box-shadow: var(--shadow);
+    }
+
+    .demo-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .knowledge-story {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .knowledge-card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+    }
+
+    .knowledge-card h3 {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .knowledge-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .stay-tuned {
+      margin-top: 34px;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      background:
+        linear-gradient(
+          135deg,
+          rgba(20, 115, 230, 0.09),
+          rgba(36, 169, 154, 0.1)
+        );
+      border: 1px solid rgba(20, 115, 230, 0.14);
+    }
+
+    .stay-tuned strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.55rem;
+      font-weight: 500;
+    }
+
+    .stay-tuned span {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
     footer {
-      width: min(1120px, calc(100% - 48px));
+      width: min(1180px, calc(100% - 48px));
       margin: 0 auto;
       padding: 24px 0 32px;
       border-top: 1px solid var(--border);
@@ -234,14 +323,20 @@
       font-size: 0.8rem;
     }
 
+    @media (max-width: 800px) {
+      .knowledge-story {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 600px) {
       header {
-        width: min(100% - 32px, 1120px);
+        width: min(100% - 32px, 1180px);
         padding-top: 22px;
       }
 
       main {
-        width: min(100% - 32px, 1120px);
+        width: min(100% - 32px, 1180px);
         padding-top: 40px;
       }
 
@@ -257,8 +352,16 @@
         display: none;
       }
 
+      .preview {
+        margin-top: 80px;
+      }
+
+      .demo-frame {
+        border-radius: 12px;
+      }
+
       footer {
-        width: min(100% - 32px, 1120px);
+        width: min(100% - 32px, 1180px);
         flex-direction: column;
       }
     }
@@ -268,11 +371,11 @@
 <body>
   <div class="page">
     <header>
-      <a class="brand" href="#">KnaiTai</a>
+      <a class="brand" href="/">KnaiTai</a>
 
       <a
         class="github-link"
-        href="knaitai.github.io"
+        href="https://github.com/knaitai"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -297,23 +400,80 @@
 
         <div class="actions">
           <a
-            class="button button-primary"
-            href="knaitai.gihub.io"
+            class="button"
+            href="papers/knaitaivision.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            Explore KnaiTai
-          </a>
-
-          <a class="button button-secondary" href="#vision">
             Read the vision
           </a>
         </div>
 
-        <div class="principles" id="vision">
+        <div class="principles">
           <span>Assimilate</span>
           <span>Subset</span>
           <span>Compile</span>
           <span>Converse</span>
           <span>Verify</span>
+        </div>
+      </section>
+
+      <section class="preview">
+        <div class="preview-heading">
+          <p class="section-label">Knowledge in action</p>
+
+          <h2>
+            Not merely more context.<br />
+            The right knowledge, made active.
+          </h2>
+
+          <p>
+            A conventional model can predict from observed behavior.
+            A knowledge-native system can progressively activate geographic,
+            vessel, port and historical knowledge—then make visible how each
+            item changes the reasoning.
+          </p>
+        </div>
+
+        <div class="demo-frame">
+          <img
+            src="images/ktbehavior.png"
+            alt="KnaiTai maritime destination reasoning demonstration showing observation-only prediction and active geographic, vessel, port and historical knowledge."
+          />
+        </div>
+
+        <div class="knowledge-story">
+          <article class="knowledge-card">
+            <h3>Knowledge is selected</h3>
+            <p>
+              The system does not indiscriminately retrieve everything.
+              It identifies the knowledge relevant to the current situation.
+            </p>
+          </article>
+
+          <article class="knowledge-card">
+            <h3>Knowledge changes the answer</h3>
+            <p>
+              Shipping lanes, vessel requirements, port capabilities and prior
+              behavior contribute explicit, inspectable effects to the result.
+            </p>
+          </article>
+
+          <article class="knowledge-card">
+            <h3>Knowledge remains visible</h3>
+            <p>
+              What entered the reasoning process, why it mattered and how
+              strongly it affected the outcome can be examined and verified.
+            </p>
+          </article>
+        </div>
+
+        <div class="stay-tuned">
+          <strong>Stay tuned.</strong>
+          <span>
+            The first KnaiTai software, demonstrations and open-source releases
+            are now taking shape on GitHub.
+          </span>
         </div>
       </section>
     </main>
