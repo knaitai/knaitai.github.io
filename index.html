@@ -8,20 +8,20 @@
 
   <meta
     name="description"
-    content="KnaiTai is open infrastructure for making knowledge native to AI systems."
+    content="KnaiTai is an open initiative for making knowledge native to AI systems."
   />
 
   <style>
     :root {
       --background: #f7f8fa;
-      --surface: rgba(255, 255, 255, 0.88);
+      --surface: rgba(255, 255, 255, 0.9);
       --text: #10213f;
       --muted: #5d687b;
       --accent: #1473e6;
       --accent-dark: #0c4fa3;
       --teal: #15998c;
       --border: rgba(16, 33, 63, 0.11);
-      --shadow: 0 24px 65px rgba(16, 33, 63, 0.16);
+      --shadow: 0 22px 55px rgba(16, 33, 63, 0.14);
     }
 
     * {
@@ -45,12 +45,12 @@
       color: var(--text);
       background:
         radial-gradient(
-          circle at 78% 12%,
+          circle at 82% 8%,
           rgba(20, 115, 230, 0.11),
-          transparent 30rem
+          transparent 28rem
         ),
         radial-gradient(
-          circle at 14% 82%,
+          circle at 12% 78%,
           rgba(39, 174, 150, 0.08),
           transparent 28rem
         ),
@@ -69,9 +69,9 @@
     }
 
     header {
-      width: min(1260px, calc(100% - 48px));
+      width: min(1180px, calc(100% - 48px));
       margin: 0 auto;
-      padding: 24px 0 18px;
+      padding: 22px 0 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -79,7 +79,7 @@
     }
 
     .brand {
-      font-size: 1.18rem;
+      font-size: 1.16rem;
       font-weight: 780;
       letter-spacing: -0.025em;
     }
@@ -89,7 +89,7 @@
       align-items: center;
       gap: 24px;
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: 0.91rem;
       font-weight: 650;
     }
 
@@ -110,40 +110,33 @@
 
     main {
       flex: 1;
-      width: min(1260px, calc(100% - 48px));
+      width: min(1180px, calc(100% - 48px));
       margin: 0 auto;
-      padding: 18px 0 96px;
+      padding: 8px 0 76px;
     }
 
     /*
-      Compact opening:
-      text and example are visible together above the fold.
+      Compact KnaiTai core.
     */
 
-    .opening {
-      min-height: calc(100vh - 104px);
-      display: grid;
-      grid-template-columns: minmax(320px, 0.78fr) minmax(600px, 1.45fr);
-      align-items: center;
-      gap: 52px;
-      padding: 20px 0 54px;
-    }
-
     .hero {
-      max-width: 470px;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 30px 0 42px;
+      text-align: center;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
       padding: 7px 13px;
       border: 1px solid var(--border);
       border-radius: 999px;
       background: var(--surface);
       color: var(--accent-dark);
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 780;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -161,16 +154,16 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(4.2rem, 7vw, 6.8rem);
+      font-size: clamp(4.3rem, 9vw, 7.2rem);
       line-height: 0.88;
       letter-spacing: -0.075em;
       font-weight: 820;
     }
 
     .tagline {
-      margin: 27px 0 0;
+      margin: 24px auto 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.75rem, 3.1vw, 2.8rem);
+      font-size: clamp(1.75rem, 3.7vw, 2.85rem);
       line-height: 1.14;
       letter-spacing: -0.035em;
       font-weight: 500;
@@ -181,61 +174,49 @@
     }
 
     .description {
-      max-width: 430px;
-      margin: 22px 0 0;
+      margin: 18px auto 0;
       color: var(--muted);
-      font-size: 1.08rem;
-      line-height: 1.72;
-    }
-
-    .hero-note {
-      margin: 22px 0 0;
-      color: var(--text);
-      font-size: 0.92rem;
-      line-height: 1.65;
-      font-weight: 650;
+      font-size: 1.04rem;
+      line-height: 1.6;
     }
 
     /*
-      Example visible immediately.
+      Maritime example begins immediately below the core.
     */
 
-    .example-preview {
-      min-width: 0;
+    .example {
+      padding-top: 6px;
     }
 
-    .preview-heading {
-      margin-bottom: 15px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 24px;
+    .example-heading {
+      max-width: 900px;
+      margin: 0 auto 20px;
+      text-align: center;
     }
 
-    .preview-label {
-      margin: 0;
+    .example-label {
+      margin: 0 0 8px;
       color: var(--teal);
-      font-size: 0.72rem;
+      font-size: 0.71rem;
       font-weight: 800;
       letter-spacing: 0.11em;
       text-transform: uppercase;
     }
 
-    .preview-title {
-      margin: 5px 0 0;
+    .example-heading h2 {
+      margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.45rem, 2.3vw, 2.15rem);
-      line-height: 1.15;
-      letter-spacing: -0.025em;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      line-height: 1.18;
+      letter-spacing: -0.03em;
       font-weight: 500;
     }
 
-    .preview-title span {
+    .example-heading h2 span {
       color: var(--accent);
     }
 
     .example-frame {
-      position: relative;
       overflow: hidden;
       width: 100%;
       border: 1px solid rgba(16, 33, 63, 0.14);
@@ -250,107 +231,174 @@
       height: auto;
     }
 
-    .preview-caption {
-      margin: 15px 3px 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.62;
+    /*
+      Plain-language explanation.
+    */
+
+    .problem {
+      max-width: 930px;
+      margin: 28px auto 0;
+      text-align: center;
     }
 
-    .preview-caption strong {
+    .problem h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.3rem, 2.4vw, 1.85rem);
+      line-height: 1.28;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .problem p {
+      max-width: 820px;
+      margin: 14px auto 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+      line-height: 1.7;
+    }
+
+    .problem strong {
       color: var(--text);
     }
 
     /*
-      Explanation section below the opening.
+      Baseline versus knowledge-native comparison.
     */
 
-    .explanation {
-      padding: 96px 0 8px;
-    }
-
-    .section-heading {
-      max-width: 840px;
-      margin: 0 auto 46px;
-      text-align: center;
-    }
-
-    .section-heading .label {
-      margin: 0 0 13px;
-      color: var(--teal);
-      font-size: 0.75rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .section-heading h2 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2rem, 4.4vw, 3.45rem);
-      line-height: 1.14;
-      letter-spacing: -0.04em;
-      font-weight: 500;
-    }
-
-    .section-heading p {
-      max-width: 760px;
-      margin: 21px auto 0;
-      color: var(--muted);
-      font-size: 1.04rem;
-      line-height: 1.78;
-    }
-
-    .knowledge-grid {
+    .comparison {
+      margin-top: 30px;
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
 
-    .knowledge-item {
-      padding: 24px 21px;
+    .comparison-card {
+      padding: 23px 21px;
       border: 1px solid var(--border);
       border-radius: 15px;
       background: var(--surface);
       backdrop-filter: blur(12px);
     }
 
+    .comparison-card.highlight {
+      border-color: rgba(20, 115, 230, 0.3);
+      background:
+        linear-gradient(
+          145deg,
+          rgba(20, 115, 230, 0.07),
+          rgba(39, 174, 150, 0.08)
+        ),
+        var(--surface);
+    }
+
+    .comparison-card .number {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--teal);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .comparison-card h3 {
+      margin: 0 0 9px;
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    .comparison-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.63;
+    }
+
+    .comparison-card.highlight h3 {
+      color: var(--accent-dark);
+    }
+
+    /*
+      Knowledge contributing to the destination decision.
+    */
+
+    .knowledge-section {
+      padding-top: 44px;
+    }
+
+    .knowledge-heading {
+      max-width: 780px;
+      margin: 0 auto 24px;
+      text-align: center;
+    }
+
+    .knowledge-heading h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.45rem, 2.7vw, 2.05rem);
+      line-height: 1.24;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+    }
+
+    .knowledge-heading p {
+      margin: 11px auto 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .knowledge-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .knowledge-item {
+      padding: 21px 19px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+    }
+
     .knowledge-item .type {
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       color: var(--teal);
-      font-size: 0.7rem;
+      font-size: 0.67rem;
       font-weight: 800;
       letter-spacing: 0.09em;
       text-transform: uppercase;
     }
 
     .knowledge-item h3 {
-      margin: 0 0 9px;
-      font-size: 1rem;
-      line-height: 1.35;
+      margin: 0 0 8px;
+      font-size: 0.96rem;
+      line-height: 1.34;
     }
 
     .knowledge-item p {
       margin: 0;
       color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.64;
+      font-size: 0.86rem;
+      line-height: 1.62;
     }
 
     .knowledge-point {
-      max-width: 920px;
-      margin: 38px auto 0;
-      padding: 27px 31px;
+      max-width: 900px;
+      margin: 30px auto 0;
+      padding: 24px 28px;
       border-left: 3px solid var(--accent);
-      background: rgba(255, 255, 255, 0.58);
+      background: rgba(255, 255, 255, 0.6);
     }
 
     .knowledge-point p {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.15rem, 2.2vw, 1.52rem);
-      line-height: 1.55;
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      line-height: 1.52;
     }
 
     .knowledge-point strong {
@@ -358,18 +406,18 @@
     }
 
     /*
-      Principles moved to the bottom.
+      Bottom material.
     */
 
     .bottom-section {
-      padding-top: 74px;
+      padding-top: 58px;
       text-align: center;
     }
 
     .coming-soon {
       max-width: 700px;
       margin: 0 auto;
-      padding: 25px 28px;
+      padding: 23px 27px;
       border: 1px solid rgba(20, 115, 230, 0.15);
       border-radius: 15px;
       background:
@@ -384,19 +432,19 @@
       margin: 0;
       color: var(--muted);
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.12rem;
+      font-size: 1.08rem;
       line-height: 1.6;
       font-style: italic;
     }
 
     .principles {
-      margin: 46px auto 0;
+      margin: 40px auto 0;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 10px 22px;
       color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 0.79rem;
       font-weight: 680;
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -409,7 +457,7 @@
     }
 
     footer {
-      width: min(1260px, calc(100% - 48px));
+      width: min(1180px, calc(100% - 48px));
       margin: 0 auto;
       padding: 24px 0 32px;
       border-top: 1px solid var(--border);
@@ -420,28 +468,9 @@
       font-size: 0.8rem;
     }
 
-    @media (max-width: 1050px) {
-      .opening {
-        min-height: auto;
+    @media (max-width: 900px) {
+      .comparison {
         grid-template-columns: 1fr;
-        gap: 52px;
-        padding-top: 40px;
-      }
-
-      .hero {
-        max-width: 760px;
-        text-align: center;
-        margin: 0 auto;
-      }
-
-      .description,
-      .hero-note {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .example-preview {
-        width: 100%;
       }
 
       .knowledge-grid {
@@ -451,42 +480,33 @@
 
     @media (max-width: 650px) {
       header {
-        width: min(100% - 32px, 1260px);
+        width: min(100% - 32px, 1180px);
         padding-top: 20px;
         align-items: flex-start;
       }
 
       .top-nav {
-        gap: 9px;
+        gap: 8px;
         flex-direction: column;
         align-items: flex-end;
         font-size: 0.84rem;
       }
 
       main {
-        width: min(100% - 32px, 1260px);
-        padding-top: 10px;
+        width: min(100% - 32px, 1180px);
       }
 
-      .opening {
-        padding-top: 28px;
-        gap: 42px;
+      .hero {
+        padding-top: 24px;
+        padding-bottom: 34px;
       }
 
       h1 {
         letter-spacing: -0.06em;
       }
 
-      .preview-heading {
-        display: block;
-      }
-
       .example-frame {
         border-radius: 12px;
-      }
-
-      .explanation {
-        padding-top: 72px;
       }
 
       .knowledge-grid {
@@ -495,7 +515,7 @@
 
       .knowledge-point,
       .coming-soon {
-        padding: 23px 21px;
+        padding: 22px 20px;
       }
 
       .principles {
@@ -508,7 +528,7 @@
       }
 
       footer {
-        width: min(100% - 32px, 1260px);
+        width: min(100% - 32px, 1180px);
         flex-direction: column;
       }
     }
@@ -537,106 +557,140 @@
     </header>
 
     <main>
-      <section class="opening">
-        <div class="hero">
-          <div class="eyebrow">Open-source infrastructure</div>
+      <section class="hero">
+        <div class="eyebrow">The KnaiTai Open Initiative</div>
 
-          <h1>KnaiTai</h1>
+        <h1>KnaiTai</h1>
 
-          <p class="tagline">
-            Knowledge-native AI.<br />
-            <span>Open, by design.</span>
+        <p class="tagline">
+          Knowledge-native AI.<br />
+          <span>Open, by design.</span>
+        </p>
+
+        <p class="description">
+          Making knowledge programmable for AI.
+        </p>
+      </section>
+
+      <section class="example">
+        <div class="example-heading">
+          <p class="example-label">
+            Maritime behavior understanding
           </p>
 
-          <p class="description">
-            Making knowledge programmable for AI.
-          </p>
+          <h2>
+            From predicting a vessel’s path
+            to <span>understanding its destination.</span>
+          </h2>
+        </div>
 
-          <p class="hero-note">
-            Not merely retrieving knowledge around a model—but selecting it,
-            activating it and giving it explicit computational effect.
+        <div class="example-frame">
+          <img
+            src="images/ktbehavior.png"
+            alt="KnaiTai maritime behavior-understanding example showing a vessel, candidate destinations, shipping corridors, protected waters, port capabilities and historical knowledge."
+          />
+        </div>
+
+        <div class="problem">
+          <h3>
+            A movement model can predict where the vessel is heading next.
+            But which port is it actually trying to reach?
+          </h3>
+
+          <p>
+            The recent track may point toward several plausible ports. Choosing
+            among them requires more than movement data. The system may need to
+            know the vessel’s size and draft, which ports can accommodate it,
+            whether its route follows a known shipping corridor, and where the
+            vessel has called before.
           </p>
         </div>
 
-        <div class="example-preview">
-          <div class="preview-heading">
-            <div>
-              <p class="preview-label">
-                Maritime behavior understanding
-              </p>
+        <div class="comparison">
+          <article class="comparison-card">
+            <span class="number">Baseline generative AI</span>
 
-              <h2 class="preview-title">
-                From predicting where a vessel will go
-                to <span>understanding why.</span>
-              </h2>
-            </div>
-          </div>
+            <h3>A plausible answer</h3>
 
-          <div class="example-frame">
-            <img
-              src="images/ktbehavior.png"
-              alt="KnaiTai maritime behavior-understanding example showing a vessel, candidate destinations, shipping corridors, protected waters, port capabilities and historical knowledge."
-            />
-          </div>
+            <p>
+              A generative AI model can examine the track and describe a likely
+              destination. It may even offer a convincing explanation, but the
+              relevant facts are not systematically selected, checked or tied
+              to their effect on the prediction.
+            </p>
+          </article>
 
-          <p class="preview-caption">
-            <strong>A vessel’s recent track suggests several destinations.</strong>
-            The conclusion changes as relevant geographic, vessel, port and
-            historical knowledge becomes active.
-          </p>
+          <article class="comparison-card">
+            <span class="number">Conventional KG-RAG</span>
+
+            <h3>Knowledge added as context</h3>
+
+            <p>
+              A knowledge graph retrieval system can find information about
+              the vessel, nearby ports and the region. That information is
+              supplied to the model as additional context, but it may still be
+              unclear which facts mattered and how they changed the answer.
+            </p>
+          </article>
+
+          <article class="comparison-card highlight">
+            <span class="number">Knowledge-native AI</span>
+
+            <h3>Knowledge participates in the decision</h3>
+
+            <p>
+              KnaiTai selects the knowledge needed for this specific prediction
+              and gives each item an explicit role: ruling out an unsuitable
+              port, strengthening a likely destination or qualifying the
+              model’s confidence.
+            </p>
+          </article>
         </div>
       </section>
 
-      <section class="explanation">
-        <div class="section-heading">
-          <p class="label">Knowledge in action</p>
-
+      <section class="knowledge-section">
+        <div class="knowledge-heading">
           <h2>
-            The prediction begins with observation.<br />
-            The understanding emerges from knowledge.
+            Different kinds of knowledge help resolve the destination.
           </h2>
 
           <p>
-            In this synthetic example, an observation-only model initially
-            favors Tanjung Pelepas. KnaiTai then activates the knowledge
-            relevant to the situation: the shipping corridor, the vessel’s
-            operating requirements, candidate-port capabilities, geographic
-            constraints and the vessel’s prior calls. Each item has an
-            explicit and inspectable effect on the conclusion.
+            The example makes visible what each kind of knowledge contributes
+            beyond the vessel’s observed movement.
           </p>
         </div>
 
         <div class="knowledge-grid">
           <article class="knowledge-item">
-            <span class="type">Geographic knowledge</span>
+            <span class="type">Movement knowledge</span>
 
-            <h3>Where can the vessel plausibly move?</h3>
+            <h3>Where is the vessel heading?</h3>
 
             <p>
-              Shipping corridors, coastal geometry and protected waters shape
-              feasible routes and constrain candidate destinations.
+              Its recent path and direction establish the initial set of
+              plausible destinations.
             </p>
           </article>
 
           <article class="knowledge-item">
             <span class="type">Vessel knowledge</span>
 
-            <h3>What does this vessel require?</h3>
+            <h3>What does the vessel require?</h3>
 
             <p>
-              Vessel class, draft and berth requirements determine which
-              nearby destinations are operationally suitable.
+              Vessel type, size, draft and berth requirements help eliminate
+              ports that cannot receive it.
             </p>
           </article>
 
           <article class="knowledge-item">
-            <span class="type">Port knowledge</span>
+            <span class="type">Port and geographic knowledge</span>
 
-            <h3>Which ports can actually receive it?</h3>
+            <h3>Which destinations are feasible?</h3>
 
             <p>
-              Port depth, berth capability and operating characteristics
-              distinguish proximity from true viability.
+              Port capabilities, shipping corridors, coastal geography and
+              protected waters shape the realistic alternatives.
             </p>
           </article>
 
@@ -646,8 +700,8 @@
             <h3>What has this vessel done before?</h3>
 
             <p>
-              Prior calls and recurring behavior supply evidence that the
-              current movement trace alone cannot reveal.
+              Previous port calls and recurring behavior can strengthen one
+              destination over otherwise similar alternatives.
             </p>
           </article>
         </div>
@@ -655,9 +709,9 @@
         <div class="knowledge-point">
           <p>
             <strong>The point of Knowledge-native AI:</strong>
-            knowledge is not background material surrounding the model. It is
-            selected, made active, given computational effect and kept visible
-            in the resulting reasoning.
+            knowledge does not merely surround the model as retrieved text. It
+            becomes an explicit and inspectable part of how the model reaches
+            its conclusion.
           </p>
         </div>
       </section>
