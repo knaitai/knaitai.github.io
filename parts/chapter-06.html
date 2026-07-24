@@ -1,0 +1,1451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>The Knowledge Runtime</title>
+
+<link rel="stylesheet" href="../assets/style.css">
+
+<style>
+.content p,
+.content li,
+.content blockquote {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+.comparison-table th,
+.comparison-table td {
+  border: 1px solid #d9d9d9;
+  padding: 0.75rem;
+  vertical-align: top;
+}
+.comparison-table th {
+  text-align: left;
+}
+.example-block {
+  margin: 1.4rem 0;
+  padding: 1rem 1.1rem;
+  border-left: 4px solid #777;
+  background: #f7f7f7;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="site-title">
+    <a href="../index.html">Programming Knowledge Native AI</a>
+  </div>
+
+  <nav class="site-nav">
+    <a href="../contents.html">Contents</a>
+    <a href="../front-matter/preface.html">Preface</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
+
+<main class="page">
+
+<article class="content">
+
+<div class="chapter-label">Chapter 6 · Part II: Knowledge Native Architecture</div>
+
+<h1 class="page-title">The Knowledge Runtime</h1>
+
+<p class="lead">
+Knowledge capsules provide the programmable units of Knowledge Native AI. The knowledge runtime coordinates their activation, interaction, revision, inquiry, and projection so that a system can progressively improve its computational understanding rather than merely generate another answer.
+</p>
+
+<h2>6.1 From Capsules to Runtime</h2>
+
+<p>
+Chapter 5 introduced knowledge capsules as active computational units. A single capsule can represent an observation, hypothesis, guideline, uncertainty, question, prediction, human judgment, or derived conclusion. Yet useful understanding rarely emerges from one capsule in isolation.
+</p>
+
+<p>
+During execution, many capsules may become relevant at once. Some support one interpretation. Others challenge it. Some constrain allowable actions. Some reveal missing knowledge. Others supersede earlier observations. A foundation model may propose a hypothesis, a graph may retrieve related entities, a rule may activate, a human may correct a fact, and a simulator may introduce a counterfactual outcome.
+</p>
+
+<p>
+These activities require coordination.
+</p>
+
+<div class="definition">
+<strong>Definition 6.1 (Knowledge Runtime).</strong>
+A <em>knowledge runtime</em> is the execution environment that coordinates knowledge capsules, understanding states, knowledge operations, dependencies, revision, inquiry, and projection during a Knowledge Native computation.
+</div>
+
+<pre><code>Knowledge Capsules
+        ↓
+Knowledge Runtime
+        ↓
+Activation
+Interaction
+Revision
+Inquiry
+Composition
+Tracing
+        ↓
+Evolving Computational Understanding</code></pre>
+
+<p>
+The runtime plays a role analogous to familiar execution environments. A language runtime manages values, calls, memory, and control flow. A database engine manages queries, transactions, indexes, and views. An operating system coordinates processes, resources, and events.
+</p>
+
+<p>
+A knowledge runtime manages the execution of knowledge.
+</p>
+
+<div class="callout">
+<strong>Programming Principle.</strong>
+Knowledge capsules make knowledge programmable. The knowledge runtime makes their collective behavior executable.
+</div>
+
+<h2>6.2 What the Runtime Owns</h2>
+
+<p>
+A capsule owns its identity, semantic payload, provenance, scope, epistemic state, lifecycle, capabilities, dependencies, and contribution roles. The runtime owns coordination across capsules and tasks.
+</p>
+
+<p>
+The runtime is responsible for:
+</p>
+
+<ul>
+  <li>registering and locating capsules;</li>
+  <li>maintaining task-relative active sets;</li>
+  <li>evaluating activation conditions;</li>
+  <li>dispatching knowledge operations;</li>
+  <li>maintaining understanding states;</li>
+  <li>recording dependencies and influence;</li>
+  <li>detecting conflicts and unresolved gaps;</li>
+  <li>scheduling the next useful computation;</li>
+  <li>propagating revisions;</li>
+  <li>creating derived capsules;</li>
+  <li>and projecting dialogue, recommendations, plans, alerts, or explanations.</li>
+</ul>
+
+<table class="comparison-table">
+<thead>
+<tr>
+  <th>Capsule responsibility</th>
+  <th>Runtime responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>What the knowledge represents</td>
+  <td>When and how it may participate</td>
+</tr>
+<tr>
+  <td>Local scope and capabilities</td>
+  <td>Task-relative activation and enforcement</td>
+</tr>
+<tr>
+  <td>Declared dependencies</td>
+  <td>Dependency indexing and revision propagation</td>
+</tr>
+<tr>
+  <td>Possible understanding contribution</td>
+  <td>Applying the contribution to the current understanding</td>
+</tr>
+<tr>
+  <td>Local lifecycle</td>
+  <td>Coordination of lifecycle transitions across the system</td>
+</tr>
+</tbody>
+</table>
+
+<h2>6.3 Understanding as Runtime State</h2>
+
+<p>
+A knowledge runtime does not merely maintain a collection of active capsules. It maintains an explicit understanding state.
+</p>
+
+<div class="definition">
+<strong>Definition 6.2 (Runtime Understanding State).</strong>
+A <em>runtime understanding state</em> is the task-focused organization of observations, hypotheses, evidence, constraints, uncertainties, conflicts, and knowledge gaps currently held about the subject of reasoning.
+</div>
+
+<div class="example-block">
+<p><strong>Caregiver assistance.</strong></p>
+<pre><code>Subject:
+    child-17, current encounter
+
+Observed:
+    fever
+    rash
+    faster breathing
+
+Hypotheses:
+    viral illness
+    respiratory infection
+
+Active constraint:
+    unresolved respiratory distress
+    prevents home-monitoring recommendation
+
+Knowledge gaps:
+    respiratory rate
+    responsiveness
+    hydration
+
+Current projection:
+    ask targeted questions
+    prepare urgent-evaluation recommendation</code></pre>
+</div>
+
+<div class="example-block">
+<p><strong>Operational intelligence.</strong></p>
+<pre><code>Subject:
+    vessel-group-12, current observation window
+
+Observed:
+    low speed
+    repeated course change
+    close proximity
+
+Hypotheses:
+    weather-driven maneuvering
+    loitering
+    possible rendezvous
+
+Active challenge:
+    severe current conditions
+
+Knowledge gaps:
+    cargo transfer evidence
+    historical association
+    communications
+
+Current projection:
+    analyst-facing assessment
+    with ranked hypotheses</code></pre>
+</div>
+
+<p>
+The understanding state is not a model's hidden context. It is an explicit program object maintained by the runtime.
+</p>
+
+<h2>6.4 Runtime Architecture</h2>
+
+<pre><code>Sources and Users
+        ↓
+Constructors and Grounders
+        ↓
+Capsule Registry
+        ↓
+Activation Engine
+        ↓
+Knowledge Runtime
+    ┌───────────────┬────────────────┐
+    │               │                │
+Operation Engine  Scheduler     Revision Engine
+    │               │                │
+    └───────────────┴────────────────┘
+        ↓
+Understanding State
+        ↓
+Projection Layer
+        ↓
+Dialogue, Recommendation,
+Plan, Prediction, Alert, Explanation</code></pre>
+
+<p>
+A practical runtime may contain the following services.
+</p>
+
+<h3>Capsule Registry</h3>
+<p>Stores capsule identities, kinds, versions, locations, provenance, and dependency indexes.</p>
+
+<h3>Activation Engine</h3>
+<p>Determines which candidate capsules are applicable and which capabilities they may exercise in the current task.</p>
+
+<h3>Operation Engine</h3>
+<p>Applies support, challenge, constraint, derivation, inquiry, revision, composition, and explanation operations.</p>
+
+<h3>Understanding Manager</h3>
+<p>Maintains the current organized understanding and records which capsules actually influence it.</p>
+
+<h3>Scheduler</h3>
+<p>Selects what should happen next: apply a rule, retrieve evidence, ask a question, invoke a model, call a tool, or defer to a human.</p>
+
+<h3>Revision Engine</h3>
+<p>Propagates changed observations, corrected mappings, superseded policies, and invalidated hypotheses through the affected dependency region.</p>
+
+<h3>Trace Manager</h3>
+<p>Preserves knowledge-level execution events and paths from source information to resulting projections.</p>
+
+<h2>6.5 The Runtime Execution Cycle</h2>
+
+<p>
+A Knowledge Native program repeatedly executes a cycle:
+</p>
+
+<pre><code>1. Observe or receive information
+2. Construct or retrieve capsules
+3. Evaluate applicability
+4. Activate permitted capsules
+5. Apply knowledge operations
+6. Update understanding
+7. Detect conflicts and gaps
+8. Select the next computation
+9. Project an external response when warranted
+10. Revise when new information arrives</code></pre>
+
+<p>
+This is not a one-pass pipeline. It is a control loop.
+</p>
+
+<pre><code>Current Understanding
+        ↓
+What matters next?
+        ↓
+Question, Retrieval,
+Model, Rule, Tool, or Human
+        ↓
+New Capsule
+        ↓
+Revised Understanding
+        ↺</code></pre>
+
+<div class="callout">
+<strong>Runtime Shift.</strong>
+The system does not merely process an input. It repeatedly decides what knowledge operation would most improve the current understanding.
+</div>
+
+<h2>6.6 Activation as Runtime Admission</h2>
+
+<p>
+Activation is the process by which an applicable capsule is admitted into the current computation.
+</p>
+
+<pre><code>activation = runtime.evaluate_activation(
+    capsule=capsule,
+    task=task,
+    context=context,
+    understanding=understanding
+)</code></pre>
+
+<p>
+The runtime evaluates:
+</p>
+
+<ul>
+  <li>scope compatibility;</li>
+  <li>freshness;</li>
+  <li>prerequisites;</li>
+  <li>epistemic status;</li>
+  <li>authority;</li>
+  <li>task relevance;</li>
+  <li>and permitted contribution roles.</li>
+</ul>
+
+<pre><code>ActivationResult =
+    Activate(capabilities, basis)
+  | ActivateWithQualification(
+        capabilities,
+        basis,
+        qualification
+    )
+  | DoNotActivate(reason)
+  | CannotDetermine(missing_knowledge)</code></pre>
+
+<p>
+The last result is especially important. If applicability cannot be determined because knowledge is missing, the runtime may create a question capsule rather than silently treating the capsule as inactive.
+</p>
+
+<h2>6.7 From Active to Influential</h2>
+
+<p>
+Activation grants eligibility. Influence records actual participation.
+</p>
+
+<div class="definition">
+<strong>Definition 6.3 (Knowledge Influence Event).</strong>
+A <em>knowledge influence event</em> records that an active capsule materially changed an understanding state, candidate set, derived capsule, or external projection.
+</div>
+
+<pre><code>active capsule
+    ↓ contributes
+understanding delta
+    ↓ recorded as
+influence event</code></pre>
+
+<p>
+An active guideline may produce no change because its premises are not satisfied. An active weather capsule may materially weaken a loitering hypothesis. An active question capsule may determine the next dialogue turn.
+</p>
+
+<p>
+Distinguishing activity from influence prevents explanations from attributing a result to every object that happened to be present.
+</p>
+
+<h2>6.8 Knowledge Operations in the Runtime</h2>
+
+<p>
+The runtime mediates operations rather than allowing arbitrary capsule side effects.
+</p>
+
+<pre><code>runtime.apply(
+    operation,
+    source_capsules,
+    target,
+    understanding
+) → OperationResult</code></pre>
+
+<p>
+Core operations include:
+</p>
+
+<pre><code>observe
+support
+challenge
+constrain
+qualify
+derive
+compose
+reconcile
+revise
+request_information
+explain
+retire</code></pre>
+
+<p>
+Every operation should check capabilities, scope, state, and preconditions before execution.
+</p>
+
+<pre><code>def apply(operation, sources, target, state):
+
+    require_active(sources)
+    require_capability(sources, operation)
+    require_scope_overlap(sources, target)
+    require_preconditions(operation, state)
+
+    result = execute(operation, sources, target, state)
+
+    record_dependencies(result)
+    record_influence(result)
+    record_trace(result)
+
+    return result</code></pre>
+
+<h2>6.9 Support, Challenge, and Constraint</h2>
+
+<p>
+Three relations recur throughout runtime reasoning.
+</p>
+
+<h3>Support</h3>
+
+<p>
+A support operation increases the justification for a hypothesis, claim, action, or further investigation.
+</p>
+
+<pre><code>fever_observation
+    supports
+acute_infection_hypothesis</code></pre>
+
+<h3>Challenge</h3>
+
+<p>
+A challenge operation weakens, qualifies, or disputes a capsule or relation.
+</p>
+
+<pre><code>severe_current_weather
+    challenges
+loitering_hypothesis</code></pre>
+
+<h3>Constraint</h3>
+
+<p>
+A constraint operation restricts possible conclusions or actions.
+</p>
+
+<pre><code>respiratory_distress_guideline
+    constrains
+{home_monitoring,
+ routine_visit,
+ urgent_evaluation}
+
+result:
+{urgent_evaluation}</code></pre>
+
+<p>
+The runtime must preserve the distinction. Support does not automatically override a hard constraint, and a challenge does not necessarily prove the opposite conclusion.
+</p>
+
+<h2>6.10 The Reasoning Graph</h2>
+
+<div class="definition">
+<strong>Definition 6.4 (Reasoning Graph).</strong>
+A <em>reasoning graph</em> is a task-relative graph whose nodes are active, derived, question, uncertainty, conflict, and projection capsules, and whose edges represent typed reasoning relations and dependencies.
+</div>
+
+<pre><code>Observation Capsule
+        │ supports
+        ▼
+Hypothesis Capsule
+        │ challenged_by
+        ▼
+Alternative Evidence Capsule
+        │ constrained_by
+        ▼
+Guideline Capsule
+        │
+        ▼
+Understanding State
+        │
+        ▼
+Recommendation Capsule</code></pre>
+
+<p>
+Useful edge types include:
+</p>
+
+<pre><code>supports
+challenges
+conflicts_with
+constrains
+qualifies
+derived_from
+answers
+activated_by
+grounded_by
+validated_by
+supersedes
+depends_on</code></pre>
+
+<p>
+The graph is computational. The runtime can query all support for a hypothesis, all unresolved conflicts affecting a recommendation, all constraints excluding an action, or all dependents of a revised observation.
+</p>
+
+<h2>6.11 Conflict as Runtime State</h2>
+
+<p>
+A weak system overwrites disagreement or asks a model to select silently. A knowledge runtime represents conflict explicitly.
+</p>
+
+<div class="definition">
+<strong>Definition 6.5 (Conflict Capsule).</strong>
+A <em>conflict capsule</em> represents an incompatibility, contradiction, tension, or unresolved competition among two or more capsules.
+</div>
+
+<div class="example-block">
+<p><strong>Caregiver assistance.</strong></p>
+<pre><code>Capsule A:
+    caregiver reports no breathing difficulty
+
+Capsule B:
+    later report indicates labored breathing
+
+Conflict type:
+    temporal observation conflict
+
+Disposition:
+    prefer newer observation,
+    retain earlier state in trace</code></pre>
+</div>
+
+<div class="example-block">
+<p><strong>Operational intelligence.</strong></p>
+<pre><code>Capsule A:
+    AIS pattern supports loitering
+
+Capsule B:
+    weather explains low-speed movement
+
+Conflict type:
+    interpretation conflict
+
+Disposition:
+    retain competing hypotheses
+    and request discriminating evidence</code></pre>
+</div>
+
+<p>
+Conflict types may include direct contradiction, value disagreement, temporal conflict, scope conflict, authority conflict, rule conflict, goal conflict, and interpretation conflict.
+</p>
+
+<h2>6.12 Conflict Disposition</h2>
+
+<div class="definition">
+<strong>Definition 6.6 (Conflict Disposition).</strong>
+A <em>conflict disposition</em> is the runtime action taken in response to a detected conflict.
+</div>
+
+<pre><code>ResolvedByRecency
+ResolvedByAuthority
+ResolvedByScopeSeparation
+ResolvedByNewEvidence
+MergedWithQualification
+Deferred
+EscalatedForReview
+DependentCapsuleSuspended</code></pre>
+
+<p>
+Not every conflict should be resolved immediately. Preserving disagreement may be more truthful than forcing one capsule to win.
+</p>
+
+<h2>6.13 Constraints and Runtime Safety</h2>
+
+<p>
+Constraints apply both to domain decisions and to the runtime itself.
+</p>
+
+<h3>Domain Constraints</h3>
+
+<pre><code>do not recommend home monitoring
+when respiratory distress remains unresolved</code></pre>
+
+<pre><code>do not issue a high-confidence rendezvous alert
+without sufficient independent evidence</code></pre>
+
+<h3>Meta-Knowledge Constraints</h3>
+
+<pre><code>a provisional capsule may not
+impose an authoritative constraint
+
+a model-generated hypothesis may not
+become validated without a validation event
+
+a final projection may not omit
+an unresolved critical conflict</code></pre>
+
+<div class="definition">
+<strong>Definition 6.7 (Meta-Knowledge Constraint).</strong>
+A <em>meta-knowledge constraint</em> restricts how capsules may be constructed, activated, composed, revised, or allowed to influence understanding.
+</div>
+
+<p>
+These constraints make the runtime safer and more predictable.
+</p>
+
+<h2>6.14 Rules as Capsules</h2>
+
+<p>
+Rules used by the runtime should themselves be represented as capsules.
+</p>
+
+<pre><code>RuleCapsule:
+    rule_id
+    premises
+    conclusion_template
+    scope
+    priority
+    exceptions
+    activation_conditions
+    provenance
+    epistemic_state</code></pre>
+
+<div class="example-block">
+<p><strong>Pediatric guideline rule.</strong></p>
+<pre><code>premises:
+    child
+    possible respiratory distress
+
+conclusion:
+    urgent evaluation indicated
+
+scope:
+    pediatric triage
+
+exceptions:
+    none for unresolved severe distress</code></pre>
+</div>
+
+<div class="example-block">
+<p><strong>Behavior rule.</strong></p>
+<pre><code>premises:
+    repeated low-speed movement
+    sustained close proximity
+    no weather explanation
+
+conclusion:
+    possible rendezvous behavior
+
+scope:
+    current observation window
+
+status:
+    defeasible</code></pre>
+</div>
+
+<p>
+Representing rules as capsules allows them to be versioned, scoped, challenged, superseded, and traced.
+</p>
+
+<h2>6.15 Defeasible Reasoning</h2>
+
+<p>
+Many conclusions are justified only until new knowledge appears.
+</p>
+
+<div class="definition">
+<strong>Definition 6.8 (Defeater).</strong>
+A <em>defeater</em> is a capsule or relation that prevents, weakens, or withdraws an otherwise applicable support relation or conclusion.
+</div>
+
+<pre><code>rebutting defeater
+    supports an opposing conclusion
+
+undercutting defeater
+    challenges the connection
+    between evidence and conclusion
+
+exception defeater
+    establishes that an exception applies</code></pre>
+
+<div class="example-block">
+<p><strong>Operational intelligence.</strong> Low speed and repeated course change support loitering. Severe current conditions do not necessarily support “not loitering”; instead, they undercut the inference from low speed to intentional loitering.</p>
+</div>
+
+<h2>6.16 Assumptions as Runtime Objects</h2>
+
+<p>
+Reasoning often relies on assumptions. The runtime should represent them explicitly.
+</p>
+
+<pre><code>AssumptionCapsule:
+    AIS coverage is sufficiently complete
+
+status:
+    provisional
+
+supports:
+    interpretation of vessel behavior
+
+resolution:
+    inspect coverage history</code></pre>
+
+<p>
+If an assumption is challenged, the runtime can revise dependent capsules rather than leaving hidden conditions buried inside a prompt or model call.
+</p>
+
+<h2>6.17 Knowledge Gaps and Inquiry</h2>
+
+<p>
+A reasoning step may stop because required knowledge is missing.
+</p>
+
+<div class="definition">
+<strong>Definition 6.9 (Knowledge Gap Capsule).</strong>
+A <em>knowledge gap capsule</em> represents missing knowledge that blocks, weakens, or qualifies a runtime operation.
+</div>
+
+<pre><code>{
+  "kind": "KnowledgeGapCapsule",
+  "missing": "respiratory rate",
+  "required_for": "severity assessment",
+  "status": "open",
+  "resolution": [
+    "ask caregiver",
+    "obtain clinical measurement"
+  ]
+}</code></pre>
+
+<p>
+The runtime may convert the gap into a question capsule:
+</p>
+
+<pre><code>KnowledgeGapCapsule
+        ↓ formulate
+QuestionCapsule
+        ↓ ask
+User or Tool
+        ↓ answer
+ObservationCapsule
+        ↓ revise
+Understanding State</code></pre>
+
+<p>
+Inquiry is therefore part of runtime control flow.
+</p>
+
+<h2>6.18 The Runtime Scheduler</h2>
+
+<div class="definition">
+<strong>Definition 6.10 (Knowledge Scheduler).</strong>
+A <em>knowledge scheduler</em> selects and orders the next useful knowledge operations over the current understanding and reasoning graph.
+</div>
+
+<p>
+Possible scheduling criteria include:
+</p>
+
+<ul>
+  <li>risk;</li>
+  <li>information gain;</li>
+  <li>conflict urgency;</li>
+  <li>rule priority;</li>
+  <li>expected effect on understanding;</li>
+  <li>cost;</li>
+  <li>dependency readiness;</li>
+  <li>and user goal.</li>
+</ul>
+
+<pre><code>AgendaItem:
+    operation
+    source_capsules
+    target
+    priority
+    estimated_cost
+    expected_information_gain
+    expected_understanding_delta</code></pre>
+
+<p>
+For a caregiver assistant, the scheduler may prioritize a breathing question over a detailed history question because it has greater safety impact. For operational intelligence, it may retrieve weather before vessel history because weather can quickly eliminate a competing explanation.
+</p>
+
+<h2>6.19 Tool, Model, and Human Invocation</h2>
+
+<p>
+The scheduler may invoke different computational participants:
+</p>
+
+<pre><code>Foundation Model
+Graph Query
+Rule Engine
+Database
+Simulator
+External Tool
+Human Reviewer</code></pre>
+
+<p>
+Each invocation should have an explicit knowledge purpose.
+</p>
+
+<table class="comparison-table">
+<thead>
+<tr>
+  <th>Invocation</th>
+  <th>Knowledge purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Foundation model</td>
+  <td>Interpret an observation, propose a hypothesis, formulate a question, or project an explanation</td>
+</tr>
+<tr>
+  <td>Graph query</td>
+  <td>Retrieve related entities, evidence, dependencies, or historical patterns</td>
+</tr>
+<tr>
+  <td>Rule engine</td>
+  <td>Activate conditional knowledge and derive consequences</td>
+</tr>
+<tr>
+  <td>Simulator</td>
+  <td>Test a counterfactual or projected outcome under stated assumptions</td>
+</tr>
+<tr>
+  <td>Human reviewer</td>
+  <td>Resolve ambiguity, authorize an exception, or supply expert judgment</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The result of each invocation should return as one or more capsules, not disappear into untracked control flow.
+</p>
+
+<h2>6.20 Foundation Models Inside the Runtime</h2>
+
+<p>
+A foundation model is a flexible runtime component, not the owner of the complete reasoning state.
+</p>
+
+<p>
+The runtime may provide the model with a structured view:
+</p>
+
+<pre><code>{
+  "current_understanding": {...},
+  "active_observations": [...],
+  "competing_hypotheses": [...],
+  "constraints": [...],
+  "open_gaps": [...],
+  "requested_operation": "formulate_next_question"
+}</code></pre>
+
+<p>
+The model may return:
+</p>
+
+<pre><code>QuestionCapsuleProposal
+HypothesisCapsuleProposal
+MappingCapsuleProposal
+ExplanationCapsuleProposal</code></pre>
+
+<p>
+The runtime then grounds, validates, activates, or rejects the proposal.
+</p>
+
+<div class="callout">
+<strong>Architectural Principle.</strong>
+The foundation model contributes interpretations and projections. The runtime preserves the computational state in which those contributions acquire meaning.
+</div>
+
+<h2>6.21 Derivation and Composition</h2>
+
+<p>
+Knowledge operations often produce new capsules.
+</p>
+
+<pre><code>runtime.derive(
+    kind,
+    payload,
+    inputs,
+    operation,
+    understanding
+) → DerivedCapsule</code></pre>
+
+<div class="example-block">
+<p><strong>Caregiver assistance.</strong></p>
+<pre><code>Fever Capsule
+    +
+Respiratory-Distress Capsule
+    +
+Escalation Guideline Capsule
+    ↓
+Urgent-Evaluation Recommendation Capsule</code></pre>
+</div>
+
+<div class="example-block">
+<p><strong>Operational intelligence.</strong></p>
+<pre><code>AIS Capsules
+    +
+Satellite Capsule
+    +
+Weather Capsule
+    +
+Behavior Rule Capsule
+    ↓
+Rendezvous Assessment Capsule</code></pre>
+</div>
+
+<p>
+A composite understanding capsule may then organize observations, hypotheses, constraints, gaps, and projections without flattening their roles.
+</p>
+
+<h2>6.22 Incremental Revision</h2>
+
+<p>
+A long-lived runtime should update only the affected portion of the reasoning graph.
+</p>
+
+<pre><code>changed capsule
+    ↓
+dependent relations
+    ↓
+affected capsules
+    ↓
+affected understanding region
+    ↓
+affected projections</code></pre>
+
+<div class="example-block">
+<p><strong>Caregiver assistance.</strong> A new observation of normal breathing may deactivate an escalation rule, revise severity, retire an urgent recommendation, and activate a lower-risk follow-up question.</p>
+
+<p><strong>Operational intelligence.</strong> New satellite evidence may strengthen a rendezvous hypothesis, make an earlier uncertainty capsule obsolete, and activate an analyst alert.</p>
+</div>
+
+<p>
+The runtime should preserve unaffected understanding rather than reconstructing everything after each change.
+</p>
+
+<h2>6.23 Runtime Events</h2>
+
+<p>
+Runtime behavior can be expressed through explicit events:
+</p>
+
+<pre><code>CapsuleRegistered
+CapsuleActivated
+CapsuleInfluencedUnderstanding
+CapsuleChallenged
+ConflictDetected
+KnowledgeGapOpened
+QuestionAnswered
+CapsuleRevised
+CapsuleSuperseded
+ProjectionCreated
+HumanReviewRequested</code></pre>
+
+<p>
+An event-driven architecture supports incremental coordination:
+</p>
+
+<pre><code>on QuestionAnswered(answer_capsule):
+    revise_related_gap(answer_capsule)
+    reevaluate_dependents(answer_capsule)
+    update_understanding()
+    schedule_newly_enabled_operations()</code></pre>
+
+<h2>6.24 Runtime Transactions</h2>
+
+<p>
+Some knowledge updates should occur atomically.
+</p>
+
+<p>
+Suppose a new observation:
+</p>
+
+<ul>
+  <li>supersedes an earlier capsule;</li>
+  <li>invalidates one hypothesis;</li>
+  <li>activates a guideline;</li>
+  <li>and changes a recommendation.</li>
+</ul>
+
+<p>
+Exposing an intermediate state could produce contradictory projections.
+</p>
+
+<div class="definition">
+<strong>Definition 6.11 (Knowledge Transaction).</strong>
+A <em>knowledge transaction</em> is an atomic group of capsule, relation, and understanding-state updates that must become visible together.
+</div>
+
+<pre><code>begin knowledge transaction
+
+register new observation
+supersede old observation
+revise hypothesis
+activate guideline
+derive recommendation
+record trace
+
+commit</code></pre>
+
+<p>
+This connects Knowledge Native programming to familiar database concerns such as consistency, rollback, and isolation.
+</p>
+
+<h2>6.25 Runtime Invariants</h2>
+
+<p>
+A knowledge runtime should enforce invariants such as:
+</p>
+
+<ul>
+  <li>every active capsule has an activation basis;</li>
+  <li>every influential capsule has an influence record;</li>
+  <li>every derived capsule names its inputs;</li>
+  <li>every superseded capsule remains historically traceable;</li>
+  <li>every unresolved critical conflict qualifies or blocks final projection;</li>
+  <li>every model-produced capsule records model provenance;</li>
+  <li>and every question capsule links to the gap it is intended to resolve.</li>
+</ul>
+
+<pre><code>def validate_runtime(state):
+
+    for capsule in state.active_capsules:
+        assert state.has_activation_basis(capsule)
+
+    for capsule in state.influential_capsules:
+        assert state.has_influence_record(capsule)
+
+    for capsule in state.derived_capsules:
+        assert capsule.dependencies
+
+    if state.has_critical_conflict():
+        assert not state.projection.is_unqualified()</code></pre>
+
+<h2>6.26 Runtime Termination and Suspension</h2>
+
+<p>
+A runtime cycle needs stopping conditions.
+</p>
+
+<pre><code>RuntimeOutcome =
+    UnderstandingUpdated
+  | ProjectionReady
+  | QualifiedProjectionReady
+  | NeedsMoreKnowledge
+  | HumanReviewRequired
+  | ConflictUnresolved
+  | NoPermissibleAction
+  | BudgetExhausted</code></pre>
+
+<p>
+Termination does not always mean that the system has a final answer. A principled runtime may stop because it needs more knowledge, cannot satisfy all constraints, or must defer to a human.
+</p>
+
+<h2>6.27 A Complete Runtime Example: Caregiver Assistance</h2>
+
+<p>
+A caregiver reports:
+</p>
+
+<blockquote>
+My daughter has a fever and rash, and now she seems to be breathing much faster.
+</blockquote>
+
+<h3>Step 1: Construct Capsules</h3>
+
+<pre><code>FeverObservationCapsule
+RashObservationCapsule
+PossibleRespiratoryDistressCapsule</code></pre>
+
+<h3>Step 2: Ground and Activate</h3>
+
+<p>
+The runtime grounds the expressions to clinical concepts, activates pediatric guidance matching the child's age and current encounter, and restricts the model-generated respiratory interpretation to provisional use.
+</p>
+
+<h3>Step 3: Update Understanding</h3>
+
+<pre><code>Current understanding:
+acute febrile illness
+with possible respiratory distress
+
+Constraint:
+do not recommend home monitoring
+while severe breathing concern is unresolved</code></pre>
+
+<h3>Step 4: Detect Knowledge Gaps</h3>
+
+<pre><code>respiratory rate unknown
+responsiveness unknown
+skin color unknown</code></pre>
+
+<h3>Step 5: Schedule Inquiry</h3>
+
+<p>
+The runtime selects the breathing question with the greatest safety impact.
+</p>
+
+<pre><code>QuestionCapsule:
+"Is she struggling to breathe,
+pulling in at the ribs,
+or unable to speak normally?"</code></pre>
+
+<h3>Step 6: Receive New Observation</h3>
+
+<p>
+The caregiver reports visible rib retractions.
+</p>
+
+<pre><code>RetractionObservationCapsule
+    supports
+RespiratoryDistressHypothesisCapsule</code></pre>
+
+<h3>Step 7: Revise and Project</h3>
+
+<pre><code>UrgentEvaluationRecommendationCapsule
+
+basis:
+    reported breathing difficulty
+    visible retractions
+    applicable escalation guideline
+
+projection:
+    urgent caregiver-facing recommendation
+    with concise explanation</code></pre>
+
+<p>
+The runtime did not merely produce a response. It controlled how observations became capsules, which guideline activated, which question mattered next, how the understanding changed, and why the final recommendation was warranted.
+</p>
+
+<h2>6.28 A Complete Runtime Example: Operational Intelligence</h2>
+
+<h3>Step 1: Active Observations</h3>
+
+<pre><code>low-speed AIS movement
+repeated course changes
+close vessel proximity</code></pre>
+
+<h3>Step 2: Model Proposal</h3>
+
+<pre><code>BehaviorHypothesisCapsule:
+possible rendezvous
+status = provisional</code></pre>
+
+<h3>Step 3: Retrieve and Activate Knowledge</h3>
+
+<pre><code>weather conditions
+historical vessel association
+protected-zone context
+behavior templates</code></pre>
+
+<h3>Step 4: Challenge and Support</h3>
+
+<pre><code>severe currents
+    challenge intentional loitering
+
+historical association
+    supports possible rendezvous</code></pre>
+
+<h3>Step 5: Detect Gap</h3>
+
+<pre><code>KnowledgeGapCapsule:
+cargo-transfer evidence unavailable</code></pre>
+
+<h3>Step 6: Schedule Retrieval</h3>
+
+<p>
+The runtime requests satellite or sensor evidence likely to distinguish the hypotheses.
+</p>
+
+<h3>Step 7: Revise Understanding</h3>
+
+<pre><code>Current understanding:
+unusual vessel interaction
+
+Most plausible:
+possible rendezvous
+
+Alternative:
+weather-driven maneuvering
+
+Unresolved:
+transfer activity
+
+Projection:
+qualified analyst alert
+with evidence and gaps</code></pre>
+
+<h2>6.29 A Minimal Runtime API</h2>
+
+<pre><code>runtime.register(capsule)
+runtime.retrieve(task)
+runtime.evaluate_activation(capsule, task, state)
+runtime.activate(capsule, result)
+runtime.contribute(capsule, understanding)
+runtime.apply(operation, sources, target)
+runtime.detect_conflicts(capsule)
+runtime.open_gap(missing, required_for)
+runtime.schedule(state)
+runtime.invoke(component, purpose, inputs)
+runtime.derive(kind, payload, inputs)
+runtime.revise(capsule, revision)
+runtime.compose(capsules)
+runtime.project(kind, audience, state)
+runtime.trace(target)</code></pre>
+
+<p>
+A small educational runtime can implement these operations using immutable dataclasses, dictionaries, adjacency lists, and append-only events.
+</p>
+
+<h2>6.30 Testing the Knowledge Runtime</h2>
+
+<h3>Activation Tests</h3>
+<ul>
+  <li>Does applicable knowledge activate only in the correct scope?</li>
+  <li>Does missing knowledge produce a gap rather than a false result?</li>
+</ul>
+
+<h3>Influence Tests</h3>
+<ul>
+  <li>Is actual influence distinguished from mere activation?</li>
+  <li>Can every understanding change be traced to its contributors?</li>
+</ul>
+
+<h3>Scheduling Tests</h3>
+<ul>
+  <li>Does the runtime prioritize high-risk questions?</li>
+  <li>Does it avoid redundant retrieval or model calls?</li>
+</ul>
+
+<h3>Revision Tests</h3>
+<ul>
+  <li>Does a changed observation update only affected capsules?</li>
+  <li>Are superseded conclusions retired rather than overwritten?</li>
+</ul>
+
+<h3>Constraint Tests</h3>
+<ul>
+  <li>Can model support ever bypass a hard constraint?</li>
+  <li>Does an unresolved critical conflict qualify the projection?</li>
+</ul>
+
+<h3>Trace Tests</h3>
+<ul>
+  <li>Can the runtime reconstruct why each capsule activated?</li>
+  <li>Can it explain why a particular question was asked?</li>
+  <li>Can it distinguish source evidence from model interpretation?</li>
+</ul>
+
+<h2>6.31 Common Runtime Mistakes</h2>
+
+<h3>Treating the Runtime as an Agent Loop</h3>
+<p>A loop of model calls and tool calls is not yet a knowledge runtime unless knowledge state, activation, dependencies, revision, and influence are explicit.</p>
+
+<h3>Keeping Understanding Only in the Prompt</h3>
+<p>Prompt context is transient and difficult to inspect. The current understanding should exist as an explicit program state.</p>
+
+<h3>Allowing the Model to Schedule Everything</h3>
+<p>A model may propose the next operation, but risk, cost, constraints, and runtime policy should also govern scheduling.</p>
+
+<h3>Confusing Retrieval with Activation</h3>
+<p>Retrieved capsules are candidates. The runtime must still determine applicability and permitted roles.</p>
+
+<h3>Confusing Activation with Influence</h3>
+<p>Presence in the active set does not mean the capsule changed the result.</p>
+
+<h3>Failing to Represent Questions and Gaps</h3>
+<p>When missing knowledge affects the next computation, it should be represented explicitly.</p>
+
+<h3>Recomputing Everything After Every Change</h3>
+<p>Use dependency indexes and incremental revision.</p>
+
+<h3>Generating Explanations Without Runtime Traces</h3>
+<p>An explanation should be projected from recorded participation, not invented after the fact.</p>
+
+<h2>6.32 The Knowledge Runtime as the Execution Model</h2>
+
+<p>
+The first six chapters now define a coherent programming progression:
+</p>
+
+<pre><code>Knowledge
+    becomes a computational primitive
+
+Information
+    becomes computational understanding
+
+Knowledge objects
+    become knowledge capsules
+
+Knowledge capsules
+    execute within a knowledge runtime
+
+The runtime
+    progressively improves understanding</code></pre>
+
+<div class="callout">
+<strong>Central Thesis.</strong>
+A Knowledge Native program is not merely a model surrounded by tools and data. It is a runtime process in which explicit knowledge, generative models, rules, graphs, simulations, and people contribute through inspectable computational units to an evolving understanding.
+</div>
+
+<p>
+The runtime is where the new programming model becomes operational. It determines which knowledge is active, which contributions matter, what uncertainty blocks progress, which computation should happen next, how revisions propagate, and what projection the current understanding justifies.
+</p>
+
+<h2>Knowledge Native Thinking</h2>
+
+<p>
+When designing execution, do not ask only:
+</p>
+
+<blockquote>
+Which agent or model should run next?
+</blockquote>
+
+<p>
+Ask:
+</p>
+
+<ul>
+  <li>What is the current understanding?</li>
+  <li>Which capsules are active, and which have actually become influential?</li>
+  <li>What conflict or uncertainty matters most?</li>
+  <li>What operation would most improve understanding?</li>
+  <li>Should the next step invoke a model, rule, graph, tool, simulation, or human?</li>
+  <li>What new capsule should that step produce?</li>
+  <li>How will a change propagate through dependencies?</li>
+  <li>What constraints govern the projection?</li>
+  <li>What trace will preserve the execution?</li>
+</ul>
+
+<div class="callout">
+<strong>Programming Shift.</strong>
+Move from orchestrating model calls to orchestrating the evolution of computational understanding.
+</div>
+
+<h2>Chapter Summary</h2>
+
+<ul>
+  <li>The knowledge runtime coordinates populations of knowledge capsules during execution.</li>
+  <li>The runtime owns activation, operation dispatch, understanding maintenance, scheduling, revision, and tracing.</li>
+  <li>Understanding is an explicit runtime state, not merely hidden model context.</li>
+  <li>The runtime executes a recurring cycle of observation, construction, activation, operation, inquiry, revision, and projection.</li>
+  <li>Activation makes a capsule eligible to participate; influence records actual contribution.</li>
+  <li>Support, challenge, constraint, inquiry, derivation, composition, and revision are runtime-mediated operations.</li>
+  <li>The reasoning graph represents capsules and their typed relations computationally.</li>
+  <li>Conflict capsules preserve disagreement without forcing silent resolution.</li>
+  <li>Meta-knowledge constraints govern how knowledge itself may be used.</li>
+  <li>Rules, assumptions, questions, gaps, and defeaters are first-class runtime objects.</li>
+  <li>The scheduler selects the next computation according to risk, information gain, cost, and expected understanding improvement.</li>
+  <li>Foundation models contribute interpretations and projections without owning the complete reasoning state.</li>
+  <li>Incremental revision updates only affected regions of the runtime state.</li>
+  <li>Knowledge transactions preserve consistency across related updates.</li>
+  <li>Runtime traces support debugging, audit, replay, and explanation.</li>
+  <li>The execution model of Knowledge Native AI is the programmed evolution of computational understanding.</li>
+</ul>
+
+<h2>Discussion Questions</h2>
+
+<ol>
+  <li>How does a knowledge runtime differ from an agent loop?</li>
+  <li>What should a capsule own, and what should the runtime own?</li>
+  <li>Why should understanding be represented explicitly at runtime?</li>
+  <li>How does activation differ from influence?</li>
+  <li>When should a conflict remain unresolved?</li>
+  <li>What makes a question a runtime object rather than merely generated text?</li>
+  <li>How should risk and information gain affect scheduling?</li>
+  <li>What role should foundation models play inside the runtime?</li>
+  <li>Which updates should occur within a knowledge transaction?</li>
+  <li>What runtime invariants are essential for trustworthy execution?</li>
+</ol>
+
+<h2>Exercises</h2>
+
+<h3>Exercise 6.1: Define Runtime State</h3>
+<p>Design a runtime state containing active capsules, influential capsules, the understanding state, open conflicts, open gaps, pending operations, dependencies, and trace events.</p>
+
+<h3>Exercise 6.2: Implement Activation</h3>
+<p>Implement an activation evaluator that returns <code>Activate</code>, <code>ActivateWithQualification</code>, <code>DoNotActivate</code>, or <code>CannotDetermine</code>.</p>
+
+<h3>Exercise 6.3: Record Influence</h3>
+<p>Create an influence event whenever an active capsule materially changes a hypothesis, candidate set, understanding state, or projection.</p>
+
+<h3>Exercise 6.4: Build a Reasoning Graph</h3>
+<p>Represent observations, hypotheses, guidelines, questions, uncertainties, and recommendations as capsules connected by typed relations.</p>
+
+<h3>Exercise 6.5: Implement a Scheduler</h3>
+<p>Rank pending operations by risk, expected information gain, cost, and expected effect on understanding.</p>
+
+<h3>Exercise 6.6: Integrate a Foundation Model</h3>
+<p>Provide a model with a structured runtime view and require it to return a provisional question, hypothesis, mapping, or explanation capsule.</p>
+
+<h3>Exercise 6.7: Program a Knowledge Transaction</h3>
+<p>Atomically supersede one observation, revise a hypothesis, activate a constraint, derive a recommendation, and record the trace.</p>
+
+<h3>Exercise 6.8: Implement Incremental Revision</h3>
+<p>Revise one source capsule and update only the affected dependencies, understanding region, and projections.</p>
+
+<h3>Exercise 6.9: Reproduce the Caregiver Runtime</h3>
+<p>Implement the execution cycle from Section 6.27, including knowledge-gap creation, question scheduling, answer ingestion, revision, and recommendation projection.</p>
+
+<h3>Exercise 6.10: Reproduce the Operational Runtime</h3>
+<p>Implement competing behavioral hypotheses, weather-based challenge, evidence retrieval, and qualified analyst projection.</p>
+
+<nav class="chapter-nav">
+  <a href="chapter-05.html">← Chapter 5: Programming with Knowledge Capsules</a>
+  <a href="chapter-07.html">Chapter 7: A First Knowledge-Native Program →</a>
+</nav>
+
+</article>
+
+</main>
+
+<footer>
+Published as part of the KnaiTai Open Initiative.
+</footer>
+
+</body>
+</html>
