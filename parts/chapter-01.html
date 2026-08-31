@@ -3,11 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-
 <title>Why Knowledge Native AI?</title>
-
 <link rel="stylesheet" href="../assets/style.css">
-
 <style>
 .content p,
 .content li,
@@ -34,7 +31,6 @@
 </header>
 
 <main class="page">
-
 <article class="content">
 
 <div class="chapter-label">Chapter 1</div>
@@ -42,174 +38,183 @@
 <h1 class="page-title">Why Knowledge Native AI?</h1>
 
 <p class="lead">
-Artificial intelligence has become extraordinarily capable at prediction, generation, and interaction. Yet many important systems are ultimately judged not by the quality of a single prediction or response, but by how well they progressively understand the people, objects, processes, and situations they are responsible for. That understanding depends on knowledge that today often remains computationally invisible.
+Artificial intelligence has become extraordinarily capable. Foundation models can interpret complex situations, reason across large bodies of information, use tools, generate plans, revise conclusions, and interact naturally with people. Knowledge Native AI begins by taking that progress seriously. Its premise is not that modern models are incapable, but that no single form of intelligence is the right computation for every problem.
 </p>
 
 <p>
-The goal of many intelligent systems is not simply to produce a correct answer at a particular moment, but to progressively improve their understanding of the people, objects, processes, or situations they are reasoning about. Every observation, prediction, rule, simulation, document, and human interaction has the potential to refine that understanding. Knowledge Native AI is concerned with making those contributions explicit, computable, and cumulative.
+Real AI systems already contain many forms of knowledge and many forms of computational expertise. A language model may reason broadly. A trajectory predictor may estimate future motion. A planner may search over actions. A simulator may compute physical consequences. A logical engine may derive exact consequences. A verifier may establish that a proposed action satisfies a specification. A human expert may resolve ambiguity that no automated component can settle.
 </p>
+
+<p>
+Knowledge Native AI asks how these forms of knowledge and expertise can become first-class participants in a running intelligent system. As the situation evolves, the system should be able to determine what knowledge matters, what computational expertise should be brought to bear, what that expertise establishes, and what authority its result should have over a recommendation, decision, or action.
+</p>
+
+<div class="callout">
+<strong>Knowledge Native AI puts knowledge to work at runtime.</strong><br>
+Knowledge helps determine what should be computed, which expertise should perform that computation, how the result changes the system's understanding, and whether the resulting recommendation, decision, or action has earned sufficient computational authority.
+</div>
 
 <h3>Two Motivating Situations</h3>
 
 <p>
-Consider an after-hours caregiver assistant. A parent reports that a four-year-old has had a fever since yesterday and has now developed a rash. A capable language model can immediately produce a plausible response. But a useful system must do more. It must clarify what the caregiver means, identify the observations that matter next, apply pediatric triage knowledge, check for red flags, and revise its guidance as new information arrives. Clinical terminology may improve the meaning of the report. A triage procedure may determine the next question. A safety rule may change the appropriate action. The system becomes useful by progressively improving its understanding of the child's situation, not by producing one impressive answer.
+Consider an after-hours caregiver assistant. A parent reports that a six-year-old has a fever, has vomited twice, but is now drinking and watching television. A strong language model may reason about this situation very well. It may even produce the same eventual recommendation as an experienced clinician. But an application may still encode selected clinical knowledge with explicit computational authority: for example, home monitoring may not be cleared until respiratory status has been sufficiently assessed. If breathing has not yet been established, that missing evidence is not merely something the model should ideally remember to ask about; it is a runtime requirement. If the caregiver later reports rapid breathing and rib retractions, pediatric respiratory guidance may become applicable and explicitly constrain the home-monitoring option.
 </p>
 
 <p>
-Now consider an operational-intelligence system observing several vessels slowing and remaining near a constrained maritime approach. One model may classify the tracks as loitering. That is only a beginning. Vessel identity and ownership knowledge may reveal relationships among them. Geographic knowledge may show why the location matters. Weather and port conditions may weaken benign explanations. Learned behavior patterns and operational doctrine may suggest what evidence should be examined next. The system progresses from isolated observations, to a possible coordinated behavior, to a qualified assessment of operational significance while preserving what remains uncertain.
+Now consider an autonomous maritime system estimating whether another vessel will cross its future path. A language model may understand the scenario and explain the risks, but trajectory prediction is not naturally a language-generation problem. The system may need a specialized predictor using recent motion history, vessel behavior, geography, and environmental context. If the predicted encounter becomes dangerous, a planner may be required to generate a feasible maneuver, and a dynamics or collision verifier may be required before that maneuver is allowed to execute. The intelligence of the system comes not from forcing one model to do everything, but from bringing the right computational expertise to bear as the situation changes.
 </p>
 
 <div class="callout">
-<strong>The common capability is progressively better understanding.</strong><br>
-Different forms of knowledge become influential at different stages, changing what the system believes, what it asks, what it computes, and what it does next.
+<strong>The common capability is not simply better reasoning.</strong><br>
+It is the runtime use of knowledge to activate, combine, constrain, verify, and govern the computational expertise needed for trustworthy recommendations, decisions, and actions.
 </div>
 
-<h2>1.1 Prediction Is Not the Whole Computation</h2>
+<h2>1.1 No Single Computation Is the Whole System</h2>
 
 <p>
-Much of modern AI is organized around a familiar pattern. A system receives an input, computes an internal representation, and produces an output. The output may be a class label, numerical score, generated sentence, trajectory, plan, recommendation, or tool call.
+Much of modern AI is organized around a familiar pattern. A component receives an input and produces an output. The output may be a class label, numerical score, generated sentence, trajectory, plan, recommendation, or tool call.
 </p>
 
 <p>
-This pattern has produced remarkable systems. Models can recognize objects, generate code, summarize documents, predict demand, detect anomalies, and propose actions. In many settings, the model output is already useful.
+This pattern has produced remarkable systems. Models recognize objects, generate code, synthesize documents, reason over multimodal evidence, predict demand, detect anomalies, and propose actions. In many settings, a single model output is already sufficient.
 </p>
 
 <p>
-But the output is rarely the whole computational problem.
+But many consequential systems require more than one kind of computation.
 </p>
 
 <p>
-In many real applications, every prediction, observation, retrieved document, simulation, or human interaction should improve the system's understanding of the situation. The computation therefore does not end with one model output. It continues by refining what the system knows, what remains uncertain, and what should happen next.
+A generated treatment suggestion may need a contraindication check. A predicted trajectory may require a specialized time-series model. A proposed plan may need a planner with explicit action semantics. An engineering design may require simulation and formal verification. A grid-restoration proposal may have to satisfy topology, capacity, and safety constraints before execution.
 </p>
 
 <p>
-A generated program may rely on a deprecated library. A demand forecast may conflict with a warehouse capacity constraint. A package recommendation may violate a version dependency. A scientific claim may be supported by one dataset and challenged by another. A proposed action may be technically possible but prohibited by policy.
+The important question is therefore not:
 </p>
+
+<blockquote>
+Which model should solve the problem?
+</blockquote>
 
 <p>
-In each case, the system must do more than produce an answer. It must determine:
+It is:
 </p>
 
-<ul>
-  <li>which knowledge is relevant;</li>
-  <li>which knowledge is applicable;</li>
-  <li>which claims support or challenge the result;</li>
-  <li>which constraints restrict the available choices;</li>
-  <li>and how the conclusion should change when the knowledge changes.</li>
-</ul>
+<blockquote>
+What must be established at this point in the situation, and what computational expertise is appropriate for establishing it?
+</blockquote>
+
+<p>
+Sometimes the answer is the frontier language model. Sometimes it is a predictor, planner, optimizer, logical reasoner, simulator, verifier, database query, conventional algorithm, external service, or human expert. A mature AI system should be able to use each where its expertise is most appropriate.
+</p>
 
 <div class="callout">
-<strong>The central problem is not that AI systems possess no knowledge.</strong><br>
-The problem is that the knowledge shaping a conclusion often remains implicit, fragmented, or computationally invisible.
+<strong>Knowledge Native AI is not a reaction against neural intelligence.</strong><br>
+It assumes neural intelligence will continue improving, and asks how an AI system can use it alongside specialized forms of computation whose precision, scope, authority, or guarantees are worth preserving.
 </div>
 
+<h2>1.2 Knowledge and Computational Expertise</h2>
+
 <p>
-A useful distinction therefore emerges:
+The terms <em>knowledge</em> and <em>expertise</em> are related but not identical.
+</p>
+
+<p>
+<strong>Knowledge</strong> describes what is known. In Knowledge Native AI, the term is intentionally broad. Knowledge may be:
 </p>
 
 <ul>
-  <li><strong>A model output</strong> is a result produced by a computational component.</li>
-  <li><strong>A conclusion supported by an explicit understanding</strong> is a result whose supporting, conflicting, constraining, and contextual knowledge has participated explicitly in the computation.</li>
+  <li><strong>declarative</strong>, such as a clinical guideline, engineering constraint, logical rule, or policy;</li>
+  <li><strong>situational</strong>, such as the current state of a patient, machine, vessel, or network;</li>
+  <li><strong>historical</strong>, such as prior trajectories, service cases, observations, or transactions;</li>
+  <li><strong>structural</strong>, such as topology, dependencies, causal relationships, or an ontology;</li>
+  <li><strong>procedural</strong>, such as how a diagnostic workup or operational recovery is performed;</li>
+  <li><strong>formal</strong>, such as equations, action models, invariants, preconditions, and effects;</li>
+  <li><strong>learned</strong>, such as statistical regularities captured in a trained predictor or foundation model;</li>
+  <li>or <strong>human</strong>, such as an expert judgment or approval.</li>
 </ul>
 
 <p>
-Knowledge Native AI begins with the second object: an explicit understanding that can improve as new knowledge becomes influential.
-</p>
-
-<h2>1.2 Where Knowledge Shapes Computation</h2>
-
-<p>
-Knowledge already appears throughout software and AI systems. It is distributed across model parameters, documents, graphs, databases, rules, source code, configuration, workflows, and human judgment.
+<strong>Computational expertise</strong> is the capability to use appropriate knowledge to perform a bounded computation.
 </p>
 
 <p>
-The problem is therefore not the absence of knowledge artifacts. The problem is that their computational roles are often unclear: how they change the current understanding, when they become influential, and what computation should follow.
+A planning expert combines action knowledge with search. A formal-verification expert combines a specification with a verification procedure. A trajectory expert combines historical and contextual knowledge with a predictive model. A clinical pathway expert combines patient state and guideline knowledge with pathway logic. A foundation model combines learned knowledge with broad neural inference.
 </p>
 
-<h3>Implicit Knowledge in Models</h3>
+<div class="definition">
+<strong>Definition 1.1 (Computational Expertise).</strong>
+<em>Computational expertise</em> is a bounded capability that uses relevant knowledge, under stated conditions and assumptions, to establish a prediction, inference, plan, constraint, verification result, recommendation, action, or other computational result.
+</div>
 
 <p>
-Machine-learning models absorb regularities from data. Large language models, in particular, encode broad linguistic, factual, and procedural structure.
+This distinction matters because knowledge alone does not specify what computation should be performed with it. A set of constraints is not a constraint solver. A planning domain is not a planner. A history of positions is not a trajectory predictor. A clinical guideline is not the entire clinical reasoning process.
 </p>
 
 <p>
-This implicit knowledge gives models flexibility and breadth. It also makes it difficult to determine exactly which knowledge was used, where it originated, whether it remains valid, or why it produced a particular conclusion.
+Knowledge Native AI therefore treats both <em>what is known</em> and <em>how appropriate expertise computes with what is known</em> as first-class architectural concerns.
+</p>
+
+<h2>1.3 Where Knowledge Already Lives</h2>
+
+<p>
+Knowledge already appears throughout software and AI systems. It is distributed across model parameters, documents, graphs, databases, rules, source code, configuration, workflows, trained models, numerical procedures, and human judgment.
+</p>
+
+<h3>Learned Knowledge in Models</h3>
+
+<p>
+Machine-learning models absorb regularities from data. Foundation models in particular encode broad linguistic, factual, procedural, and inferential structure. Specialized predictors may capture temporal, geometric, biological, financial, or physical patterns that are difficult to express manually.
 </p>
 
 <p>
-The model may produce a convincing answer without exposing the assumptions, evidence, or constraints that shaped it.
+This knowledge is powerful precisely because it need not be fully represented symbolically. Knowledge Native AI does not require extracting all learned knowledge from a model. Instead, the model itself may be treated as a source of computational expertise with an explicit scope, interface, inputs, outputs, and authority.
 </p>
 
 <h3>Retrieved Knowledge in Documents</h3>
 
 <p>
-Retrieval-augmented systems bring external material into the context of a model. This is an important practical advance. Retrieval can improve freshness, domain relevance, and traceability to source documents.
+Retrieval-augmented systems bring external information into the context of a model. This can improve freshness, domain relevance, and traceability to source material.
 </p>
 
 <p>
-Yet retrieval alone does not specify the computational role of the retrieved material.
+Yet retrieval alone does not specify the computational role of the retrieved material. A passage may support a hypothesis, define an eligibility condition, prohibit an action, parameterize a model, or simply provide background. Relevance and computational consequence are different properties.
+</p>
+
+<h3>Structured Knowledge in Databases, Graphs, and Ontologies</h3>
+
+<p>
+Relational databases, knowledge graphs, ontologies, and domain models make entities, relationships, identifiers, categories, provenance, and structural constraints explicit.
 </p>
 
 <p>
-A passage may be related to the question, but does it:
+These representations become especially powerful when their contents can activate computation. A graph relationship may determine which predictor is applicable. A topology may define the feasible space for restoration. An ontology classification may activate a clinical or regulatory pathway. A database observation may satisfy a precondition required by a planner.
 </p>
 
-<ul>
-  <li>support the current hypothesis;</li>
-  <li>contradict it;</li>
-  <li>define a term;</li>
-  <li>constrain an action;</li>
-  <li>override another source;</li>
-  <li>or merely provide background?</li>
-</ul>
+<h3>Operational Knowledge in Rules, Procedures, and Code</h3>
 
 <p>
-A language model may infer such roles from prose, but the surrounding architecture often does not represent them explicitly.
-</p>
-
-<h3>Structured Knowledge in Databases and Graphs</h3>
-
-<p>
-Relational databases, knowledge graphs, ontologies, and domain models provide more explicit structure. They make entities, relations, identifiers, categories, and provenance available to computation.
+Rules, constraints, equations, procedures, validation routines, and application code often contain the most authoritative knowledge in a system.
 </p>
 
 <p>
-These representations are valuable when a system must integrate sources, enforce schema, follow relationships, or retrieve precise facts.
+A safety limit may be enforced by a checker. A drug contraindication may block a recommendation. A physical model may determine whether a proposed maneuver is feasible. A planner may know which actions can legally follow from a given state.
 </p>
 
 <p>
-But a query result does not by itself determine how the returned knowledge should affect a model output. A graph edge may express a dependency, but it does not automatically specify whether that dependency should support, block, revise, or merely qualify a conclusion.
+This knowledge is often already executable, but fragmented across implementations. Knowledge Native AI seeks to give it a common computational role without requiring that every form of expertise share one physical representation or one reasoning engine.
 </p>
 
-<h3>Operational Knowledge in Rules and Code</h3>
+<h3>Human Knowledge and Authority</h3>
 
 <p>
-Rules, constraints, validation procedures, and application code often contain the most consequential knowledge in a system.
-</p>
-
-<p>
-A software compatibility rule may be embedded in a conditional statement. A resource limit may be enforced by a scheduler. A policy exception may appear in configuration. A safety check may be implemented as a validation function.
+Many systems depend on judgments made by analysts, clinicians, engineers, reviewers, operators, and domain experts. Humans resolve ambiguity, supply missing context, and sometimes retain the final authority to approve an action.
 </p>
 
 <p>
-This knowledge is executable, but often fragmented. Its source, scope, assumptions, and relationship to the final result may remain hidden inside the implementation.
+A human contribution should therefore be representable not merely as an unstructured note, but as knowledge with identity, scope, provenance, and authority that can change what the system is permitted to do next.
 </p>
 
-<h3>Human Knowledge in Workflows</h3>
-
-<p>
-Many systems depend on judgments made by analysts, operators, reviewers, or domain experts. Humans resolve ambiguity, recognize exceptional cases, and supply knowledge that is absent from formal sources.
-</p>
-
-<p>
-Yet human input is often represented as an unstructured note or final approval rather than as a computational contribution with identity, authority, and scope.
-</p>
-
-<p>
-These forms of knowledge are not competing alternatives. A Knowledge Native system may use all of them. The architectural challenge is to make their roles explicit enough that they can participate coherently in computation.
-</p>
-
-<h2>1.3 The Missing Abstraction</h2>
+<h2>1.4 The Missing Abstraction</h2>
 
 <p>
 Computer science repeatedly advances by introducing abstractions that make previously awkward operations natural.
@@ -220,47 +225,42 @@ Files made persistent information manageable. Processes made running computation
 </p>
 
 <p>
-Modern AI systems still lack an equally clear abstraction for a unit of knowledge that can enter a computation, affect it, and remain traceable after the result is produced.
+Modern AI systems have powerful models and increasingly capable orchestration frameworks, but still lack a clear general abstraction for making heterogeneous knowledge and computational expertise participate semantically in a running intelligent system.
 </p>
 
 <p>
-Consider a software rule:
-</p>
-
-<blockquote>
-Applications using version 4 of library <code>L</code> must use package <code>P</code> version 3.2 or later.
-</blockquote>
-
-<p>
-This is more than a sentence and more than a database value. It has:
-</p>
-
-<ul>
-  <li>a source;</li>
-  <li>a scope over particular versions;</li>
-  <li>conditions under which it becomes active;</li>
-  <li>an effect on dependency resolution;</li>
-  <li>and consequences for any deployment decision that depends upon it.</li>
-</ul>
-
-<p>
-A conventional application may distribute these properties across documentation, package manifests, validation code, and error messages.
-</p>
-
-<p>
-A Knowledge Native system seeks to represent them as part of one coherent computational object.
+The missing abstraction is not merely another data structure and not merely another agent.
 </p>
 
 <div class="callout">
-<strong>The missing abstraction is not merely another data structure.</strong><br>
-It is an interface between knowledge and evolving understanding.
+<strong>The abstraction is over knowledge computation.</strong><br>
+An application should be able to represent what is known, what expertise can establish, when that expertise applies, what it requires, what it produces, and what authority its result carries, without hard-wiring every underlying implementation into application logic.
 </div>
 
 <p>
-Such an abstraction should allow the system to identify knowledge, test its applicability, combine it with other knowledge, represent disagreement, propagate revisions, and preserve its contribution to a conclusion.
+A useful unit of computational expertise should be able to expose, directly or indirectly:
 </p>
 
-<h2>1.4 What “Knowledge Native” Means</h2>
+<ul>
+  <li>what knowledge or capability it embodies;</li>
+  <li>where it came from and under what scope it is valid;</li>
+  <li>when it is applicable;</li>
+  <li>what evidence, state, assumptions, or inputs it requires;</li>
+  <li>how its computation is invoked;</li>
+  <li>what kind of result it establishes;</li>
+  <li>how that result may be verified;</li>
+  <li>and what computational authority the result may exercise.</li>
+</ul>
+
+<p>
+The implementation behind this abstraction might be an LLM, a rule engine, a trained predictor, a planner, a numerical solver, a simulation, an optimizer, an API, a database query, ordinary Python code, or a human service.
+</p>
+
+<p>
+KnaiTai's concern is the common computational semantics above those implementations.
+</p>
+
+<h2>1.5 What “Knowledge Native” Means</h2>
 
 <p>
 The phrase <em>knowledge native</em> describes a property of system architecture.
@@ -274,180 +274,93 @@ It does not mean:
   <li>that every fact must be stored in a graph;</li>
   <li>that all reasoning must be symbolic;</li>
   <li>that machine learning should be replaced by rules;</li>
-  <li>or that every internal operation must be exposed to users.</li>
+  <li>that every model output requires independent verification;</li>
+  <li>or that every AI application needs specialized knowledge infrastructure.</li>
 </ul>
 
 <p>
-A system is knowledge native when explicit knowledge is designed into its computational model from the beginning.
+A system is knowledge native when knowledge is designed into the computational model from the beginning and can influence what computation happens at runtime.
 </p>
 
 <p>
-Knowledge is not added only as a final explanation, an external lookup, or an optional prompt attachment. It has a defined identity, lifecycle, and effect on system behavior.
+Knowledge may determine what evidence is required, activate a model, invoke a planner, select an algorithm, parameterize a simulation, constrain a search, challenge a hypothesis, verify a result, block an action, or authorize a transition.
 </p>
 
 <div class="definition">
-<strong>Definition 1.1 (Knowledge Native AI).</strong>
-<em>Knowledge Native AI</em> is the design and programming of intelligent systems in which explicit knowledge progressively shapes an evolving computational understanding, from which predictions, explanations, plans, recommendations, and actions emerge.
+<strong>Definition 1.2 (Knowledge Native AI).</strong>
+<em>Knowledge Native AI</em> is the design and programming of intelligent systems in which knowledge participates directly at runtime by shaping what computational expertise is activated, how its results alter the system's evolving understanding, and what authority those results have over recommendations, decisions, and actions.
 </div>
 
 <p>
-Five properties are especially important.
-</p>
-
-<h3>Knowledge Has Identity</h3>
-
-<p>
-The system can refer to a particular claim, observation, rule, model output, assumption, or human judgment as an individual object.
-</p>
-
-<p>
-Identity makes it possible to preserve provenance, represent disagreement, track revisions, and record dependencies.
-</p>
-
-<h3>Knowledge Has Provenance</h3>
-
-<p>
-The system records where the knowledge came from, how it entered the computation, and which source or derivation produced it.
-</p>
-
-<p>
-Provenance may affect trust, authority, reproducibility, and conflict resolution.
-</p>
-
-<h3>Knowledge Has Scope</h3>
-
-<p>
-The system represents when and where the knowledge applies.
-</p>
-
-<p>
-Scope may depend on:
-</p>
-
-<ul>
-  <li>time;</li>
-  <li>location;</li>
-  <li>software version;</li>
-  <li>user role;</li>
-  <li>organizational context;</li>
-  <li>task;</li>
-  <li>or operating conditions.</li>
-</ul>
-
-<h3>Knowledge Has Computational Behavior</h3>
-
-<p>
-More fundamentally, knowledge changes the system's current understanding. It may:
-</p>
-
-<ul>
-  <li>support a claim;</li>
-  <li>challenge a prediction;</li>
-  <li>constrain a possible action;</li>
-  <li>trigger another computation;</li>
-  <li>revise an existing conclusion;</li>
-  <li>or contribute to an explanation.</li>
-</ul>
-
-<p>
-Its role is not left entirely to an opaque downstream component.
-</p>
-
-<h3>Knowledge Remains Visible in the Result</h3>
-
-<p>
-The system preserves enough structure to show which knowledge contributed to the conclusion and in what role.
-</p>
-
-<p>
-This does not require displaying every internal step to every user. It means the system retains a computational trace that supports inspection, testing, debugging, revision, and explanation.
+A shorter formulation is:
 </p>
 
 <div class="callout">
-<strong>Knowledge Native AI is not defined by a particular technology stack.</strong><br>
-It is defined by whether knowledge is a first-class participant in the computational path from observation to conclusion.
+<strong>Knowledge Native AI puts knowledge to work at runtime.</strong><br>
+The objective is to bring the right computational expertise to bear, at the point where it matters, and with the appropriate authority.
 </div>
 
-<h2>1.5 From Model Output to Knowledge-Supported Conclusion</h2>
+<h2>1.6 The Knowledge Runtime</h2>
 
 <p>
-Consider a deployment system evaluating whether a new release may enter production.
+The runtime is the connecting layer between knowledge, computational expertise, evolving understanding, and action.
 </p>
 
 <p>
-A predictive model estimates a low probability of failure. That estimate is useful, but it is not the entire decision.
+At any point, the system has a current state: observations, hypotheses, predictions, assumptions, plans, constraints, unresolved questions, and previous results. The runtime must determine what this state makes relevant next.
+</p>
+
+<pre><code>CURRENT UNDERSTANDING
+        ↓
+What needs to be established?
+        ↓
+What knowledge and expertise are applicable?
+        ↓
+What inputs or evidence are required?
+        ↓
+ACTIVATE ELIGIBLE EXPERTISE
+        ↓
+[LLM / predictor / planner / solver /
+ simulator / rule engine / verifier / human]
+        ↓
+STRUCTURED RESULT
+        ↓
+What did this result establish?
+        ↓
+ASSIMILATE INTO UNDERSTANDING
+        ↓
+What expertise is relevant now?
+        ↓
+Has sufficient authority been earned
+to recommend, decide, or act?
+</code></pre>
+
+<p>
+The runtime need not own every scheduling, messaging, retry, agent, or workflow mechanism used to execute these computations. Existing orchestration systems can perform that plumbing.
 </p>
 
 <p>
-Other knowledge may include:
+The Knowledge Runtime instead owns the semantic questions:
 </p>
 
 <ul>
-  <li>the release depends on a particular library version;</li>
-  <li>that version is associated with a newly disclosed vulnerability;</li>
-  <li>the vulnerability affects only one operating environment;</li>
-  <li>the target environment matches the affected configuration;</li>
-  <li>organizational policy prohibits deployment with unresolved critical vulnerabilities;</li>
-  <li>and an approved patched version is already available.</li>
+  <li>Why is this expertise applicable?</li>
+  <li>What does it require?</li>
+  <li>What did its result establish?</li>
+  <li>How does the result change the current understanding?</li>
+  <li>What knowledge or expertise becomes applicable next?</li>
+  <li>What authority does the result have?</li>
 </ul>
-
-<p>
-Each item plays a different role.
-</p>
-
-<ul>
-  <li>The reliability model supports deployment.</li>
-  <li>The vulnerability report challenges it.</li>
-  <li>The environment match activates the vulnerability claim.</li>
-  <li>The security policy constrains the permissible action.</li>
-  <li>The patched version enables a revised deployment plan.</li>
-</ul>
-
-<p>
-The resulting conclusion might be:
-</p>
 
 <div class="callout">
-<strong>Deployment assessment:</strong>
-Do not deploy the current build. Although predicted operational risk is low, the build contains a library version affected by a critical vulnerability in the target environment. Rebuild using the approved patched version and repeat validation.
+<strong>KnaiTai is not primarily an orchestration framework.</strong><br>
+Existing workflow and agent infrastructure may execute the computation. KnaiTai provides the knowledge semantics that determine why particular expertise matters and what its result means to the running AI system.
 </div>
 
-<p>
-This is not simply a longer answer. It is a different kind of computational result.
-</p>
+<h2>1.7 Presence Is Not Participation</h2>
 
 <p>
-More importantly, the system leaves the computation with a better understanding of the deployment situation. That understanding can support later recommendations, explanations, audits, and future deployment decisions.
-</p>
-
-<p>
-The conclusion preserves:
-</p>
-
-<ul>
-  <li>the original model output;</li>
-  <li>the knowledge that challenged it;</li>
-  <li>the condition that made the challenge applicable;</li>
-  <li>the constraint that blocked the action;</li>
-  <li>and the revision that produced a valid alternative.</li>
-</ul>
-
-<p>
-The same pattern appears across domains.
-</p>
-
-<p>
-A scheduling recommendation may be revised by a resource constraint. A financial forecast may be qualified by a policy change. A scientific inference may be weakened by a conflicting dataset. A route prediction may be altered by an environmental restriction.
-</p>
-
-<p>
-The domain changes, but the computational structure remains similar.
-</p>
-
-<h2>1.6 Presence Is Not Participation</h2>
-
-<p>
-Modern AI systems often assemble large contexts containing retrieved text, tool outputs, database records, model predictions, and instructions.
+Modern AI systems often assemble large contexts containing retrieved text, tool outputs, database records, model predictions, policies, instructions, and intermediate results.
 </p>
 
 <p>
@@ -459,66 +372,129 @@ Suppose a model receives:
 </p>
 
 <ul>
-  <li>a forecast;</li>
-  <li>a policy document;</li>
-  <li>a resource constraint;</li>
-  <li>and a human recommendation.</li>
+  <li>a demand forecast;</li>
+  <li>a warehouse capacity limit;</li>
+  <li>a supplier delay notice;</li>
+  <li>and an analyst recommendation.</li>
 </ul>
 
 <p>
-The model may produce a plausible synthesis. Yet the surrounding system may not know whether:
+The model may produce an excellent synthesis. Yet the surrounding system may not know whether the capacity limit eliminated an option, whether the delay notice changed the forecast, whether an optimization should now run, or whether the analyst recommendation was merely noted.
 </p>
-
-<ul>
-  <li>the policy constrained the answer;</li>
-  <li>the forecast supported it;</li>
-  <li>the resource limit was ignored;</li>
-  <li>or the human recommendation overrode the other inputs.</li>
-</ul>
 
 <div class="callout">
 <strong>Presence is not participation.</strong><br>
-Information appearing in a prompt or context is not evidence that it played a known and controlled computational role.
+Information appearing in a prompt or context is not evidence that it played a known computational role.
 </div>
 
 <p>
-Knowledge Native computation requires those roles to be represented outside the final prose answer.
+Knowledge Native computation requires the relevant roles and effects to exist outside the final prose response.
 </p>
 
 <p>
-A system might retain a structured account such as:
+For example:
 </p>
 
-<pre><code>proposal:
-    deploy_release_4_2
+<pre><code>forecast:
+    demand_forecast_18
 
-supported_by:
-    reliability_prediction_17
+constraint:
+    warehouse_capacity_04
 
-challenged_by:
-    vulnerability_report_08
+active_expertise:
+    inventory_optimizer_07
 
-activated_by:
-    environment_match_03
+optimizer_result:
+    phased_order_plan_03
 
-constrained_by:
-    security_policy_04
+verified_by:
+    capacity_checker_02
 
-revised_to:
-    deploy_patched_release_4_2_1</code></pre>
+authority:
+    recommendation_allowed
+</code></pre>
 
 <p>
-The language model may still perform interpretation or synthesis. But the computational relationships among the knowledge objects remain inspectable and testable.
+The language model may still perform interpretation, synthesis, or communication. But the computational relationships among the knowledge, expertise, results, and authority remain explicit and testable.
 </p>
 
-<h2>1.7 What Changes for Programmers</h2>
+<h2>1.8 Governance, Assurance, and Computational Authority</h2>
+
+<p>
+Knowledge Native AI introduces a particular kind of governance. It is not primarily organizational governance, legal compliance, or policy administration. It concerns the transition from a proposed result to a recommendation, decision, or action that the system is permitted to rely upon or execute.
+</p>
+
+<p>
+Different computational expertise may therefore carry different authority.
+</p>
+
+<ul>
+  <li>An LLM-generated hypothesis may be <strong>advisory</strong>.</li>
+  <li>A statistical predictor may provide <strong>supporting evidence</strong>.</li>
+  <li>A formal verifier may <strong>verify</strong> a property.</li>
+  <li>A safety constraint may <strong>block</strong> an action.</li>
+  <li>An approved procedure may be required before an action is <strong>authorized</strong>.</li>
+</ul>
+
+<p>
+The amount of assurance required should depend on the consequence of the decision and the role of the system.
+</p>
+
+<p>
+A restaurant recommendation may require almost none. A caregiver assistant may require selected clinical checks before recommending a disposition. A clinician-facing system may require stronger evidence and verification. A fully autonomous system may require independent planning, constraint checking, and state verification before executing an action.
+</p>
+
+<div class="callout">
+<strong>Trust is earned.</strong><br>
+In an AI system, some of that trust can be earned computationally by bringing the required expertise to bear before granting authority to recommend, decide, or act.
+</div>
+
+<p>
+This does not mean that every decision requires maximal verification. The governance itself can be knowledge driven: for one situation, broad neural reasoning may be sufficient; for another, specialized verification may be mandatory.
+</p>
+
+<h2>1.9 From Knowledge to Computational Expertise</h2>
+
+<p>
+The relationship between knowledge and expertise can be summarized simply:
+</p>
+
+<div class="callout">
+<strong>Knowledge is what is known.</strong><br>
+<strong>Computational expertise is the capability to put appropriate knowledge to work for a particular computational purpose.</strong>
+</div>
+
+<p>
+Examples include:
+</p>
+
+<ul>
+  <li><strong>Clinical pathway expertise:</strong> patient state + clinical guidance + pathway logic;</li>
+  <li><strong>Trajectory expertise:</strong> motion history + context + predictive model;</li>
+  <li><strong>Planning expertise:</strong> actions + preconditions + effects + search;</li>
+  <li><strong>Logical expertise:</strong> facts + rules + deductive engine;</li>
+  <li><strong>Constraint expertise:</strong> allowable states + constraint checker or solver;</li>
+  <li><strong>Simulation expertise:</strong> physical knowledge + numerical model;</li>
+  <li><strong>Verification expertise:</strong> specification + verifier;</li>
+  <li><strong>Neural expertise:</strong> learned knowledge + context + neural inference.</li>
+</ul>
+
+<p>
+These are not competing paradigms. They are different computational experts that may participate in one intelligent system.
+</p>
+
+<p>
+The runtime challenge is to determine when each expert should become active, what evidence it requires, how its result should be assimilated, and whether that result should merely inform the system or carry stronger computational authority.
+</p>
+
+<h2>1.10 What Changes for Programmers</h2>
 
 <p>
 A Knowledge Native approach changes software design before it changes model choice.
 </p>
 
 <p>
-The programmer must decide how knowledge enters the system, how it is represented, how it becomes active, and what operations may be performed over it.
+The programmer must decide not only how models and tools are connected, but what knowledge and expertise exist in the system and what their computational semantics are.
 </p>
 
 <p>
@@ -526,142 +502,132 @@ This introduces a different family of design questions:
 </p>
 
 <ul>
-  <li>What counts as one unit of knowledge?</li>
-  <li>How is its identity preserved?</li>
-  <li>Where did it come from?</li>
-  <li>Under which conditions does it apply?</li>
-  <li>Is it observed, inferred, predicted, assumed, or disputed?</li>
-  <li>What computational operations may it perform?</li>
-  <li>What depends upon it?</li>
-  <li>What happens if it is revised or invalidated?</li>
-  <li>How is its contribution preserved in the final result?</li>
+  <li>What knowledge is relevant to this application?</li>
+  <li>Which knowledge should remain explicit, and which may remain embodied in models or algorithms?</li>
+  <li>What computational expertise exists?</li>
+  <li>What can each expert establish?</li>
+  <li>Under which conditions is it applicable?</li>
+  <li>What evidence, state, or assumptions does it require?</li>
+  <li>What happens when those requirements are missing?</li>
+  <li>How should its result change the current understanding?</li>
+  <li>What authority should that result carry?</li>
+  <li>What other expertise becomes relevant after the state changes?</li>
+  <li>What must be preserved in the computational trace?</li>
 </ul>
 
 <p>
-These questions lead naturally to new software abstractions.
-</p>
-
-<p>
-Later chapters will introduce:
+These questions lead naturally to software abstractions for:
 </p>
 
 <ul>
-  <li>knowledge objects;</li>
-  <li>knowledge-bearing values;</li>
-  <li>knowledge operations;</li>
-  <li>activation and applicability;</li>
-  <li>knowledge state;</li>
+  <li>knowledge objects and capsules;</li>
+  <li>computational expertise;</li>
+  <li>knowledge and understanding state;</li>
+  <li>applicability and activation;</li>
+  <li>requirements and missing evidence;</li>
+  <li>support, challenge, constraint, prediction, planning, and verification;</li>
   <li>dependencies and revision;</li>
-  <li>and knowledge traces.</li>
+  <li>computational authority;</li>
+  <li>and execution traces.</li>
 </ul>
 
 <p>
-The precise vocabulary may evolve, but the programming objective is stable: make the use of knowledge explicit enough to compose, inspect, test, and improve.
+The precise vocabulary may evolve, but the programming objective is stable: provide an abstraction layer over heterogeneous knowledge computation rather than forcing every application to hand-wire the semantics of models, rules, solvers, planners, and verifiers.
 </p>
 
-<h2>1.8 The Role of Models</h2>
+<h2>1.11 The Role of Models and Existing Orchestration</h2>
 
 <p>
-Knowledge Native AI is not anti-model.
-</p>
-
-<p>
-Learned models may remain central. A model may:
-</p>
-
-<ul>
-  <li>interpret unstructured input;</li>
-  <li>classify an observation;</li>
-  <li>estimate an unknown quantity;</li>
-  <li>propose a hypothesis;</li>
-  <li>identify relevant knowledge;</li>
-  <li>or generate an explanation from a structured trace.</li>
-</ul>
-
-<p>
-The difference is architectural.
+Knowledge Native AI is emphatically not anti-model.
 </p>
 
 <p>
-The model is no longer required to contain, retrieve, interpret, validate, reconcile, and explain all knowledge within one opaque step.
+Foundation models may remain the dominant computational expert in many applications. They can interpret unstructured input, maintain conversational context, synthesize evidence, propose hypotheses, use tools, generate candidate plans, and communicate naturally with users.
 </p>
 
 <p>
-Instead, it operates as one component within an explicit knowledge process.
+The architecture should use that capability aggressively wherever it is sufficient.
+</p>
+
+<p>
+At the same time, certain computations may be better performed by specialized components. Exact deduction may belong to a logical reasoner. Long-horizon trajectory prediction may belong to a trained predictor. Feasible multi-step action may require a planner. Physical consequences may require simulation. Safety properties may require independent verification.
 </p>
 
 <div class="callout">
-<strong>The resulting architecture is not model versus knowledge.</strong><br>
-It is model plus knowledge, with explicit semantics for the plus.
+<strong>The architecture is not model versus knowledge.</strong><br>
+It is general intelligence plus specialized computational expertise, with knowledge determining how and when each should participate.
 </div>
 
 <p>
-This makes it possible to assign different computational roles to different components.
+Nor is KnaiTai intended to replace agent frameworks, workflow systems, tool protocols, schedulers, or model routers.
 </p>
 
 <p>
-A model may propose. A database may remember. A graph may relate. A rule may constrain. A numerical method may estimate. A human may resolve ambiguity. The system as a whole maintains the knowledge state in which these contributions interact.
+Those systems may execute calls, manage retries, coordinate agents, route requests, or move data among components. KnaiTai should complement them by representing the semantic reason a computation is required and the computational consequence of its result.
 </p>
 
-<h2>1.9 Why This Matters</h2>
-
 <p>
-Making knowledge a first-class computational object has several consequences.
+An agent is therefore one possible carrier of expertise, not the abstraction itself. A computational expert may just as easily be a planner, SQL query, Python function, transformer, theorem prover, optimization service, simulator, or human.
 </p>
 
-<h3>Composability</h3>
+<h2>1.12 Why This Matters</h2>
 
+<h3>Specialization Without Fragmentation</h3>
 <p>
-Knowledge from different sources can participate through common operations rather than through application-specific glue alone.
+Different forms of computational expertise can participate through common runtime semantics without forcing them into one representation or one reasoning mechanism.
 </p>
 
-<h3>Inspectability</h3>
-
+<h3>Selective Use of Expensive Expertise</h3>
 <p>
-The system can reveal which knowledge shaped a conclusion and what role each contribution played.
+Specialized computation may be expensive, narrow, assumption-dependent, or authoritative only in a limited scope. Activation allows the system to bring it to bear only when it matters.
+</p>
+
+<h3>Trustworthy Decisions and Actions</h3>
+<p>
+Critical knowledge can do more than inform a model. It can require evidence, invoke verification, constrain a decision, or block an action until sufficient computational assurance has been established.
+</p>
+
+<h3>Model Independence</h3>
+<p>
+Important system semantics need not disappear when a foundation model is replaced or upgraded. The neural expert may change while the governing knowledge, specialized computations, and authority boundaries remain stable.
 </p>
 
 <h3>Revisability</h3>
-
 <p>
-When knowledge changes, the system can identify affected conclusions and update them rather than silently retaining stale results.
+When evidence or knowledge changes, the runtime can identify affected results, revise the evolving understanding, and reconsider what expertise now applies.
 </p>
 
-<h3>Testability</h3>
-
+<h3>Inspectability and Testability</h3>
 <p>
-Knowledge behavior can be tested independently of model fluency. A constraint can be checked for activation. A rule can be tested for scope. A conclusion can be examined for unsupported dependencies.
-</p>
-
-<h3>Architectural Clarity</h3>
-
-<p>
-Models, databases, rules, graphs, tools, and humans can be assigned explicit knowledge roles instead of being connected through an informal sequence of prompts and calls.
+The system can record not merely what answer was produced, but which expertise ran, what it established, which knowledge made it applicable, and what authority the result carried.
 </p>
 
 <p>
-These properties become particularly important when systems are long-lived, distributed, consequential, or expected to adapt as their information changes.
+These properties become especially important when systems are long-lived, consequential, heterogeneous, or increasingly autonomous.
 </p>
 
-<h2>1.10 A Research and Programming Agenda</h2>
+<h2>1.13 A Research and Programming Agenda</h2>
 
 <p>
-Treating knowledge as a computational primitive raises questions that are both theoretical and practical.
+Treating knowledge and computational expertise as first-class runtime abstractions raises questions that are both theoretical and practical.
 </p>
 
 <ul>
-  <li>What is the appropriate granularity of a knowledge object?</li>
-  <li>Which properties belong in every knowledge representation?</li>
-  <li>What are the fundamental operations over knowledge?</li>
+  <li>What is the right abstraction for a unit of computational expertise?</li>
+  <li>Which kinds of knowledge should be represented explicitly and which may remain embodied in models?</li>
   <li>How should applicability be computed?</li>
-  <li>How should uncertain or conflicting objects interact?</li>
-  <li>How should changes propagate through knowledge dependencies?</li>
-  <li>What information must a knowledge trace preserve?</li>
-  <li>How can knowledge-level programming remain independent of physical representation?</li>
+  <li>How should an expert declare what it requires and what it can establish?</li>
+  <li>How should heterogeneous expert results be assimilated into a common evolving understanding?</li>
+  <li>How should the runtime distinguish advisory evidence from constraining or authorizing results?</li>
+  <li>How should uncertainty and disagreement propagate?</li>
+  <li>How should changes invalidate dependent conclusions?</li>
+  <li>How should existing workflow and agent systems execute expertise without owning its knowledge semantics?</li>
+  <li>What information must a computational trace preserve?</li>
+  <li>How can these abstractions remain independent of the physical representation of knowledge and implementation of expertise?</li>
 </ul>
 
 <p>
-These questions suggest that Knowledge Native AI is not merely another application pattern. It is a possible programming and systems discipline centered on the representation and manipulation of knowledge.
+These questions suggest that Knowledge Native AI is not merely another application pattern or another agent framework. It is a possible programming and systems discipline centered on making knowledge computational across heterogeneous forms of intelligence.
 </p>
 
 <p>
@@ -669,31 +635,31 @@ The chapters that follow begin developing this discipline.
 </p>
 
 <p>
-Chapter 2 introduces the <em>knowledge object</em> and a preliminary family of operations over it. Chapter 3 examines how problem formulation changes when programmers begin to think in terms of knowledge state, dependencies, revision, and architecture.
+Chapter 2 introduces knowledge as a computational primitive and develops the knowledge object and operations that allow knowledge to participate explicitly in computation. Later chapters develop applicability, activation, computational expertise, evolving understanding, revision, verification, authority, and the runtime machinery through which these abstractions interact.
 </p>
 
 <h2>Knowledge Native Thinking</h2>
 
 <p>
-When examining an intelligent system, begin with its output—but do not stop there.
+When examining an intelligent system, begin with the task, but do not ask only which model should perform it.
 </p>
 
-<p>
-Ask:
-</p>
+<p>Ask:</p>
 
 <ul>
-  <li>What knowledge made this output possible?</li>
-  <li>What knowledge could overturn it?</li>
-  <li>Which constraints limit its interpretation?</li>
-  <li>Which assumptions remain implicit?</li>
-  <li>Can the system identify what it used?</li>
-  <li>Can the system revise the conclusion when its knowledge changes?</li>
+  <li>What is already known about the domain and the current situation?</li>
+  <li>What must be established next?</li>
+  <li>Which computational expertise is appropriate for establishing it?</li>
+  <li>What evidence or assumptions does that expertise require?</li>
+  <li>What should happen if those requirements are missing?</li>
+  <li>How should its result change the system's understanding?</li>
+  <li>Should the result merely inform, or should it verify, constrain, block, or authorize?</li>
+  <li>What expertise becomes relevant after the situation changes?</li>
 </ul>
 
 <div class="callout">
-<strong>Move from:</strong> What did the model predict?<br>
-<strong>To:</strong> How did knowledge improve the system's understanding?
+<strong>Move from:</strong> Which model should answer this?<br>
+<strong>To:</strong> What knowledge and computational expertise should participate now, and what authority should their results have?
 </div>
 
 <p>
@@ -703,109 +669,75 @@ That shift is the starting point for programming Knowledge Native AI.
 <h2>Chapter Summary</h2>
 
 <ul>
-  <li>Modern AI systems already use many forms of knowledge, but their computational roles are often implicit or fragmented.</li>
-  <li>A model output becomes a conclusion supported by explicit understanding when supporting, conflicting, constraining, and contextual knowledge participates directly in improving that understanding.</li>
-  <li>Knowledge may reside in models, documents, graphs, databases, rules, code, workflows, and human judgment.</li>
-  <li>Knowledge Native AI is an architectural and programming viewpoint rather than a commitment to one representation or technology.</li>
-  <li>A Knowledge Native system gives knowledge identity, provenance, scope, behavior, and visibility in the result.</li>
-  <li>Placing information in a prompt or context does not establish its computational role.</li>
-  <li>Models remain important, but they operate as components within a broader knowledge process.</li>
-  <li>The central proposition is that knowledge should become a first-class computational object that progressively improves understanding.</li>
+  <li>Modern foundation models provide extraordinary general-purpose computational expertise and should be used aggressively where that expertise is sufficient.</li>
+  <li>No single form of intelligence is the right computation for every problem.</li>
+  <li>Knowledge includes declarative, situational, historical, structural, procedural, formal, learned, and human knowledge.</li>
+  <li>Computational expertise is the capability to use relevant knowledge to perform a bounded computation.</li>
+  <li>Examples of computational expertise include LLM reasoning, prediction, planning, deduction, optimization, simulation, constraint solving, verification, and human judgment.</li>
+  <li>Knowledge Native AI makes knowledge computational by allowing it to shape which expertise is activated, how results alter understanding, and what authority those results carry.</li>
+  <li>The Knowledge Runtime mediates between evolving state, applicable knowledge, computational expertise, result assimilation, and decision or action authority.</li>
+  <li>KnaiTai need not replace workflow, tool, or multi-agent orchestration; it complements those systems with knowledge semantics.</li>
+  <li>Presence of information in a prompt is not the same as controlled computational participation.</li>
+  <li>Critical knowledge may inform, support, challenge, verify, constrain, block, or authorize.</li>
+  <li>Trustworthy recommendations, decisions, and actions can require different amounts and kinds of computational assurance.</li>
+  <li>The central programming objective is an abstraction layer over heterogeneous knowledge computation.</li>
 </ul>
 
 <h2>Discussion Questions</h2>
 
 <ol>
   <li>Where does consequential knowledge currently reside in a software or AI system you know well?</li>
-  <li>Which parts of that knowledge are explicit, and which remain embedded in prompts, code, configuration, or human practice?</li>
-  <li>Can the system distinguish knowledge that supports a conclusion from knowledge that merely provides context?</li>
-  <li>What would need to change for the system to preserve the provenance of knowledge used in a decision?</li>
-  <li>When is a model output sufficient, and when is a knowledge-supported conclusion required?</li>
-  <li>Does every intelligent application benefit from a Knowledge Native architecture, or only applications with particular properties?</li>
-  <li>Which computational roles should remain with learned models, and which should be represented outside them?</li>
+  <li>Which of that knowledge is explicit, and which is embodied in models, code, procedures, or human expertise?</li>
+  <li>What computational expertise exists in the system besides the primary foundation model?</li>
+  <li>Which tasks should remain with a general neural model, and which are better delegated to specialized computation?</li>
+  <li>When should a model result be merely advisory, and when should an independent verifier or constraint have stronger authority?</li>
+  <li>Can an application know that a required computation occurred, rather than merely hope the model reasoned about the relevant information?</li>
+  <li>How would you distinguish a Knowledge Runtime from an agent or workflow orchestrator?</li>
+  <li>Does every intelligent application benefit from Knowledge Native architecture, or only applications with particular requirements for specialization, assurance, or autonomy?</li>
 </ol>
 
 <h2>Exercises</h2>
 
 <h3>Exercise 1.1: Locate the Knowledge</h3>
-
 <p>
 Choose a familiar software or AI application. Identify at least six pieces of consequential knowledge and classify each according to where it currently resides:
 </p>
-
 <ul>
   <li>model parameters;</li>
   <li>documents;</li>
   <li>database or graph;</li>
   <li>rules or source code;</li>
   <li>configuration;</li>
+  <li>specialized model or algorithm;</li>
   <li>or human procedure.</li>
 </ul>
 
-<h3>Exercise 1.2: From Output to Conclusion</h3>
-
+<h3>Exercise 1.2: Identify the Expertise</h3>
 <p>
-Take a model output from any domain and identify:
+For the same application, identify at least four computational experts. For each expert, state what knowledge it uses, what it can establish, when it is applicable, what inputs or assumptions it requires, and what authority its result currently has.
 </p>
 
-<ul>
-  <li>one item of knowledge that supports it;</li>
-  <li>one that challenges it;</li>
-  <li>one that constrains its use;</li>
-  <li>and one condition that would require revision.</li>
-</ul>
-
+<h3>Exercise 1.3: Generalist or Specialist?</h3>
 <p>
-Rewrite the original output as a knowledge-supported conclusion.
+Choose three computational tasks in an AI application. For each one, decide whether a frontier language model is sufficient or whether a specialized predictor, planner, solver, simulator, verifier, or other expert would be preferable. Explain why.
 </p>
 
-<h3>Exercise 1.3: Presence Versus Participation</h3>
-
+<h3>Exercise 1.4: Presence Versus Participation</h3>
 <p>
-Design a prompt containing five relevant sources of information. Then describe why merely including those sources does not reveal what computational role each one played.
+Design a prompt containing five relevant sources of information. Then describe why merely including those sources does not establish what computational role each played.
+</p>
+<p>
+Propose one case in which a piece of knowledge should explicitly trigger, constrain, or verify another computation.
 </p>
 
+<h3>Exercise 1.5: Define an Authority Boundary</h3>
 <p>
-Propose a structured representation that records the role of each source.
+Choose one consequential recommendation or action. Specify what expertise may propose it, what evidence must exist, what additional expertise must verify or constrain it, and when computational authority should be granted or withheld.
 </p>
 
-<h3>Exercise 1.4: Identify the Missing Abstraction</h3>
-
+<h3>Exercise 1.6: Separate Runtime Semantics from Orchestration</h3>
 <p>
-Select one rule, policy, dependency, or domain assumption currently distributed across code and documentation. Describe what would be required to represent it as one coherent computational object.
-</p>
-
-<h3>Exercise 1.5: Assign Knowledge Roles</h3>
-
-<p>
-For a system containing a language model, relational database, rule engine, numerical model, and human reviewer, assign each component one or more knowledge roles such as:
-</p>
-
-<ul>
-  <li>producer;</li>
-  <li>store;</li>
-  <li>transformer;</li>
-  <li>validator;</li>
-  <li>constraint enforcer;</li>
-  <li>or reviser.</li>
-</ul>
-
-<h3>Exercise 1.6: Evaluate Knowledge Nativeness</h3>
-
-<p>
-Choose an existing AI architecture and evaluate it against the five properties in Section 1.4:
-</p>
-
-<ul>
-  <li>identity;</li>
-  <li>provenance;</li>
-  <li>scope;</li>
-  <li>computational behavior;</li>
-  <li>and visibility in the result.</li>
-</ul>
-
-<p>
-For each property, classify the architecture as explicit, partial, or absent.
+Sketch an AI workflow involving an LLM, one specialized model, one verifier, and one external tool. Separate the knowledge-runtime semantics that determine why each expert is required from the orchestration mechanics that schedule, call, retry, or route those components.
 </p>
 
 <nav class="chapter-nav">
@@ -814,7 +746,6 @@ For each property, classify the architecture as explicit, partial, or absent.
 </nav>
 
 </article>
-
 </main>
 
 <footer>
