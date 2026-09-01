@@ -22,22 +22,24 @@
   border-collapse: collapse;
   margin: 1.5rem 0;
 }
+
 .comparison-table th,
 .comparison-table td {
   border: 1px solid #d9d9d9;
   padding: 0.75rem;
   vertical-align: top;
 }
+
 .comparison-table th {
   text-align: left;
 }
+
 .example-block {
   margin: 1.4rem 0;
   padding: 1rem 1.1rem;
   border-left: 4px solid #777;
   background: #f7f7f7;
 }
-
 </style>
 </head>
 
@@ -64,958 +66,2020 @@
 <h1 class="page-title">Programming with Knowledge Capsules</h1>
 
 <p class="lead">
-During execution, a Knowledge Native system receives observations, retrieves applicable knowledge, generates hypotheses, identifies gaps, validates evidence, revises earlier conclusions, and explains its reasoning. The programmable units that participate in this evolving process are <em>knowledge capsules</em>.
+Knowledge Native programs need a practical way to package knowledge together with the semantics that determine when and how it should participate in computation. A <em>Knowledge Capsule</em> provides that boundary. It declares relevant knowledge, scope, applicability, requirements, computational expertise, expected results, authority, and provenance, while leaving the underlying expert implementation free to be an LLM, rule engine, predictor, planner, solver, simulator, verifier, ordinary program, external service, or human.
 </p>
 
-<h2>5.1 From Knowledge Objects to Active Computational Units</h2>
+
+<h2>5.1 From Knowledge Objects to Programmable Knowledge</h2>
 
 <p>
-Chapter 2 introduced the knowledge object as a semantic unit. Chapter 4 showed how information from observations, documents, databases, foundation models, simulations, and people becomes computational knowledge. A running program now requires a concrete unit through which that knowledge can be instantiated, activated, combined, revised, and traced.
+Chapter 2 introduced knowledge objects as semantic units. Chapter 3 distinguished knowledge from computational expertise. Chapter 4 introduced the Knowledge Runtime and the A4 cycle:
 </p>
+
+<pre><code>ACTIVATE
+    ↓
+APPLY
+    ↓
+ABSORB
+    ↓
+AUTHORIZE</code></pre>
+
+<p>
+A running system now needs a practical abstraction that connects these ideas.
+</p>
+
+<p>
+A knowledge object by itself answers:
+</p>
+
+<blockquote>
+What is known?
+</blockquote>
+
+<p>
+A computational expert answers:
+</p>
+
+<blockquote>
+What specialized computation can be performed with relevant knowledge?
+</blockquote>
+
+<p>
+A Knowledge Capsule connects the two:
+</p>
+
+<blockquote>
+Under what conditions should this knowledge and expertise participate, what does the expertise require, what does its result mean, and what authority may follow?
+</blockquote>
 
 <div class="definition">
 <strong>Definition 5.1 (Knowledge Capsule).</strong>
-A <em>knowledge capsule</em> is a programmable computational unit that realizes one or more knowledge objects together with the operational state, interfaces, dependencies, lifecycle, activation logic, and permissions through which that knowledge can participate in constructing and revising an understanding.
+A <em>Knowledge Capsule</em> is a portable declarative unit that packages knowledge together with the scope, applicability, requirements, computational-expertise binding, result semantics, authority conditions, and provenance needed for that knowledge to participate in the Knowledge Runtime.
 </div>
 
-<pre><code>knowledge object
-    semantic identity and meaning
-
-knowledge capsule
-    runtime realization and participation
-
-understanding state
-    organized result of interacting capsules</code></pre>
-
-<p>
-A knowledge object answers, <em>What knowledge is represented?</em> A knowledge capsule answers, <em>How can this knowledge enter, influence, revise, and explain a computation?</em>
-</p>
+<pre><code>Knowledge
+    +
+Applicability
+    +
+Requirements
+    +
+Computational Expertise
+    +
+Result Semantics
+    +
+Authority
+    =
+Knowledge Capsule</code></pre>
 
 <div class="callout">
-<strong>Programming Principle.</strong>
-A capsule is not merely a record containing knowledge. It is a computational participant whose provenance, scope, status, and capabilities govern how it may shape understanding.
+<strong>A capsule is not the expert itself.</strong><br>
+It is the programmable boundary through which knowledge and expertise become available to the runtime.
 </div>
 
-<h2>5.2 Why an Ordinary Object Is Not Enough</h2>
+
+<h2>5.2 Why the Capsule Exists</h2>
 
 <p>
-A capsule may be implemented using a class, record, actor, graph node, message, or database entity. The abstraction is not reducible to any one of these mechanisms.
+Consider three very different computational capabilities.
 </p>
 
-<pre><code>class Claim:
-    def __init__(self, subject, relation, object):
-        self.subject = subject
-        self.relation = relation
-        self.object = object</code></pre>
+<div class="example-block">
 
-<p>
-This object stores a proposition, but it does not tell the program where the proposition came from, whether it is observed or predicted, when it applies, what it depends upon, which operations it may perform, or how it should affect the current understanding.
-</p>
+<p><strong>Clinical knowledge.</strong></p>
 
-<p>
-Fields alone are insufficient. The program must enforce their meaning. An expired capsule should not impose an authoritative constraint. A provisional capsule may support a hypothesis without settling it. A derived capsule must preserve dependencies. A superseded capsule must remain traceable without remaining influential.
-</p>
+<pre><code>Knowledge:
+    rib retractions are an
+    escalation-relevant sign
 
-<div class="callout">
-<strong>A capsule is not an object plus metadata.</strong>
-Its knowledge-level properties determine what the system is permitted to do with it.
+Expertise:
+    clinical pathway evaluator</code></pre>
+
+<p><strong>Trajectory prediction.</strong></p>
+
+<pre><code>Knowledge:
+    trajectory history
+    vessel context
+    learned motion patterns
+
+Expertise:
+    trajectory predictor</code></pre>
+
+<p><strong>Formal verification.</strong></p>
+
+<pre><code>Knowledge:
+    system specification
+    invariants
+    candidate plan
+
+Expertise:
+    formal verifier</code></pre>
+
 </div>
 
-<h2>5.3 The Capsule Boundary</h2>
+<p>
+The internal computations are entirely different.
+</p>
+
+<p>
+Yet the Knowledge Runtime needs to ask common questions:
+</p>
+
+<ul>
+  <li>When does this capability apply?</li>
+  <li>What knowledge does it require?</li>
+  <li>Are those requirements currently satisfied?</li>
+  <li>How is the computation invoked?</li>
+  <li>What kind of result will it produce?</li>
+  <li>How should that result alter understanding?</li>
+  <li>What authority may that result carry?</li>
+</ul>
+
+<p>
+The capsule provides a common declaration of these semantics without forcing every expert to share one internal implementation.
+</p>
+
+
+<h2>5.3 The Capsule Is an Abstraction Boundary</h2>
 
 <pre><code>                  Knowledge Capsule
-        ┌─────────────────────────────────┐
-        │ semantic payload                │
-        │ provenance                      │
-        │ scope                           │
-        │ epistemic state                 │
-        │ lifecycle state                 │
-        │ activation conditions           │
-        │ dependencies                    │
-        │ understanding contribution      │
-        │ capabilities                    │
-        │ trace events                    │
-        └─────────────────────────────────┘
-                 ↑               ↓
-             inspection       operations</code></pre>
+        ┌──────────────────────────────────┐
+        │ identity                         │
+        │ knowledge                        │
+        │ scope                            │
+        │ applicability                    │
+        │ requirements                     │
+        │ expertise binding                │
+        │ result semantics                 │
+        │ authority                        │
+        │ provenance                       │
+        └──────────────────────────────────┘
+                       │
+                       ↓
+                Knowledge Runtime
+                       │
+                 ACTIVATE / APPLY
+                       │
+                       ↓
+               Computational Expert
+                       │
+           ┌───────────┼───────────┐
+           ↓           ↓           ↓
+          LLM       Predictor    Planner
+           ↓           ↓           ↓
+        Solver      Simulator    Verifier
+                       │
+                       ↓
+                    Result
+                       │
+                       ↓
+                    ABSORB
+                       │
+                       ↓
+                  AUTHORIZE</code></pre>
 
 <p>
-A guideline capsule may contain a structured clinical rule. A prediction capsule may contain a probability distribution. A mapping capsule may contain an ontology link. A procedure capsule may reference a tool. A question capsule may encode a missing piece of information and the reason it matters.
+The capsule hides unnecessary implementation detail while exposing what the runtime needs to know.
 </p>
 
 <p>
-Despite these differences, the runtime can interact with them through common interfaces:
-</p>
-
-<pre><code>capsule.identity()
-capsule.kind()
-capsule.scope()
-capsule.status()
-capsule.provenance()
-capsule.dependencies()
-capsule.applies_to(context)
-capsule.capabilities()
-capsule.contribution()
-capsule.trace()</code></pre>
-
-<h2>5.4 Understanding Contribution</h2>
-
-<div class="definition">
-<strong>Definition 5.2 (Understanding Contribution).</strong>
-An <em>understanding contribution</em> describes the role through which a capsule may alter the current understanding state.
-</div>
-
-<pre><code>observe
-support
-challenge
-constrain
-qualify
-derive
-revise
-request_information
-explain
-retire</code></pre>
-
-<div class="example-block">
-<p><strong>Caregiver assistance.</strong></p>
-<pre><code>ObservationCapsule:
-    fever = 39.2°C
-    contributes: observe
-
-HypothesisCapsule:
-    possible influenza
-    contributes: support, challenge, explain
-
-GuidelineCapsule:
-    breathing difficulty requires escalation
-    contributes: constrain, revise
-
-QuestionCapsule:
-    respiratory rate unknown
-    contributes: request_information
-
-RecommendationCapsule:
-    urgent evaluation advised
-    contributes: project, explain</code></pre>
-</div>
-
-<div class="example-block">
-<p><strong>Operational intelligence.</strong></p>
-<pre><code>AISObservationCapsule:
-    repeated low-speed movement
-    contributes: observe
-
-BehaviorHypothesisCapsule:
-    possible rendezvous
-    contributes: support, challenge
-
-WeatherCapsule:
-    severe current conditions
-    contributes: qualify, challenge
-
-AnalystJudgmentCapsule:
-    historical association is significant
-    contributes: support, revise
-
-AlertCapsule:
-    analyst review recommended
-    contributes: project, explain</code></pre>
-</div>
-
-<h2>5.5 The Anatomy of a Knowledge Capsule</h2>
-
-<h3>Semantic Payload</h3>
-<p>The payload contains the knowledge object or objects realized by the capsule. It may be symbolic, numerical, textual, procedural, or hybrid.</p>
-
-<h3>Identity</h3>
-<p>Every capsule requires a stable runtime identity for lookup, comparison, revision, serialization, dependency tracking, and trace construction.</p>
-
-<pre><code>source item:
-    caregiver-dialogue-42:turn-7
-
-knowledge object:
-    observation:possible-respiratory-distress
-
-capsule instance:
-    capsule:respiratory-distress:r2</code></pre>
-
-<h3>Provenance</h3>
-<p>Provenance may include source identifiers, constructor versions, model versions, prompt templates, source spans, human contributors, timestamps, and derivation inputs.</p>
-
-<h3>Scope</h3>
-<p>Scope specifies when, where, for whom, and for which task the capsule may be interpreted and used.</p>
-
-<h3>Epistemic State</h3>
-<pre><code>observed
-reported
-asserted
-inferred
-predicted
-assumed
-provisional
-disputed
-validated
-invalidated</code></pre>
-
-<h3>Lifecycle State</h3>
-<pre><code>constructed
-grounded
-validated
-available
-active
-influential
-suspended
-superseded
-retired
-archived</code></pre>
-
-<p>
-Epistemic and lifecycle states are distinct. A predicted capsule may be active. A validated capsule may be archived. A disputed capsule may remain active for the purpose of challenging another interpretation.
-</p>
-
-<h3>Activation Logic</h3>
-<p>Activation logic specifies the conditions under which the capsule may enter a task's active knowledge set.</p>
-
-<h3>Capabilities</h3>
-<p>Capabilities specify which operations the capsule may perform. They may depend on kind, provenance, epistemic state, lifecycle state, and task.</p>
-
-<h3>Dependencies and Trace</h3>
-<p>Dependencies record what the capsule relies upon. Trace state records construction, grounding, validation, activation, influence, revision, supersession, and retirement events.</p>
-
-<h2>5.6 A Minimal Capsule Representation</h2>
-
-<pre><code>from dataclasses import dataclass, field
-from typing import Any, FrozenSet, Tuple
-
-@dataclass(frozen=True)
-class KnowledgeCapsule:
-    capsule_id: str
-    kind: str
-    payload: Any
-    provenance: dict
-    scope: dict
-    epistemic_state: dict
-    lifecycle_state: str
-    activation_conditions: Tuple[Any, ...]
-    capabilities: FrozenSet[str]
-    contribution_roles: FrozenSet[str]
-    dependencies: FrozenSet[str] = field(
-        default_factory=frozenset
-    )</code></pre>
-
-<p>
-The capsule exposes the contract. A runtime, rule engine, graph service, model, or tool may perform the actual operation.
-</p>
-
-<pre><code>runtime.activate(capsule, task)
-runtime.contribute(capsule, understanding)
-runtime.request_information(capsule)
-runtime.revise(capsule, revision)
-runtime.retire(capsule)
-runtime.trace(capsule)</code></pre>
-
-<h2>5.7 Capsule Kinds</h2>
-
-<pre><code>KnowledgeCapsule
-    ObservationCapsule
-    ClaimCapsule
-    HypothesisCapsule
-    RuleCapsule
-    GuidelineCapsule
-    ConstraintCapsule
-    PredictionCapsule
-    MappingCapsule
-    ProcedureCapsule
-    QuestionCapsule
-    UncertaintyCapsule
-    HumanJudgmentCapsule
-    ExplanationCapsule
-    DerivedCapsule</code></pre>
-
-<h3>Observation Capsule</h3>
-<p>Represents information observed or reported about an entity, event, or situation.</p>
-
-<h3>Hypothesis Capsule</h3>
-<p>Represents a candidate interpretation that may be supported, challenged, refined, or rejected.</p>
-
-<h3>Guideline and Constraint Capsules</h3>
-<p>Guideline capsules represent conditional domain knowledge. Constraint capsules restrict permissible conclusions or actions.</p>
-
-<h3>Prediction Capsule</h3>
-<p>Represents a computational estimate while preserving the model, calibration, time, and scope that produced it.</p>
-
-<h3>Mapping Capsule</h3>
-<p>Connects expressions, identifiers, entities, or concepts.</p>
-
-<pre><code>MappingCapsule:
-    "breathing much faster"
-    maps_to
-    possible tachypnea</code></pre>
-
-<h3>Procedure Capsule</h3>
-<p>Represents knowledge of how to perform a controlled operation, such as querying a terminology service, retrieving vessel history, or calculating a threshold.</p>
-
-<h3>Question Capsule</h3>
-
-<div class="definition">
-<strong>Definition 5.3 (Question Capsule).</strong>
-A <em>question capsule</em> represents a knowledge gap as an actionable request for observation, retrieval, computation, or human input.
-</div>
-
-<pre><code>Current understanding
-        ↓
-missing respiratory rate
-        ↓
-QuestionCapsule
-        ↓
-ask caregiver
-        ↓
-ObservationCapsule
-        ↓
-revised understanding</code></pre>
-
-<h3>Uncertainty Capsule</h3>
-
-<p>
-An uncertainty capsule represents unresolved uncertainty explicitly rather than hiding it inside a confidence score.
-</p>
-
-<pre><code>UncertaintyCapsule:
-    fever duration unknown
-    affects = severity assessment
-    resolution = ask caregiver
-    urgency = medium</code></pre>
-
-<h3>Human Judgment Capsule</h3>
-<p>Preserves human observation or judgment together with role, authority, time, and intended use.</p>
-
-<h3>Explanation Capsule</h3>
-<p>Represents an audience-specific explanation projected from a knowledge trace. It is distinct from the trace itself.</p>
-
-<h2>5.8 Capsules and Foundation Models</h2>
-
-<p>
-Foundation models both consume and produce capsules.
+A trajectory capsule need not contain a trained transformer's weights. It may reference a model endpoint or Python implementation.
 </p>
 
 <p>
-A model may produce an observation capsule from conversation, a hypothesis capsule from multimodal evidence, a mapping capsule from ambiguous terminology, a question capsule from a knowledge gap, or an explanation capsule from a trace.
+A planning capsule need not implement search. It may provide planning knowledge and bind to an existing planner.
 </p>
 
 <p>
-A model may consume active observations, competing hypotheses, applicable guidelines, constraints, unresolved questions, and the current understanding state.
+A verification capsule may reference a formal specification and bind to an external model checker.
 </p>
-
-<pre><code>Active Capsules
-      ↓
-Foundation Model
-      ↓
-Question Capsule
-      ↓
-User or Tool
-      ↓
-Observation Capsule
-      ↓
-Revised Understanding</code></pre>
-
-<p>
-This makes model participation inspectable. The model is not merely sent a prompt and asked to reason invisibly.
-</p>
-
-<h2>5.9 Capsule Lifecycle</h2>
-
-<div class="definition">
-<strong>Definition 5.4 (Capsule Lifecycle).</strong>
-The <em>capsule lifecycle</em> is the sequence of operational states through which a capsule passes as it is constructed, grounded, validated, activated, allowed to influence understanding, revised, and retired.
-</div>
-
-<pre><code>constructed
-    ↓
-grounded
-    ↓
-validated
-    ↓
-available
-    ↓
-active
-    ↓
-influential
-    ↓
-revised or superseded
-    ↓
-retired
-    ↓
-archived</code></pre>
 
 <div class="callout">
-<strong>Important Distinction.</strong>
-An active capsule is eligible to participate. An influential capsule has actually changed the understanding state or a downstream projection.
+<strong>The capsule packages computational semantics, not necessarily computational machinery.</strong>
 </div>
 
-<h2>5.10 Capsule State, Runtime State, and Understanding State</h2>
+
+<h2>5.4 Knowledge, Capsule, Expert, and Result</h2>
+
+<p>
+These four concepts should remain distinct.
+</p>
 
 <table class="comparison-table">
 <thead>
-<tr><th>State</th><th>What it records</th></tr>
+<tr>
+  <th>Concept</th>
+  <th>Purpose</th>
+</tr>
 </thead>
+
 <tbody>
-<tr><td>Capsule state</td><td>The status, scope, capabilities, and dependencies of one capsule</td></tr>
-<tr><td>Runtime state</td><td>Registration, activation, events, coordination, and operation dispatch across capsules</td></tr>
-<tr><td>Understanding state</td><td>The organized interpretation currently held about the subject of reasoning</td></tr>
+
+<tr>
+  <td><strong>Knowledge Object</strong></td>
+  <td>Represents something known, observed, predicted, proposed, assumed, required, or established.</td>
+</tr>
+
+<tr>
+  <td><strong>Knowledge Capsule</strong></td>
+  <td>Declares how a body of knowledge and associated expertise may participate in runtime computation.</td>
+</tr>
+
+<tr>
+  <td><strong>Computational Expert</strong></td>
+  <td>Performs the specialized computation.</td>
+</tr>
+
+<tr>
+  <td><strong>Expert Result</strong></td>
+  <td>Represents what that computation produced and claims to establish.</td>
+</tr>
+
+</tbody>
+</table>
+
+<p>
+For example:
+</p>
+
+<pre><code>Knowledge Objects:
+    recent vessel positions
+    timestamps
+    vessel class
+
+Knowledge Capsule:
+    trajectory_prediction
+
+Computational Expert:
+    trajectory-transformer-v7
+
+Expert Result:
+    predicted future track</code></pre>
+
+<p>
+The result can then become new knowledge through ABSORB.
+</p>
+
+
+<h2>5.5 General Knowledge and Runtime Binding</h2>
+
+<p>
+A Knowledge Capsule should normally declare general knowledge independently of any particular runtime subject.
+</p>
+
+<p>
+For example, this is poor design:
+</p>
+
+<pre><code>id: respiratory-rule-child-17
+
+if:
+    child-17 has rib retractions
+
+then:
+    child-17 has respiratory distress</code></pre>
+
+<p>
+The domain knowledge has been incorrectly fused with one runtime instance.
+</p>
+
+<p>
+Instead:
+</p>
+
+<pre><code>id: respiratory-retractions
+
+knowledge:
+    if:
+        subject has intercostal retractions
+
+    then:
+        respiratory distress concern supported</code></pre>
+
+<p>
+At runtime:
+</p>
+
+<pre><code>$subject = child-17</code></pre>
+
+<p>
+The same capsule may later apply to:
+</p>
+
+<pre><code>$subject = child-31
+$subject = child-82
+...</code></pre>
+
+<div class="callout">
+<strong>General knowledge is declared once.</strong><br>
+The Knowledge Runtime binds it to the current entities and situation when ACTIVATE determines that it applies.
+</div>
+
+
+<h2>5.6 Anatomy of a Knowledge Capsule</h2>
+
+<p>
+A capsule should remain small enough to understand and general enough to represent very different forms of knowledge computation.
+</p>
+
+
+<h3>Identity</h3>
+
+<p>
+Every capsule needs stable identity for registration, lookup, versioning, dependency tracking, and traceability.
+</p>
+
+<pre><code>id: pediatric-respiratory-assessment
+version: 1.2</code></pre>
+
+
+<h3>Knowledge</h3>
+
+<p>
+The capsule identifies the knowledge it embodies, references, or expects to use.
+</p>
+
+<p>
+Knowledge may include:
+</p>
+
+<ul>
+  <li>rules;</li>
+  <li>constraints;</li>
+  <li>guidelines;</li>
+  <li>planning models;</li>
+  <li>formal specifications;</li>
+  <li>equations;</li>
+  <li>feature definitions;</li>
+  <li>model identity;</li>
+  <li>historical or contextual knowledge requirements;</li>
+  <li>or references to external knowledge resources.</li>
+</ul>
+
+
+<h3>Scope</h3>
+
+<p>
+Scope declares where the capsule is intended to apply.
+</p>
+
+<pre><code>scope:
+    domain: pediatric_care
+    age:
+        min: 0
+        max: 17</code></pre>
+
+<p>
+For a specialized model:
+</p>
+
+<pre><code>scope:
+    domain: maritime_trajectory
+    observation_interval:
+        max_seconds: 300
+    vessel_classes:
+        - cargo
+        - tanker
+        - fishing</code></pre>
+
+
+<h3>Applicability</h3>
+
+<p>
+Applicability determines when the capsule becomes relevant to the current understanding.
+</p>
+
+<pre><code>applicable_when:
+    respiratory_concern == true</code></pre>
+
+<p>
+Or:
+</p>
+
+<pre><code>applicable_when:
+    future_motion_required == true
+    and trajectory_history_available == true</code></pre>
+
+
+<h3>Requirements</h3>
+
+<p>
+Applicability and readiness are different.
+</p>
+
+<p>
+A capsule may be relevant but lack inputs required for APPLY.
+</p>
+
+<pre><code>requires:
+    - respiratory_status</code></pre>
+
+<p>
+Or:
+</p>
+
+<pre><code>requires:
+    - trajectory_window
+    - timestamps
+    - vessel_context</code></pre>
+
+<p>
+Missing requirements become explicit knowledge gaps rather than silent defaults.
+</p>
+
+
+<h3>Expertise Binding</h3>
+
+<p>
+The capsule identifies how the computation should be performed.
+</p>
+
+<pre><code>expertise:
+    kind: python
+    binding:
+        knaitai_examples.respiratory.evaluate</code></pre>
+
+<p>
+Or:
+</p>
+
+<pre><code>expertise:
+    kind: model
+    binding:
+        trajectory-transformer-v7</code></pre>
+
+<p>
+Or:
+</p>
+
+<pre><code>expertise:
+    kind: external
+    binding:
+        formal-verification-service</code></pre>
+
+<p>
+The binding is deliberately abstract enough that execution infrastructure may change without rewriting domain knowledge.
+</p>
+
+
+<h3>Result Semantics</h3>
+
+<p>
+The capsule declares what kind of result the expert produces.
+</p>
+
+<pre><code>result:
+    type: clinical_assessment
+    establishes:
+        respiratory_distress_status</code></pre>
+
+<p>
+Or:
+</p>
+
+<pre><code>result:
+    type: prediction
+    establishes:
+        future_trajectory</code></pre>
+
+<p>
+This allows ABSORB to interpret results correctly.
+</p>
+
+
+<h3>Authority</h3>
+
+<p>
+A capsule may also declare how its result may influence the system.
+</p>
+
+<pre><code>authority:
+    role: constraining</code></pre>
+
+<p>
+Or:
+</p>
+
+<pre><code>authority:
+    role: advisory</code></pre>
+
+<p>
+Or:
+</p>
+
+<pre><code>authority:
+    role: verifying
+    required_for:
+        execute_maneuver</code></pre>
+
+
+<h3>Provenance</h3>
+
+<p>
+Provenance records where the capsule's knowledge and semantics came from.
+</p>
+
+<p>
+This may include:
+</p>
+
+<ul>
+  <li>source document;</li>
+  <li>guideline edition;</li>
+  <li>model version;</li>
+  <li>training or validation information;</li>
+  <li>author or institution;</li>
+  <li>software version;</li>
+  <li>or human approver.</li>
+</ul>
+
+
+<h2>5.7 A Minimal Declarative Representation</h2>
+
+<p>
+A capsule should be declarable independently of application code wherever practical.
+</p>
+
+<p>
+For example:
+</p>
+
+<pre><code>id: pediatric-respiratory-assessment
+version: "1.0"
+
+title: Pediatric respiratory assessment
+
+scope:
+  domain: pediatric_care
+  age_max: 17
+
+applicable_when:
+  respiratory_concern: true
+
+requires:
+  - work_of_breathing
+
+knowledge:
+  guideline:
+    rib_retractions:
+      supports: respiratory_distress
+
+expertise:
+  kind: python
+  binding: caretrace.respiratory.evaluate
+
+result:
+  type: clinical_assessment
+
+authority:
+  role: constraining
+
+provenance:
+  source: pediatric-triage-guidance</code></pre>
+
+<p>
+This declaration contains no patient-specific identifier.
+</p>
+
+<p>
+At runtime:
+</p>
+
+<pre><code>case:
+    subject = child-17
+
+understanding:
+    respiratory_concern = true
+    work_of_breathing = intercostal_retractions</code></pre>
+
+<p>
+The runtime binds the general capsule to the current case.
+</p>
+
+
+<h2>5.8 A Minimal Python Representation</h2>
+
+<p>
+The same abstraction can be represented as validated Python data.
+</p>
+
+<pre><code>from pydantic import BaseModel
+from typing import Any
+
+
+class KnowledgeCapsule(BaseModel):
+
+    id: str
+    version: str
+
+    title: str
+
+    scope: dict[str, Any] = {}
+
+    applicability: dict[str, Any] = {}
+
+    requirements: list[str] = []
+
+    knowledge: dict[str, Any] = {}
+
+    expertise: dict[str, Any]
+
+    result_semantics: dict[str, Any]
+
+    authority: dict[str, Any] = {}
+
+    provenance: dict[str, Any] = {}</code></pre>
+
+<p>
+This model is intentionally compact.
+</p>
+
+<p>
+The purpose of the base abstraction is not to encode every possible domain concept. It is to define the common contract required by the Knowledge Runtime.
+</p>
+
+<div class="callout">
+<strong>Implementation Principle.</strong><br>
+Prefer one small general capsule abstraction over a large hierarchy of domain-specific capsule classes.
+</div>
+
+
+<h2>5.9 Do Not Turn Every Runtime Object into a Capsule</h2>
+
+<p>
+The earlier formulation of Knowledge Capsules can tempt an implementation toward classes such as:
+</p>
+
+<pre><code>ObservationCapsule
+HypothesisCapsule
+PredictionCapsule
+QuestionCapsule
+UncertaintyCapsule
+RecommendationCapsule
+ExplanationCapsule
+...</code></pre>
+
+<p>
+That is usually unnecessary.
+</p>
+
+<p>
+An observation, hypothesis, prediction, plan, question, or verification result is better understood primarily as a <strong>knowledge object or runtime result</strong>.
+</p>
+
+<p>
+A capsule is useful when there is something reusable to declare about how knowledge and expertise participate.
+</p>
+
+<p>
+For example:
+</p>
+
+<table class="comparison-table">
+<thead>
+<tr>
+  <th>Thing</th>
+  <th>Preferred abstraction</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+  <td>“Child has a fever”</td>
+  <td>Knowledge object / observation</td>
+</tr>
+
+<tr>
+  <td>“Possible respiratory distress”</td>
+  <td>Knowledge object / hypothesis or assessment</td>
+</tr>
+
+<tr>
+  <td>Predicted vessel path</td>
+  <td>Knowledge object / prediction</td>
+</tr>
+
+<tr>
+  <td>General pediatric respiratory assessment logic</td>
+  <td>Knowledge Capsule</td>
+</tr>
+
+<tr>
+  <td>Trajectory predictor and its applicability semantics</td>
+  <td>Knowledge Capsule</td>
+</tr>
+
+<tr>
+  <td>Planning domain + planner binding</td>
+  <td>Knowledge Capsule</td>
+</tr>
+
+<tr>
+  <td>Formal specification + verifier binding</td>
+  <td>Knowledge Capsule</td>
+</tr>
 </tbody>
 </table>
 
 <div class="callout">
-<strong>Separation of Concerns.</strong>
-The capsule owns its knowledge-level identity and contract. The runtime coordinates capsule behavior. The understanding state represents what the system currently believes.
+<strong>Capsules package reusable computational expertise.</strong><br>
+They need not become wrappers around every piece of runtime state.
 </div>
 
-<h2>5.11 Activation and Influence</h2>
 
-<pre><code>activation = runtime.evaluate_activation(
-    capsule=capsule,
-    task=task,
-    context=context,
+<h2>5.10 Capsules and Computational Experts</h2>
+
+<p>
+A capsule describes expertise. A computational expert performs it.
+</p>
+
+<p>
+A simple expert interface might be:
+</p>
+
+<pre><code>class ComputationalExpert:
+
+    def apply(
+        self,
+        context
+    ) -> ExpertResult:
+        ...</code></pre>
+
+<p>
+The implementation may be local:
+</p>
+
+<pre><code>class PythonExpert(ComputationalExpert):
+
+    def __init__(self, fn):
+        self.fn = fn
+
+    def apply(self, context):
+        return self.fn(context)</code></pre>
+
+<p>
+Or remote:
+</p>
+
+<pre><code>class ExternalExpert(ComputationalExpert):
+
+    def apply(self, context):
+        return call_external_service(
+            context
+        )</code></pre>
+
+<p>
+Or neural:
+</p>
+
+<pre><code>class LLMExpert(ComputationalExpert):
+
+    def apply(self, context):
+        return call_foundation_model(
+            context
+        )</code></pre>
+
+<p>
+KnaiTai should not require all experts to inherit literally from one Python class. Protocols, adapters, service contracts, or existing orchestration systems may implement the same abstraction.
+</p>
+
+
+<h2>5.11 Capsules Through A4</h2>
+
+<p>
+The cleanest way to understand a capsule is through the four runtime operations.
+</p>
+
+
+<h3>ACTIVATE</h3>
+
+<p>
+ACTIVATE evaluates whether the capsule's knowledge and expertise matter in the current understanding.
+</p>
+
+<pre><code>activation = runtime.activate(
+    capsule,
+    understanding
+)</code></pre>
+
+<p>
+Possible outcomes might include:
+</p>
+
+<pre><code>ACTIVE
+INACTIVE
+NOT_READY
+OUT_OF_SCOPE</code></pre>
+
+<p>
+If applicable but missing requirements:
+</p>
+
+<pre><code>NOT_READY
+
+missing:
+    work_of_breathing</code></pre>
+
+<p>
+The missing requirement becomes part of the runtime understanding.
+</p>
+
+
+<h3>APPLY</h3>
+
+<p>
+If activated and ready, APPLY invokes the expertise bound by the capsule.
+</p>
+
+<pre><code>result = runtime.apply(
+    capsule,
+    understanding
+)</code></pre>
+
+<p>
+The underlying expert may be a rule evaluator, predictor, planner, LLM, solver, simulator, or external service.
+</p>
+
+
+<h3>ABSORB</h3>
+
+<p>
+ABSORB interprets the expert result according to the capsule's declared result semantics.
+</p>
+
+<pre><code>understanding = runtime.absorb(
+    understanding,
+    result
+)</code></pre>
+
+<p>
+A prediction remains a prediction.
+</p>
+
+<p>
+A proposed plan remains a proposed plan.
+</p>
+
+<p>
+A successful formal verification may establish a verified property.
+</p>
+
+<p>
+A failed constraint may invalidate an action.
+</p>
+
+
+<h3>AUTHORIZE</h3>
+
+<p>
+AUTHORIZE evaluates whether the updated understanding satisfies a decision or action boundary.
+</p>
+
+<pre><code>authority = runtime.authorize(
+    target="home_monitoring",
     understanding=understanding
 )</code></pre>
 
-<pre><code>ActivationResult =
-    Activate(capabilities, basis)
-  | DoNotActivate(reason)
-  | ActivateWithQualification(
-        capabilities,
-        basis,
-        qualification
-    )
-  | CannotDetermine(missing_knowledge)</code></pre>
-
 <p>
-After activation, the runtime applies the capsule's understanding contribution:
+The capsule may contribute to that authority without itself owning the final decision.
 </p>
 
-<pre><code>ContributionResult =
-    Supported(target, strength)
-  | Challenged(target, reason)
-  | Constrained(alternatives_removed)
-  | Revised(understanding_delta)
-  | RequestedInformation(question_capsule)
-  | NoMaterialChange(reason)</code></pre>
 
-<h2>5.12 Operations Over Capsules</h2>
+<h2>5.12 Result Semantics Matter</h2>
 
 <p>
-Operations may be expressed as methods, functions, or runtime-mediated requests.
+Different experts may return structurally similar values that mean very different things.
 </p>
-
-<pre><code>runtime.apply(
-    operation="support",
-    source=observation,
-    target=hypothesis
-)</code></pre>
 
 <p>
-Runtime mediation provides a strong default because the runtime can enforce capabilities, record dependencies, update traces, and reject invalid operations consistently.
+Consider:
 </p>
 
-<h3>Support</h3>
-<pre><code>fever_observation
-    supports
-acute_infection_hypothesis</code></pre>
-
-<h3>Challenge</h3>
-<pre><code>severe_current_weather
-    challenges
-loitering_hypothesis</code></pre>
-
-<h3>Constraint</h3>
-<pre><code>respiratory_distress_guideline
-    constrains
-{home_monitoring,
- routine_visit,
- urgent_evaluation}
-
-result:
-{urgent_evaluation}</code></pre>
-
-<h3>Inquiry</h3>
-<pre><code>uncertain_respiratory_status
-    ↓ request_information
-QuestionCapsule:
-    "Is the child struggling to breathe?"</code></pre>
+<pre><code>{
+    "safe": true
+}</code></pre>
 
 <p>
-Inquiry is not a fallback outside reasoning. It is a knowledge operation that determines the next computation.
+That result might mean:
 </p>
-
-<h2>5.13 Derived Capsules</h2>
-
-<div class="definition">
-<strong>Definition 5.5 (Derived Capsule).</strong>
-A <em>derived capsule</em> is a capsule whose payload is produced through one or more operations over existing capsules and whose provenance records those operations and dependencies.
-</div>
-
-<div class="example-block">
-<p><strong>Caregiver assistance.</strong></p>
-<pre><code>Fever Observation Capsule
-        +
-Respiratory-Distress Observation Capsule
-        +
-Escalation Guideline Capsule
-        ↓
-Urgent Evaluation Recommendation Capsule</code></pre>
-</div>
-
-<div class="example-block">
-<p><strong>Operational intelligence.</strong></p>
-<pre><code>AIS Observation Capsules
-        +
-Satellite Detection Capsule
-        +
-Weather Capsule
-        +
-Behavior Knowledge Capsule
-        ↓
-Possible Rendezvous Assessment Capsule</code></pre>
-</div>
-
-<p>
-A derived capsule preserves its inputs, operations, time of derivation, and the understanding state in which it was created.
-</p>
-
-<h2>5.14 Dependencies and Revision</h2>
-
-<div class="definition">
-<strong>Definition 5.6 (Capsule Dependency).</strong>
-A <em>capsule dependency</em> is a recorded relation indicating that the content, status, activation, confidence, or influence of one capsule relies on another.
-</div>
-
-<pre><code>derived_from
-supported_by
-challenged_by
-activated_by
-constrained_by
-grounded_by
-validated_by
-supersedes
-answers</code></pre>
-
-<p>
-Different dependency types produce different revision behavior.
-</p>
-
-<pre><code>if dependency.type == "grounded_by"
-and source.invalidated:
-    suspend(dependent)
-
-if dependency.type == "supported_by"
-and source.invalidated:
-    revise_confidence(dependent)
-
-if dependency.type == "constrained_by"
-and source.superseded:
-    reconsider_alternatives(dependent)</code></pre>
-
-<div class="example-block">
-<p><strong>Caregiver assistance.</strong> If “no breathing difficulty” is corrected to “labored breathing,” the respiratory observation is revised, the earlier low-risk recommendation is superseded, and escalation knowledge becomes influential.</p>
-<p><strong>Operational intelligence.</strong> If new weather data explains low-speed movement, the loitering capsule loses support, the alert capsule is revised, and the analyst-facing explanation changes.</p>
-</div>
-
-<h2>5.15 Immutable Capsule Revisions</h2>
-
-<pre><code>capsule-r1
-    ↓ superseded_by
-capsule-r2</code></pre>
-
-<p>
-Silent mutation destroys historical reconstruction. A stronger default is to create a new semantic capsule version while preserving the previous version for trace, replay, audit, and comparison.
-</p>
-
-<div class="callout">
-<strong>Recommended Default.</strong>
-Treat semantic capsule revisions as immutable versions. Keep task-specific activation and runtime bookkeeping as separate operational state.
-</div>
-
-<h2>5.16 Capsule Composition</h2>
-
-<div class="definition">
-<strong>Definition 5.7 (Capsule Composition).</strong>
-<em>Capsule composition</em> constructs a higher-level capsule from component capsules while preserving their identities, roles, dependencies, and provenance.
-</div>
-
-<pre><code>CaregiverAssessmentCapsule
-    observations
-    supported hypotheses
-    challenged hypotheses
-    active guidelines
-    constraints
-    unanswered questions
-    recommendation
-    explanation trace</code></pre>
-
-<p>
-Composition preserves structure. It is not equivalent to concatenating capsule contents into a single block of text.
-</p>
-
-<h2>5.17 The Knowledge Capsule Runtime</h2>
-
-<div class="definition">
-<strong>Definition 5.8 (Knowledge Capsule Runtime).</strong>
-A <em>knowledge capsule runtime</em> is the program infrastructure that manages capsule creation, registration, activation, operation dispatch, dependency tracking, composition, revision, persistence, and tracing.
-</div>
-
-<pre><code>Capsule Runtime
-
-register
-retrieve
-activate
-deactivate
-contribute
-compose
-derive
-merge
-split
-revise
-retire
-persist
-trace</code></pre>
-
-<p>
-The runtime acts as an operating environment for knowledge. It need not begin as a large platform. A small implementation may use ordinary Python classes, dictionaries, and adjacency lists.
-</p>
-
-<h2>5.18 Capsule Algebra: A First Glimpse</h2>
-
-<pre><code>C₁ supports C₂
-        ↓
-revised C₂
-
-C₃ challenges C₂
-        ↓
-qualified C₂
-
-C₄ constrains alternatives
-        ↓
-reduced action set
-
-C₁ + C₂ + C₄
-        ↓ derive
-C₅</code></pre>
-
-<p>
-Once capsules become first-class units, operations over them begin to resemble an algebra. Later chapters can develop how capsules compose, conflict, specialize, revise, and produce higher-level understanding while preserving computational meaning.
-</p>
-
-<h2>5.19 A Complete Programming Example: Caregiver Assistance</h2>
-
-<pre><code>fever = factory.create(
-    kind="ObservationCapsule",
-    payload={
-        "concept": "fever",
-        "value_celsius": 39.2,
-        "subject": "child-17"
-    },
-    provenance={
-        "source": "caregiver-thermometer"
-    },
-    contribution_roles={
-        "observe"
-    }
-)</code></pre>
-
-<pre><code>breathing = factory.create(
-    kind="ObservationCapsule",
-    payload={
-        "concept": "possible_respiratory_distress",
-        "subject": "child-17"
-    },
-    provenance={
-        "source": "caregiver-dialogue-42",
-        "constructor": "conversation-constructor-v3",
-        "method": "llm-assisted"
-    },
-    epistemic_state={
-        "status": "reported",
-        "confidence": 0.82
-    },
-    contribution_roles={
-        "observe",
-        "revise"
-    }
-)</code></pre>
-
-<pre><code>guideline = factory.create(
-    kind="GuidelineCapsule",
-    payload={
-        "if": "respiratory distress is present",
-        "then": "urgent evaluation is indicated"
-    },
-    provenance={
-        "source": "pediatric-triage-guideline"
-    },
-    capabilities={
-        "constrain",
-        "revise",
-        "explain"
-    }
-)</code></pre>
-
-<pre><code>respiratory_rate_question = runtime.derive(
-    kind="QuestionCapsule",
-    payload={
-        "question":
-            "How many breaths per minute is she taking?",
-        "knowledge_gap":
-            "respiratory rate is unknown",
-        "reason":
-            "needed to assess respiratory distress"
-    },
-    inputs=[
-        breathing,
-        guideline
-    ]
-)</code></pre>
-
-<pre><code>understanding = runtime.contribute(
-    fever,
-    understanding
-)
-
-understanding = runtime.contribute(
-    breathing,
-    understanding
-)
-
-understanding = runtime.contribute(
-    guideline,
-    understanding
-)</code></pre>
-
-<pre><code>recommendation = runtime.derive(
-    kind="RecommendationCapsule",
-    payload={
-        "recommendation":
-            "seek urgent clinical evaluation",
-        "qualification":
-            "especially if breathing difficulty is confirmed"
-    },
-    inputs=[
-        fever,
-        breathing,
-        guideline
-    ]
-)</code></pre>
-
-<p>
-The system has not merely generated an answer. It has orchestrated capsules representing observations, uncertainty, applicable guidance, inquiry, recommendation, and explanation.
-</p>
-
-<h2>5.20 The Same Pattern in Operational Intelligence</h2>
-
-<pre><code>AISObservationCapsule
-SatelliteDetectionCapsule
-WeatherCapsule
-BehaviorHypothesisCapsule
-AnalystJudgmentCapsule
-MissionRuleCapsule
-QuestionCapsule
-AlertCapsule</code></pre>
-
-<p>
-A foundation model may propose a rendezvous hypothesis. Weather may challenge it. Historical association may support it. A mission rule may constrain whether an alert can be issued. A question capsule may request additional evidence. The runtime composes these contributions into a current operational understanding.
-</p>
-
-<h2>5.21 Testing Knowledge Capsules</h2>
 
 <ul>
-  <li><strong>Construction:</strong> Is the correct kind created, with complete provenance and preserved model assistance?</li>
-  <li><strong>Lifecycle:</strong> Are invalid transitions rejected and revision chains preserved?</li>
-  <li><strong>Activation:</strong> Does the capsule activate only in its intended scope?</li>
-  <li><strong>Capability:</strong> Is a prediction prevented from behaving as an authoritative guideline?</li>
-  <li><strong>Influence:</strong> Can each change in understanding be traced to the capsules that caused it?</li>
-  <li><strong>Revision:</strong> Does invalidation propagate according to dependency type while unaffected capsules remain stable?</li>
+  <li>an LLM believes an action is safe;</li>
+  <li>a statistical classifier predicts safety with probability 0.94;</li>
+  <li>a deterministic checker found no configured violation;</li>
+  <li>or a formal verifier established a property under stated assumptions.</li>
 </ul>
 
-<h2>5.22 Common Design Mistakes</h2>
-
-<h3>Making Capsules Large Unstructured Dictionaries</h3>
-<p>Without types, lifecycle rules, capabilities, and invariants, a capsule becomes another loosely structured data object.</p>
-
-<h3>Putting All Reasoning Inside Capsule Methods</h3>
-<p>Capsules expose knowledge behavior. Coordination, permission enforcement, dependency propagation, and tracing usually belong in the runtime.</p>
-
-<h3>Conflating Active with Influential</h3>
-<p>An active capsule is eligible to participate. An influential capsule actually changed understanding.</p>
-
-<h3>Treating LLM Output as Authoritative</h3>
-<p>Model-produced capsules should preserve model provenance and normally begin as provisional unless independently validated.</p>
-
-<h3>Representing Questions Only as Prompt Text</h3>
-<p>A question should arise from an explicit gap and remain linked to the decision or hypothesis it is intended to resolve.</p>
-
-<h3>Hiding Uncertainty Inside Confidence Scores</h3>
-<p>Some uncertainty deserves its own capsule because it changes what the system must do next.</p>
-
-<h3>Overwriting Capsules During Revision</h3>
-<p>Prefer immutable versions and explicit supersession links.</p>
-
-<h3>Flattening Composite Capsules</h3>
-<p>A higher-level capsule should preserve component identities and contribution roles.</p>
-
-<h2>5.23 A Minimal Student Implementation</h2>
-
-<pre><code>capsule.py
-    capsule types and invariants
-
-factory.py
-    capsule creation
-
-registry.py
-    storage and lookup
-
-runtime.py
-    activation and operation dispatch
-
-understanding.py
-    understanding-state updates
-
-trace.py
-    dependency and lifecycle records</code></pre>
-
-<pre><code>capsule = factory.create(...)
-registry.add(capsule)
-
-activation = runtime.evaluate_activation(
-    capsule,
-    task,
-    understanding
-)
-
-runtime.activate(capsule, activation)
-
-understanding = runtime.contribute(
-    capsule,
-    understanding
-)
-
-derived = runtime.derive(
-    operation,
-    inputs
-)
-
-trace = runtime.trace(
-    derived.capsule_id
-)</code></pre>
+<p>
+The surface value is identical. The epistemic meaning is not.
+</p>
 
 <div class="callout">
-<strong>Implementation Guidance.</strong>
-Start with a small number of capsule kinds and operations. Preserve identity, provenance, activation, understanding contribution, dependencies, revision, and trace correctly before adding sophisticated reasoning.
-</div>
-
-<h2>5.24 The Capsule as a Core Programming Unit</h2>
-
-<pre><code>information
-    ↓ construction
-knowledge object
-    ↓ encapsulation
-knowledge capsule
-    ↓ activation
-active capsule
-    ↓ contribution
-understanding revision
-    ↓ composition
-recommendation, dialogue,
-prediction, alert, or explanation</code></pre>
-
-<div class="callout">
-<strong>Central Thesis.</strong>
-In conventional programming, the primary computational unit is often the object or function. In Knowledge Native programming, a primary computational unit is the knowledge capsule: a living unit of knowledge that participates in constructing, revising, and explaining computational understanding.
+<strong>Expert results must carry semantics, not merely values.</strong>
 </div>
 
 <p>
-Programs no longer compute solely by transforming data structures or invoking models. They also compute by orchestrating populations of interacting knowledge capsules whose collective behavior gives rise to an evolving understanding of the world.
+A minimal result might therefore contain:
 </p>
+
+<pre><code>ExpertResult
+
+    expert_id
+    result_type
+    payload
+    epistemic_status
+    provenance
+    assumptions
+    dependencies
+    validity_scope</code></pre>
+
+<p>
+ABSORB uses this information to determine what the result can legitimately change.
+</p>
+
+
+<h2>5.13 Authority Belongs in the Contract</h2>
+
+<p>
+A major purpose of the capsule abstraction is to prevent all computational expertise from being treated as equally authoritative.
+</p>
+
+<p>
+A useful initial authority vocabulary might include:
+</p>
+
+<pre><code>ADVISORY
+SUPPORTING
+VERIFYING
+CONSTRAINING
+AUTHORIZING</code></pre>
+
+<p>
+These labels need not imply one universal policy engine. They communicate how a result may participate.
+</p>
+
+<div class="example-block">
+
+<p><strong>Trajectory predictor.</strong></p>
+
+<pre><code>authority:
+    ADVISORY</code></pre>
+
+<p>The prediction changes understanding but does not independently authorize a maneuver.</p>
+
+<p><strong>Clinical safety requirement.</strong></p>
+
+<pre><code>authority:
+    CONSTRAINING</code></pre>
+
+<p>Failure of the requirement can prevent a home-monitoring recommendation.</p>
+
+<p><strong>Formal safety verifier.</strong></p>
+
+<pre><code>authority:
+    VERIFYING
+
+required_for:
+    execute_plan</code></pre>
+
+<p>The verified result may satisfy one mandatory condition for execution authority.</p>
+
+</div>
+
+
+<h2>5.14 Capsules Can Describe Neural Expertise Too</h2>
+
+<p>
+Knowledge Capsules should not become synonymous with symbolic knowledge.
+</p>
+
+<p>
+An LLM can participate through the same abstraction.
+</p>
+
+<pre><code>id: general-clinical-reasoner
+
+scope:
+    domain: caregiver_assistance
+
+expertise:
+    kind: llm
+    binding: frontier-medical-model
+
+requires:
+    - current_conversation
+    - understanding_state
+
+result:
+    type: clinical_interpretation
+
+authority:
+    role: advisory</code></pre>
+
+<p>
+In another application, the same model may have greater authority.
+</p>
+
+<p>
+The capsule abstraction therefore does not encode a neural-versus-symbolic hierarchy.
+</p>
+
+<div class="callout">
+<strong>The LLM is one computational expert.</strong><br>
+Use it aggressively wherever its expertise is sufficient.
+</div>
+
+
+<h2>5.15 Capsules Can Describe Specialized Computation</h2>
+
+<p>
+The same abstraction becomes especially useful for computation that should not be reduced to general language reasoning.
+</p>
+
+
+<h3>Trajectory Prediction</h3>
+
+<pre><code>id: vessel-trajectory-predictor
+
+scope:
+    domain: maritime_motion
+
+applicable_when:
+    future_motion_required: true
+
+requires:
+    - trajectory_window
+    - timestamps
+    - vessel_context
+
+expertise:
+    kind: python
+    binding: maritime.predictor.predict
+
+result:
+    type: trajectory_prediction
+
+authority:
+    role: advisory</code></pre>
+
+
+<h3>Planning</h3>
+
+<pre><code>id: operational-planner
+
+applicable_when:
+    goal_requires_multistep_action: true
+
+requires:
+    - current_state
+    - goal
+    - action_model
+
+knowledge:
+    - actions
+    - preconditions
+    - effects
+
+expertise:
+    kind: external
+    binding: planner-service
+
+result:
+    type: candidate_plan
+
+authority:
+    role: advisory</code></pre>
+
+
+<h3>Formal Verification</h3>
+
+<pre><code>id: maneuver-safety-verifier
+
+applicable_when:
+    candidate_plan_available: true
+
+requires:
+    - candidate_plan
+    - safety_specification
+
+expertise:
+    kind: external
+    binding: verifier-service
+
+result:
+    type: verification_result
+
+authority:
+    role: verifying
+    required_for:
+        execute_maneuver</code></pre>
+
+
+<h2>5.16 A Capsule Registry</h2>
+
+<p>
+The runtime needs a way to discover available capsules.
+</p>
+
+<p>
+A minimal registry might support:
+</p>
+
+<pre><code>registry.register(capsule)
+
+registry.get(capsule_id)
+
+registry.list()
+
+registry.candidates(
+    understanding
+)</code></pre>
+
+<p>
+The registry is not the activation engine.
+</p>
+
+<p>
+It makes expertise discoverable. ACTIVATE determines what actually matters.
+</p>
+
+<pre><code>Capsule Registry
+      ↓
+candidate capsules
+      ↓
+ACTIVATE
+      ↓
+relevant / applicable /
+required expertise</code></pre>
+
+
+<h2>5.17 Declarative and Programmatic Expertise Share One Runtime</h2>
+
+<p>
+Knowledge Native programming should support both declarative and programmatic definitions without creating two disconnected architectures.
+</p>
+
+<pre><code>YAML / JSON
+    ↓
+KnowledgeCapsule
+    ↓
+Registry
+    ↓
+A4 Runtime</code></pre>
+
+<p>
+And:
+</p>
+
+<pre><code>Python function / model / service
+    ↓
+ComputationalExpert binding
+    ↓
+KnowledgeCapsule
+    ↓
+Registry
+    ↓
+A4 Runtime</code></pre>
+
+<p>
+For example:
+</p>
+
+<pre><code>def predict_trajectory(context):
+
+    history = context.require(
+        "trajectory_window"
+    )
+
+    return ExpertResult(
+        result_type="trajectory_prediction",
+        payload=predict(history),
+        epistemic_status="predicted"
+    )</code></pre>
+
+<p>
+The capsule declares when and why this function participates.
+</p>
+
+<p>
+The Python function implements the actual specialized expertise.
+</p>
+
+
+<h2>5.18 Capsules and Existing Orchestration</h2>
+
+<p>
+A capsule does not need to tell KnaiTai how to manage queues, retries, network calls, parallel execution, agent messaging, or distributed scheduling.
+</p>
+
+<p>
+The runtime might determine:
+</p>
+
+<pre><code>maneuver-safety-verifier
+
+    REQUIRED NOW</code></pre>
+
+<p>
+An orchestration layer may then determine:
+</p>
+
+<pre><code>service location
+authentication
+retry policy
+timeout
+parallel execution
+resource allocation</code></pre>
+
+<p>
+The result returns to the Knowledge Runtime for ABSORB.
+</p>
+
+<div class="callout">
+<strong>Capsules declare computational meaning.</strong><br>
+Existing orchestration infrastructure can handle computational mechanics.
+</div>
+
+
+<h2>5.19 Versioning and Revision</h2>
+
+<p>
+Knowledge Capsules themselves may evolve.
+</p>
+
+<p>
+A clinical guideline changes. A predictor is retrained. A model's validated scope changes. A safety specification is revised.
+</p>
+
+<p>
+Capsule versions should therefore be explicit:
+</p>
+
+<pre><code>trajectory-predictor:1.4
+        ↓ superseded_by
+trajectory-predictor:1.5</code></pre>
+
+<p>
+Historical traces should retain which capsule and expert version actually participated in a computation.
+</p>
+
+<div class="callout">
+<strong>Recommended Default.</strong><br>
+Treat semantic capsule revisions as versioned declarations rather than silently mutating the definition used by earlier computations.
+</div>
+
+<p>
+Runtime state is different. Activation status, current bindings, execution attempts, and task-local bookkeeping may change freely without creating a new semantic capsule version.
+</p>
+
+
+<h2>5.20 Dependencies Belong to Results and Understanding</h2>
+
+<p>
+Earlier capsule designs can overburden the capsule itself with every downstream dependency.
+</p>
+
+<p>
+A cleaner model separates:
+</p>
+
+<ul>
+  <li>the reusable capsule declaration;</li>
+  <li>the expert invocation;</li>
+  <li>the expert result;</li>
+  <li>and the dependencies created when that result is absorbed.</li>
+</ul>
+
+<p>
+For example:
+</p>
+
+<pre><code>trajectory observations
+        ↓
+APPLY trajectory capsule
+        ↓
+prediction result
+        ↓
+ABSORB
+        ↓
+collision hypothesis
+
+dependency:
+    collision hypothesis
+    depends_on prediction result</code></pre>
+
+<p>
+The general trajectory capsule itself does not suddenly become dependent on one particular vessel observation.
+</p>
+
+<div class="callout">
+<strong>Keep reusable expertise separate from case-specific dependency state.</strong>
+</div>
+
+
+<h2>5.21 Running Example I: Caregiver Assistance</h2>
+
+<p>
+Consider a small CareTrace-style application.
+</p>
+
+<p>
+The frontier model handles the natural dialogue and broad clinical reasoning.
+</p>
+
+<p>
+One selected piece of clinical knowledge receives explicit computational authority.
+</p>
+
+
+<h3>Capsule Declaration</h3>
+
+<pre><code>id: home-monitoring-readiness
+
+scope:
+  domain: pediatric_caregiver
+
+applicable_when:
+  requested_disposition: home_monitoring
+
+requires:
+  - responsiveness
+  - hydration_status
+  - respiratory_status
+
+expertise:
+  kind: python
+  binding: caretrace.disposition.evaluate
+
+result:
+  type: disposition_readiness
+
+authority:
+  role: constraining</code></pre>
+
+
+<h3>Current Runtime State</h3>
+
+<pre><code>subject:
+    child-17
+
+responsiveness:
+    adequate
+
+hydration_status:
+    adequate
+
+respiratory_status:
+    UNKNOWN</code></pre>
+
+
+<h3>ACTIVATE</h3>
+
+<p>
+The caregiver asks:
+</p>
+
+<blockquote>
+Can I monitor her at home tonight?
+</blockquote>
+
+<p>
+The home-monitoring capsule becomes applicable.
+</p>
+
+
+<h3>Requirements Check</h3>
+
+<pre><code>responsiveness      ✓
+hydration_status    ✓
+respiratory_status  ?</code></pre>
+
+<p>
+The capsule is applicable but not ready for APPLY.
+</p>
+
+<p>
+The runtime exposes:
+</p>
+
+<pre><code>knowledge_gap:
+    respiratory_status</code></pre>
+
+
+<h3>Dialogue</h3>
+
+<p>
+The conversational expert asks about breathing.
+</p>
+
+<p>
+The caregiver eventually reports:
+</p>
+
+<blockquote>
+I can see the skin pulling in a little between her ribs.
+</blockquote>
+
+
+<h3>ABSORB Observation</h3>
+
+<pre><code>intercostal_retractions = true</code></pre>
+
+<p>
+This makes a respiratory-assessment capsule applicable.
+</p>
+
+
+<h3>APPLY Respiratory Expertise</h3>
+
+<pre><code>result:
+    respiratory_distress_concern
+
+authority:
+    constraining</code></pre>
+
+
+<h3>ABSORB + AUTHORIZE</h3>
+
+<pre><code>home_monitoring:
+    BLOCKED
+
+prompt_evaluation:
+    RECOMMENDABLE</code></pre>
+
+<div class="callout">
+<strong>The LLM might independently reach exactly the same conclusion.</strong><br>
+The value of the capsule is that this application chose not to leave this particular authority boundary entirely to model discretion.
+</div>
+
+
+<h2>5.22 Running Example II: Trajectory Prediction</h2>
+
+<p>
+Now consider a case in which specialized expertise performs the substantive computation.
+</p>
+
+
+<h3>Capsule</h3>
+
+<pre><code>id: trajectory-prediction
+
+scope:
+  domain: maritime
+
+applicable_when:
+  future_motion_required: true
+
+requires:
+  - trajectory_window
+  - timestamps
+
+expertise:
+  kind: python
+  binding: maritime.predict
+
+result:
+  type: trajectory_prediction
+
+authority:
+  role: advisory</code></pre>
+
+
+<h3>Runtime</h3>
+
+<pre><code>ACTIVATE
+    trajectory-prediction
+
+APPLY
+    maritime.predict(...)
+
+RESULT
+    future_track
+
+ABSORB
+    future_track as prediction
+
+ACTIVATE
+    collision-assessment</code></pre>
+
+<p>
+The capsule does not contain the prediction algorithm.
+</p>
+
+<p>
+It tells the runtime when trajectory expertise matters, what it requires, how it is bound, and how to interpret its result.
+</p>
+
+
+<h2>5.23 Running Example III: Planning and Verification</h2>
+
+<p>
+Capsules also allow different expertise to participate sequentially without turning KnaiTai into a workflow engine.
+</p>
+
+<pre><code>Planning Capsule
+    ↓
+ACTIVATE
+    ↓
+APPLY planner
+    ↓
+candidate plan
+    ↓
+ABSORB
+    ↓
+Verification Capsule
+    becomes applicable
+    ↓
+APPLY verifier
+    ↓
+verified / failed
+    ↓
+ABSORB
+    ↓
+AUTHORIZE execution</code></pre>
+
+<p>
+The execution framework may physically call the planner and verifier.
+</p>
+
+<p>
+KnaiTai preserves why each computation became required and what its result established.
+</p>
+
+
+<h2>5.24 A Minimal Public Python API</h2>
+
+<p>
+From an application developer's perspective, the package should remain simple.
+</p>
+
+<pre><code>from knaitai import Runtime
+from knaitai.experts import PythonExpert
+
+
+runtime = Runtime()
+
+runtime.load_capsules(
+    "knowledge/"
+)
+
+
+runtime.register_expert(
+    "trajectory_predictor",
+    PythonExpert(
+        predict_trajectory
+    )
+)
+
+
+case = runtime.new_case(
+    subject="vessel-204"
+)
+
+
+case.observe(
+    trajectory_window=history
+)
+
+
+state = case.update()</code></pre>
+
+<p>
+The developer should not need to manage internal registries, dependency graphs, trace stores, or execution bookkeeping directly.
+</p>
+
+<p>
+The runtime should expose them when inspection is needed, but hide them during ordinary use.
+</p>
+
+
+<h2>5.25 A Minimal v0.1 Architecture</h2>
+
+<p>
+A first implementation does not need dozens of capsule kinds or a large expert ecosystem.
+</p>
+
+<p>
+A useful v0.1 can contain:
+</p>
+
+<pre><code>knaitai/
+
+    capsule.py
+        KnowledgeCapsule
+
+    knowledge.py
+        KnowledgeObject
+
+    experts.py
+        ComputationalExpert
+        PythonExpert
+
+    registry.py
+        CapsuleRegistry
+        ExpertRegistry
+
+    understanding.py
+        UnderstandingState
+
+    runtime.py
+        ACTIVATE
+        APPLY
+        ABSORB
+        AUTHORIZE
+
+    trace.py
+        execution and dependency trace
+
+    loaders.py
+        YAML / JSON capsule loading</code></pre>
+
+<p>
+The minimal proof should demonstrate:
+</p>
+
+<ul>
+  <li>one declarative knowledge capsule;</li>
+  <li>one Python-backed specialized expert;</li>
+  <li>runtime applicability and requirements;</li>
+  <li>structured expert results;</li>
+  <li>ABSORB changing understanding;</li>
+  <li>AUTHORIZE granting or withholding authority;</li>
+  <li>and a trace showing what actually happened.</li>
+</ul>
+
+
+<h2>5.26 What Not to Build Into the Capsule</h2>
+
+<p>
+A capsule should not become a miniature application framework.
+</p>
+
+<p>
+Avoid placing inside the abstraction:
+</p>
+
+<ul>
+  <li>workflow scheduling;</li>
+  <li>network retries;</li>
+  <li>agent messaging;</li>
+  <li>model-routing strategy;</li>
+  <li>database implementation;</li>
+  <li>UI behavior;</li>
+  <li>arbitrary business logic;</li>
+  <li>or the entire internal implementation of specialized experts.</li>
+</ul>
+
+<p>
+These concerns may be referenced or adapted, but they belong beneath or outside the capsule abstraction.
+</p>
+
+<div class="callout">
+<strong>A capsule should say what expertise means to the Knowledge Runtime, not how the entire surrounding software system works.</strong>
+</div>
+
+
+<h2>5.27 Common Design Mistakes</h2>
+
+
+<h3>Making Everything a Capsule</h3>
+
+<p>
+Observations, predictions, hypotheses, questions, and plans are frequently better represented as knowledge objects or expert results. Capsules should package reusable knowledge computation.
+</p>
+
+
+<h3>Making Capsules Domain-Specific Classes</h3>
+
+<p>
+A hierarchy containing dozens of capsule subclasses quickly hard-codes domain semantics into the infrastructure.
+</p>
+
+<p>
+Prefer a small general schema with domain-specific declarations.
+</p>
+
+
+<h3>Putting the Expert Inside the Capsule</h3>
+
+<p>
+A capsule may reference or bind to an implementation, but the abstraction should not require a model, planner, solver, or service to live physically inside it.
+</p>
+
+
+<h3>Confusing Applicability with Readiness</h3>
+
+<p>
+An expert may be relevant while required inputs remain missing.
+</p>
+
+
+<h3>Confusing Result with Truth</h3>
+
+<p>
+A predictor returns a prediction. An LLM may return a hypothesis. A planner returns a candidate plan. The runtime must preserve these distinctions.
+</p>
+
+
+<h3>Giving Every Expert Equal Authority</h3>
+
+<p>
+Expertise should participate according to its declared computational role and the application's authority requirements.
+</p>
+
+
+<h3>Hard-Coding Runtime Subjects into General Knowledge</h3>
+
+<p>
+A rule about rib retractions should be general. The runtime binds that rule to <code>child-17</code> when appropriate.
+</p>
+
+
+<h3>Rebuilding Existing Orchestration</h3>
+
+<p>
+KnaiTai should determine why expertise is required and what its result means. Existing infrastructure can execute the underlying work.
+</p>
+
+
+<h3>Reintroducing an Operator Zoo</h3>
+
+<p>
+The capsule should fit cleanly into the stable A4 abstraction:
+</p>
+
+<pre><code>ACTIVATE
+APPLY
+ABSORB
+AUTHORIZE</code></pre>
+
+<p>
+Prediction, planning, verification, support, challenge, constraint checking, and similar capabilities belong under APPLY or in result semantics.
+</p>
+
+
+<h2>5.28 The Capsule as a Core Programming Abstraction</h2>
+
+<p>
+The full relationship can now be summarized as:
+</p>
+
+<pre><code>INFORMATION
+      ↓
+knowledge construction
+      ↓
+KNOWLEDGE OBJECTS
+      ↓
+current understanding
+      ↓
+
+KNOWLEDGE CAPSULES
+declare:
+    what knowledge matters
+    when it applies
+    what expertise uses it
+    what results mean
+    what authority may follow
+
+      ↓
+
+KNOWLEDGE RUNTIME
+
+    ACTIVATE
+       ↓
+     APPLY
+       ↓
+     ABSORB
+       ↓
+   AUTHORIZE
+
+      ↓
+
+COMPUTATIONAL EXPERTISE
+
+LLM
+predictor
+planner
+solver
+simulator
+verifier
+algorithm
+human</code></pre>
+
+<div class="callout">
+<strong>Central Thesis.</strong><br>
+A Knowledge Capsule is the programmable declaration through which knowledge is connected to computational expertise and given runtime meaning.
+</div>
+
+<p>
+The capsule does not replace the knowledge object, the expert, the runtime, or the orchestration system.
+</p>
+
+<p>
+Its value comes precisely from connecting them while keeping their responsibilities separate.
+</p>
+
 
 <h2>Knowledge Native Thinking</h2>
 
+<p>
+When considering whether something should become a Knowledge Capsule, ask:
+</p>
+
 <ul>
-  <li>What knowledge object does this information represent?</li>
-  <li>What capsule should realize it?</li>
-  <li>How may it contribute to understanding?</li>
-  <li>Which capabilities should it possess?</li>
-  <li>Under what conditions may it activate?</li>
-  <li>What does it depend upon?</li>
-  <li>What question should it create when knowledge is missing?</li>
-  <li>How should it be revised or retired?</li>
-  <li>What trace must it preserve?</li>
+  <li>What reusable knowledge does this capsule represent or reference?</li>
+
+  <li>Under what conditions should it matter?</li>
+
+  <li>What runtime knowledge does it require?</li>
+
+  <li>What computational expertise can put that knowledge to work?</li>
+
+  <li>Where is that expertise implemented?</li>
+
+  <li>What kind of result will it return?</li>
+
+  <li>What does that result establish?</li>
+
+  <li>What authority should it have?</li>
+
+  <li>What provenance and version must be preserved?</li>
 </ul>
 
 <div class="callout">
-<strong>Programming Shift.</strong>
-Move from passing information between components to orchestrating computational units that know what they represent, where they came from, how they may influence understanding, and what must happen when they change.
+<strong>Programming Shift.</strong><br>
+Move from hard-wiring specialized computation into application workflows to declaring the knowledge semantics through which that expertise participates at runtime.
 </div>
+
 
 <h2>Chapter Summary</h2>
 
 <ul>
-  <li>A knowledge object is the semantic abstraction; a knowledge capsule is its runtime realization.</li>
-  <li>A capsule combines payload, provenance, scope, epistemic state, lifecycle, dependencies, capabilities, and understanding contribution.</li>
-  <li>Foundation models both consume and produce capsules.</li>
-  <li>Question capsules make knowledge gaps actionable.</li>
-  <li>Uncertainty capsules make unresolved knowledge computationally explicit.</li>
-  <li>Activation makes a capsule eligible to participate; influence records that it actually changed understanding.</li>
-  <li>Runtime-mediated operations enforce capabilities, record dependencies, and preserve traces.</li>
-  <li>Derived capsules preserve their inputs, operations, and understanding context.</li>
-  <li>Typed dependencies enable incremental revision.</li>
-  <li>Immutable semantic revisions preserve historical traceability.</li>
-  <li>Capsule composition creates higher-level understanding without flattening component roles.</li>
-  <li>The capsule runtime acts as an operating environment for knowledge.</li>
-  <li>Capsule operations suggest the beginnings of a knowledge algebra.</li>
+  <li>A knowledge object represents what is known; a Knowledge Capsule declares how reusable knowledge and computational expertise may participate in the runtime.</li>
+
+  <li>A computational expert performs the specialized computation; the capsule does not need to contain its implementation.</li>
+
+  <li>An expert result records what the computation produced and what it claims to establish.</li>
+
+  <li>Capsules package identity, knowledge, scope, applicability, requirements, expertise binding, result semantics, authority, and provenance.</li>
+
+  <li>General knowledge should remain independent of runtime subjects and be bound to concrete entities only when applicable.</li>
+
+  <li>Capsules can be declared in YAML, JSON, Python, or another suitable representation.</li>
+
+  <li>One general capsule abstraction is preferable to a large hierarchy of observation, question, hypothesis, prediction, and recommendation capsule classes.</li>
+
+  <li>Observations, hypotheses, predictions, plans, and verification outputs are usually knowledge objects or expert results rather than distinct capsule kinds.</li>
+
+  <li>Foundation models can participate as computational experts through the same abstraction as predictors, planners, solvers, simulators, and verifiers.</li>
+
+  <li>ACTIVATE determines whether capsule knowledge and expertise matter now.</li>
+
+  <li>APPLY invokes the appropriate computational expertise.</li>
+
+  <li>ABSORB interprets the result and changes the evolving understanding.</li>
+
+  <li>AUTHORIZE evaluates whether the resulting understanding permits a recommendation, decision, or action.</li>
+
+  <li>Applicability and execution readiness are distinct because required knowledge may still be missing.</li>
+
+  <li>Result semantics preserve distinctions among observations, hypotheses, predictions, plans, and verified properties.</li>
+
+  <li>Authority belongs in the capsule contract because different expertise should exert different computational influence.</li>
+
+  <li>Dependencies created by one particular computation belong primarily to runtime results and understanding, not to the reusable capsule definition.</li>
+
+  <li>Capsule definitions should be versioned so historical computations remain reconstructable.</li>
+
+  <li>Existing workflow and agent infrastructure can execute expert calls while KnaiTai preserves their knowledge semantics.</li>
+
+  <li>The capsule is a core programming abstraction for connecting knowledge to heterogeneous computational expertise.</li>
 </ul>
+
 
 <h2>Discussion Questions</h2>
 
 <ol>
-  <li>How is a knowledge capsule different from an ordinary object containing metadata?</li>
-  <li>Why should understanding contribution be explicit?</li>
-  <li>How does an active capsule differ from an influential capsule?</li>
-  <li>When should uncertainty become its own capsule?</li>
-  <li>Why should questions be represented as capsules rather than only as generated text?</li>
-  <li>What information must a derived capsule preserve?</li>
-  <li>Why are immutable revisions useful?</li>
-  <li>What operations might belong in a future capsule algebra?</li>
+  <li>Why should a Knowledge Capsule be distinct from both a knowledge object and a computational expert?</li>
+
+  <li>What information must a capsule expose for the Knowledge Runtime to use it correctly?</li>
+
+  <li>Why should general domain knowledge remain independent of runtime subjects?</li>
+
+  <li>When should a runtime result become a knowledge object rather than a new capsule?</li>
+
+  <li>Why is one general capsule abstraction preferable to many domain-specific capsule subclasses?</li>
+
+  <li>How should a capsule distinguish applicability from execution readiness?</li>
+
+  <li>Why are result semantics necessary even when an expert returns structured data?</li>
+
+  <li>How should authority differ among an LLM, predictor, planner, constraint checker, and formal verifier?</li>
+
+  <li>What should be declarative in a capsule and what should remain in executable code?</li>
+
+  <li>How can capsules reference external experts without becoming an orchestration framework?</li>
+
+  <li>When does a change require a new capsule version rather than only an update to runtime state?</li>
+
+  <li>Which aspects of an existing AI application could be expressed as capsules without rewriting the underlying models and workflows?</li>
 </ol>
+
 
 <h2>Exercises</h2>
 
-<h3>Exercise 5.1: From Knowledge Object to Capsule</h3>
-<p>Take one knowledge object from Chapter 2 and design its capsule realization, including payload, provenance, scope, lifecycle, capabilities, contribution roles, dependencies, and trace events.</p>
 
-<h3>Exercise 5.2: Implement the Base Capsule</h3>
-<p>Implement an immutable <code>KnowledgeCapsule</code> record with capability checking, dependency inspection, revision linking, and serialization.</p>
+<h3>Exercise 5.1: Separate the Four Concepts</h3>
 
-<h3>Exercise 5.3: Define Capsule Kinds</h3>
-<p>Implement observation, hypothesis, guideline, question, uncertainty, and derived capsules. Specify default capabilities and contribution roles.</p>
+<p>
+For one application, identify:
+</p>
 
-<h3>Exercise 5.4: Program the Lifecycle</h3>
-<p>Implement constructed, grounded, validated, available, active, influential, suspended, superseded, retired, and archived states.</p>
+<ul>
+  <li>three knowledge objects;</li>
+  <li>one Knowledge Capsule;</li>
+  <li>one computational expert;</li>
+  <li>and one expert result.</li>
+</ul>
 
-<h3>Exercise 5.5: Build a Question Capsule</h3>
-<p>Represent one knowledge gap as a question capsule and link it to the hypothesis or decision it affects.</p>
+<p>
+Explain why each belongs to that abstraction.
+</p>
 
-<h3>Exercise 5.6: Create an Uncertainty Capsule</h3>
-<p>Represent an uncertainty that cannot be captured adequately by a single confidence score.</p>
 
-<h3>Exercise 5.7: Create a Derived Capsule</h3>
-<p>Use observations and a guideline or behavior capsule to derive a recommendation or assessment capsule with complete provenance.</p>
+<h3>Exercise 5.2: Declare a General Capsule</h3>
 
-<h3>Exercise 5.8: Propagate a Revision</h3>
-<p>Create a capsule dependency graph and revise one source capsule. Determine which dependents require recomputation, suspension, confidence revision, retirement, or no change.</p>
+<p>
+Write a YAML capsule containing general domain knowledge, applicability, requirements, expertise binding, result semantics, authority, and provenance. Do not include any runtime subject identifier.
+</p>
 
-<h3>Exercise 5.9: Implement a Minimal Runtime</h3>
-<p>Build a runtime supporting registration, activation, contribution, derivation, revision, retirement, and trace retrieval.</p>
 
-<h3>Exercise 5.10: Compose an Understanding Capsule</h3>
-<p>Create a composite assessment capsule from observations, competing hypotheses, one constraint, one human judgment, one uncertainty, and one question capsule.</p>
+<h3>Exercise 5.3: Bind General Knowledge at Runtime</h3>
+
+<p>
+Create two runtime subjects and show how the same general capsule can become applicable to one, both, or neither depending on their current understanding states.
+</p>
+
+
+<h3>Exercise 5.4: Implement a Python Expert</h3>
+
+<p>
+Implement a small Python function that accepts structured runtime context and returns a typed <code>ExpertResult</code>. Register it as the expertise binding of a capsule.
+</p>
+
+
+<h3>Exercise 5.5: Preserve Result Semantics</h3>
+
+<p>
+Create three results containing superficially similar values but produced respectively by an LLM, a predictor, and a verifier. Specify the epistemic status and permitted authority of each.
+</p>
+
+
+<h3>Exercise 5.6: Model Missing Requirements</h3>
+
+<p>
+Create a capsule that is applicable but cannot yet run because one required input is unknown. Show how the runtime represents the missing knowledge and what becomes possible after the requirement is satisfied.
+</p>
+
+
+<h3>Exercise 5.7: Run an A4 Cycle</h3>
+
+<p>
+Using one capsule and one computational expert, trace:
+</p>
+
+<pre><code>ACTIVATE
+    ↓
+APPLY
+    ↓
+ABSORB
+    ↓
+AUTHORIZE</code></pre>
+
+<p>
+State exactly what changes at each stage.
+</p>
+
+
+<h3>Exercise 5.8: Add a Verifier</h3>
+
+<p>
+Create a second capsule whose expertise verifies the first expert's result. Require the verification result before AUTHORIZE grants a consequential action.
+</p>
+
+
+<h3>Exercise 5.9: Separate Runtime Dependencies</h3>
+
+<p>
+Show why a prediction result may depend on one case's observations while the reusable prediction capsule itself does not. Represent both dependency structures correctly.
+</p>
+
+
+<h3>Exercise 5.10: Replace an Expert Implementation</h3>
+
+<p>
+Replace the implementation binding of one capsule, such as changing a simple Python predictor to a trained model or remote service. Identify what parts of the Knowledge Native program should remain unchanged.
+</p>
+
 
 <nav class="chapter-nav">
   <a href="chapter-04.html">← Chapter 4: From Information to Computational Understanding</a>
