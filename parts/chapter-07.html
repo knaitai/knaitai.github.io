@@ -4,24 +4,220 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Chapter 7 — A First Knowledge-Native Program</title>
+
 <style>
 
-:root{--bg:#fbfbf8;--ink:#17201c;--muted:#627069;--accent:#176f52;--soft:#edf6f2;--line:#dfe6e2;--max:1120px;--measure:760px}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.7}
-a{color:var(--accent);text-underline-offset:3px}.site-header,.page,footer{max-width:var(--max);margin:auto;padding-left:28px;padding-right:28px}
-.site-header{padding-top:26px;display:flex;justify-content:space-between}.site-title{font-weight:800}.site-nav a{margin-left:18px;color:var(--muted);text-decoration:none;font-size:.94rem}
-.page{padding-top:72px;padding-bottom:100px}.book-cover{min-height:78vh;display:flex;flex-direction:column;justify-content:center;max-width:900px}
-.kicker,.chapter-label{color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.11em;font-size:.78rem}
-h1{font-size:clamp(3.4rem,8vw,7rem);line-height:.96;letter-spacing:-.065em;margin:18px 0 28px}.page-title{font-size:clamp(2.5rem,5vw,4.3rem)}
-.subtitle,.lead{color:var(--muted);max-width:760px}.subtitle{font-size:clamp(1.25rem,2.5vw,1.8rem);line-height:1.45}.lead{font-size:1.25rem}
-.byline{margin-top:48px}.byline strong{display:block;font-size:1.2rem}.release{margin-top:34px;color:var(--muted);font-size:.92rem}
-.primary-link{display:inline-block;margin-top:28px;padding:11px 16px;border:1px solid var(--accent);border-radius:8px;text-decoration:none;font-weight:700;width:max-content}
-.content{max-width:var(--measure)}.toc{max-width:850px;margin-top:44px}.toc-part{margin-top:52px}.toc-part h2{font-size:1.05rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
-.toc-item{display:grid;grid-template-columns:54px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.toc-number{color:var(--muted)}.toc-item a{color:var(--ink);text-decoration:none;font-weight:700}.toc-item p{margin:4px 0;color:var(--muted);font-size:.95rem}
-.note{margin:32px 0;padding:18px 20px;background:var(--soft);border-radius:10px}.chapter-nav{margin-top:70px;display:flex;justify-content:space-between}.placeholder{color:var(--muted);font-style:italic}
-footer{padding-bottom:48px;color:var(--muted);font-size:.9rem}
-@media(max-width:720px){.site-header{flex-direction:column;gap:14px}.site-nav a{margin:0 14px 0 0}.toc-item{grid-template-columns:40px 1fr}.chapter-nav{flex-direction:column;gap:12px}}
+:root{
+  --bg:#fbfbf8;
+  --ink:#17201c;
+  --muted:#627069;
+  --accent:#176f52;
+  --soft:#edf6f2;
+  --line:#dfe6e2;
+  --max:1120px;
+  --measure:760px
+}
 
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  line-height:1.7
+}
+
+a{
+  color:var(--accent);
+  text-underline-offset:3px
+}
+
+.site-header,
+.page,
+footer{
+  max-width:var(--max);
+  margin:auto;
+  padding-left:28px;
+  padding-right:28px
+}
+
+.site-header{
+  padding-top:26px;
+  display:flex;
+  justify-content:space-between
+}
+
+.site-title{
+  font-weight:800
+}
+
+.site-nav a{
+  margin-left:18px;
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.94rem
+}
+
+.page{
+  padding-top:72px;
+  padding-bottom:100px
+}
+
+.book-cover{
+  min-height:78vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  max-width:900px
+}
+
+.kicker,
+.chapter-label{
+  color:var(--accent);
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.11em;
+  font-size:.78rem
+}
+
+h1{
+  font-size:clamp(3.4rem,8vw,7rem);
+  line-height:.96;
+  letter-spacing:-.065em;
+  margin:18px 0 28px
+}
+
+.page-title{
+  font-size:clamp(2.5rem,5vw,4.3rem)
+}
+
+.subtitle,
+.lead{
+  color:var(--muted);
+  max-width:760px
+}
+
+.subtitle{
+  font-size:clamp(1.25rem,2.5vw,1.8rem);
+  line-height:1.45
+}
+
+.lead{
+  font-size:1.25rem
+}
+
+.byline{margin-top:48px}
+
+.byline strong{
+  display:block;
+  font-size:1.2rem
+}
+
+.release{
+  margin-top:34px;
+  color:var(--muted);
+  font-size:.92rem
+}
+
+.primary-link{
+  display:inline-block;
+  margin-top:28px;
+  padding:11px 16px;
+  border:1px solid var(--accent);
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:700;
+  width:max-content
+}
+
+.content{
+  max-width:var(--measure)
+}
+
+.toc{
+  max-width:850px;
+  margin-top:44px
+}
+
+.toc-part{
+  margin-top:52px
+}
+
+.toc-part h2{
+  font-size:1.05rem;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color:var(--accent)
+}
+
+.toc-item{
+  display:grid;
+  grid-template-columns:54px 1fr;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line)
+}
+
+.toc-number{
+  color:var(--muted)
+}
+
+.toc-item a{
+  color:var(--ink);
+  text-decoration:none;
+  font-weight:700
+}
+
+.toc-item p{
+  margin:4px 0;
+  color:var(--muted);
+  font-size:.95rem
+}
+
+.note{
+  margin:32px 0;
+  padding:18px 20px;
+  background:var(--soft);
+  border-radius:10px
+}
+
+.chapter-nav{
+  margin-top:70px;
+  display:flex;
+  justify-content:space-between
+}
+
+.placeholder{
+  color:var(--muted);
+  font-style:italic
+}
+
+footer{
+  padding-bottom:48px;
+  color:var(--muted);
+  font-size:.9rem
+}
+
+@media(max-width:720px){
+  .site-header{
+    flex-direction:column;
+    gap:14px
+  }
+
+  .site-nav a{
+    margin:0 14px 0 0
+  }
+
+  .toc-item{
+    grid-template-columns:40px 1fr
+  }
+
+  .chapter-nav{
+    flex-direction:column;
+    gap:12px
+  }
+}
 
 .content p,
 .content li,
@@ -45,7 +241,9 @@ footer{padding-bottom:48px;color:var(--muted);font-size:.9rem}
   line-height: 1.72;
 }
 
-.problem-opening p:last-child { margin-bottom: 0; }
+.problem-opening p:last-child {
+  margin-bottom: 0;
+}
 
 .code-box {
   margin: 1.5rem 0;
@@ -87,18 +285,63 @@ footer{padding-bottom:48px;color:var(--muted);font-size:.9rem}
   font-size: 0.79rem;
   cursor: pointer;
 }
-.copy-code-button:hover { border-color: #cbd7d1; background:#fff; color:var(--ink); }
-.copy-code-button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
-.copy-code-button svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
-.copy-code-button.copied { color:var(--accent); }
-.code-box pre { margin:0 !important; padding:1.12rem 1.25rem !important; overflow-x:auto; border:0 !important; border-radius:0 !important; background:transparent !important; }
-.code-box code { font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace; font-size:.9rem; line-height:1.62; }
-.code-box.output-box { background:#fbfbf9; }
-.code-box.output-box .code-box-header { background:#f2f2ee; }
-.code-box.structure-box { background:#faf9fc; }
-.code-box.structure-box .code-box-header { background:#f0edf5; }
 
-/* Two reusable Part III components, aligned with the original book palette. */
+.copy-code-button:hover {
+  border-color: #cbd7d1;
+  background:#fff;
+  color:var(--ink);
+}
+
+.copy-code-button:focus-visible {
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+.copy-code-button svg {
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.copy-code-button.copied {
+  color:var(--accent);
+}
+
+.code-box pre {
+  margin:0 !important;
+  padding:1.12rem 1.25rem !important;
+  overflow-x:auto;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+}
+
+.code-box code {
+  font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  font-size:.9rem;
+  line-height:1.62;
+}
+
+.code-box.output-box {
+  background:#fbfbf9;
+}
+
+.code-box.output-box .code-box-header {
+  background:#f2f2ee;
+}
+
+.code-box.structure-box {
+  background:#faf9fc;
+}
+
+.code-box.structure-box .code-box-header {
+  background:#f0edf5;
+}
+
 .understanding-panel {
   margin: 1.5rem 0 2rem;
   border: 1px solid var(--line);
@@ -107,23 +350,30 @@ footer{padding-bottom:48px;color:var(--muted);font-size:.9rem}
   background: #fff;
   box-shadow: 0 2px 8px rgba(23, 32, 28, 0.05);
 }
+
 .understanding-title {
   padding: .82rem 1rem;
   color: #fff;
   background: var(--accent);
   font-weight: 750;
 }
+
 .understanding-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0,1fr));
 }
+
 .understanding-grid > div {
   min-height: 118px;
   padding: 1rem;
   border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
-.understanding-grid > div:nth-child(2n) { border-right: 0; }
+
+.understanding-grid > div:nth-child(2n) {
+  border-right: 0;
+}
+
 .understanding-grid h4 {
   margin: 0 0 .52rem;
   color: var(--accent);
@@ -131,17 +381,22 @@ footer{padding-bottom:48px;color:var(--muted);font-size:.9rem}
   letter-spacing: .08em;
   text-transform: uppercase;
 }
-.understanding-grid p { margin:.28rem 0; text-align:left; }
+
+.understanding-grid p {
+  margin:.28rem 0;
+  text-align:left;
+}
 
 .knowledge-influence {
   display:grid;
-  grid-template-columns: 178px 1fr;
+  grid-template-columns:178px 1fr;
   margin:1.45rem 0;
   border:1px solid #cfe0d8;
   border-radius:10px;
   overflow:hidden;
   background:#fbfdfc;
 }
+
 .influence-label {
   padding:1rem;
   color:var(--accent);
@@ -151,8 +406,14 @@ footer{padding-bottom:48px;color:var(--muted);font-size:.9rem}
   letter-spacing:.08em;
   text-transform:uppercase;
 }
-.influence-content { padding:1rem 1.1rem; }
-.influence-content p { margin:.35rem 0 0; }
+
+.influence-content {
+  padding:1rem 1.1rem;
+}
+
+.influence-content p {
+  margin:.35rem 0 0;
+}
 
 .principle-card {
   margin:1.7rem 0 2rem;
@@ -161,1055 +422,2370 @@ footer{padding-bottom:48px;color:var(--muted);font-size:.9rem}
   border-radius:10px;
   background:var(--soft);
 }
-.principle-kicker { color:var(--accent); font-size:.76rem; font-weight:800; letter-spacing:.09em; text-transform:uppercase; }
-.principle-statement { margin-top:.3rem; font-size:1.27rem; font-weight:750; line-height:1.4; }
-.callout { margin:1.5rem 0; padding:1.05rem 1.2rem; border-left:4px solid var(--accent); background:var(--soft); }
-.comparison-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:1.5rem 0 2rem; }
-.comparison-card { padding:1.1rem 1.2rem; border:1px solid var(--line); border-radius:10px; background:#fff; }
-.comparison-card.emphasized { border-color:#b9d2c7; background:var(--soft); }
-.comparison-card h3 { margin-top:0; }
-.comparison-card p { margin:.5rem 0; text-align:left; }
-.content table { width:100%; border-collapse:collapse; margin:1.4rem 0 2rem; }
-.content th,.content td { padding:.72rem .78rem; border:1px solid var(--line); vertical-align:top; text-align:left; }
-.content th { background:var(--soft); }
-.content blockquote { margin-left:0; padding:.7rem 1rem; border-left:4px solid var(--accent); background:var(--soft); }
-.content h2 { margin-top:3.1rem; }
-.content h3 { margin-top:2rem; }
+
+.principle-kicker {
+  color:var(--accent);
+  font-size:.76rem;
+  font-weight:800;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+.principle-statement {
+  margin-top:.3rem;
+  font-size:1.27rem;
+  font-weight:750;
+  line-height:1.4;
+}
+
+.callout {
+  margin:1.5rem 0;
+  padding:1.05rem 1.2rem;
+  border-left:4px solid var(--accent);
+  background:var(--soft);
+}
+
+.comparison-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1rem;
+  margin:1.5rem 0 2rem;
+}
+
+.comparison-card {
+  padding:1.1rem 1.2rem;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff;
+}
+
+.comparison-card.emphasized {
+  border-color:#b9d2c7;
+  background:var(--soft);
+}
+
+.comparison-card h3 {
+  margin-top:0;
+}
+
+.comparison-card p {
+  margin:.5rem 0;
+  text-align:left;
+}
+
+.content table {
+  width:100%;
+  border-collapse:collapse;
+  margin:1.4rem 0 2rem;
+}
+
+.content th,
+.content td {
+  padding:.72rem .78rem;
+  border:1px solid var(--line);
+  vertical-align:top;
+  text-align:left;
+}
+
+.content th {
+  background:var(--soft);
+}
+
+.content blockquote {
+  margin-left:0;
+  padding:.7rem 1rem;
+  border-left:4px solid var(--accent);
+  background:var(--soft);
+}
+
+.content h2 {
+  margin-top:3.1rem;
+}
+
+.content h3 {
+  margin-top:2rem;
+}
 
 @media(max-width:720px){
-  .understanding-grid,.comparison-grid { grid-template-columns:1fr; }
-  .understanding-grid > div { border-right:0; }
-  .knowledge-influence { grid-template-columns:1fr; }
-  .code-box pre { padding:1rem !important; }
+  .understanding-grid,
+  .comparison-grid {
+    grid-template-columns:1fr;
+  }
+
+  .understanding-grid > div {
+    border-right:0;
+  }
+
+  .knowledge-influence {
+    grid-template-columns:1fr;
+  }
+
+  .code-box pre {
+    padding:1rem !important;
+  }
 }
 
 </style>
 </head>
+
 <body>
+
 <header class="site-header">
-  <div class="site-title"><a href="../program.html">Programming Knowledge Native AI</a></div>
+  <div class="site-title">
+    <a href="../program.html">Programming Knowledge Native AI</a>
+  </div>
+
   <nav class="site-nav">
     <a href="../contents.html">Contents</a>
     <a href="../front-matter/preface.html">Preface</a>
     <a href="../about.html">About</a>
   </nav>
 </header>
+
 <main class="page">
 <article class="content">
+
 <div class="chapter-label">Chapter 7 · Part III: Programming Knowledge Native AI</div>
 
 <h1 class="page-title">A First Knowledge-Native Program</h1>
 
 <p class="lead">
-Most AI applications are organized around producing an output: an answer, prediction,
-recommendation, plan, or alert. A Knowledge-Native program is organized around something
-more durable: <strong>progressively better understanding</strong>.
+The previous chapters developed the abstractions. We can now write a Knowledge Native program. The program will maintain an explicit understanding, activate knowledge and computational expertise as the situation evolves, apply that expertise, absorb what it establishes, and authorize only those recommendations or actions for which the required computational grounds exist.
 </p>
 
 <div class="principle-card">
-  <div class="principle-kicker">The core idea</div>
+  <div class="principle-kicker">The runtime pattern</div>
   <div class="principle-statement">
-    Knowledge shapes understanding. Understanding shapes action.
+    ACTIVATE → APPLY → ABSORB → AUTHORIZE
   </div>
 </div>
 
 <p>
-The subject of that understanding can be almost anything: a child with new symptoms, a
-vessel operating near a restricted area, a manufacturing process, a software system, a
-scientific phenomenon, or an unfolding business situation. The application may use a
-language model, structured knowledge, learned models, rules, simulations, verifiers, or
-only a subset of them. What makes it Knowledge Native is not the presence of every
-component. It is that explicit knowledge repeatedly changes what the system understands
-and therefore what it computes next.
+The important point is not that every application must use an LLM, ontology, rule engine, predictor, planner, or verifier. Different applications need different expertise. The common programming model is that knowledge determines what matters, appropriate expertise performs the computation, its result becomes part of the evolving understanding, and that understanding determines what the system may do next.
 </p>
 
-<h2>7.1 The Computational Object Is Understanding</h2>
+
+<h2>7.1 The Program We Are Building</h2>
 
 <p>
-In this book, <strong>understanding</strong> means an explicit, evolving representation of
-what is currently believed about an entity, situation, process, or phenomenon. It includes:
+Our first program needs only a few abstractions:
 </p>
 
-<ul>
-  <li>observations and their sources;</li>
-  <li>entities, events, and relationships;</li>
-  <li>candidate interpretations and competing hypotheses;</li>
-  <li>supporting and conflicting evidence;</li>
-  <li>uncertainties and unresolved questions;</li>
-  <li>constraints, applicable procedures, and possible actions; and</li>
-  <li>the provenance of important conclusions.</li>
-</ul>
+<pre data-label="Minimal Knowledge Native Program" data-box="structure"><code>KnowledgeObject
+    something known, observed,
+    predicted, proposed, or established
 
-<p>
-This is more than conversation state, model context, or a collection of retrieved passages.
-It is the system's current computable account of the thing it is trying to understand.
-</p>
+KnowledgeCapsule
+    reusable declaration of
+    knowledge + applicability +
+    expertise + result semantics
 
-<pre data-label="The Knowledge-Native Computation" data-box="structure"><code>Observations
-      ↓
-Current understanding
-      ↓
-Relevant knowledge becomes influential
-      ↓
-Understanding is expanded, constrained, challenged, or revised
-      ↓
-The next computation is selected
-      ↓
-New observation, inference, verification, prediction, or action
-      ↓
-Improved understanding
-      ↓
-...</code></pre>
+ComputationalExpert
+    performs a bounded computation
 
-<p>
-The loop continues until the understanding is sufficient for a useful action. Different
-applications may end in a recommendation, warning, prediction, explanation, plan, or
-decision. Those outputs are projections from the understanding, not the primary
-computational object.
-</p>
+UnderstandingState
+    current computational understanding
 
-<h2>7.2 Knowledge Does More Than Supply Information</h2>
-
-<p>
-A conventional system often treats knowledge as content to retrieve and place into a model
-prompt. A Knowledge-Native system treats knowledge as an active computational influence.
-Different knowledge can have different consequences:
-</p>
-
-<table>
-  <thead>
-    <tr>
-      <th>Form of knowledge</th>
-      <th>How it shapes computation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Ontology or terminology</td>
-      <td>Normalizes meaning, identifies equivalence, and exposes relevant categories or relations.</td>
-    </tr>
-    <tr>
-      <td>Guideline or process knowledge</td>
-      <td>Determines what must be established next and which sequence is appropriate.</td>
-    </tr>
-    <tr>
-      <td>Rules and policies</td>
-      <td>Derive consequences, prohibit invalid actions, and establish escalation conditions.</td>
-    </tr>
-    <tr>
-      <td>Structured relational knowledge</td>
-      <td>Connects entities, events, places, roles, and prior observations.</td>
-    </tr>
-    <tr>
-      <td>Learned models</td>
-      <td>Contribute probabilistic classifications, forecasts, similarities, and anomaly scores.</td>
-    </tr>
-    <tr>
-      <td>Scientific or physical models</td>
-      <td>Rule out impossible explanations and test candidate futures.</td>
-    </tr>
-    <tr>
-      <td>Historical or experiential knowledge</td>
-      <td>Supplies precedent, expected patterns, and comparable cases.</td>
-    </tr>
-    <tr>
-      <td>Verification knowledge</td>
-      <td>Challenges unsupported claims, contradictions, and missing evidence.</td>
-    </tr>
-  </tbody>
-</table>
-
-<div class="callout">
-<strong>Design criterion.</strong> Every knowledge source should earn its place by changing
-the computation. It should alter what is considered, what is inferred, what is asked,
-what is rejected, what is verified, or what happens next.
-</div>
-
-<h2>7.3 A Minimal Programming Pattern</h2>
-
-<p>
-The generic program is not tied to dialogue, medicine, or operational intelligence.
-It repeatedly improves an explicit understanding.
-</p>
-
-<pre data-label="Python — Generic Knowledge-Native Loop"><code class="language-python">understanding = Understanding(subject=subject)
-
-while not understanding.is_sufficient():
-    observations = observe(subject, understanding)
-    understanding.add(observations)
-
-    influences = knowledge.select_for(understanding)
-
-    for influence in influences:
-        understanding = influence.apply(understanding)
-
-    next_step = understanding.next_computation()
-    result = execute(next_step, understanding)
-    understanding.integrate(result)
-
-return understanding.project(required_output)
+Runtime
+    ACTIVATE
+    APPLY
+    ABSORB
+    AUTHORIZE
 </code></pre>
 
 <p>
-The individual operations may be implemented by different technologies. A language model
-may interpret an observation. An ontology may normalize it. A learned model may classify
-a pattern. A rule may trigger escalation. A verifier may reject a hypothesis. The runtime's
-job is not merely to orchestrate tools. It is to make the influence of knowledge on the
-evolving understanding explicit and inspectable.
+These abstractions deliberately hide a great deal.
 </p>
-
-<h2>7.4 Example One: An After-Hours Caregiver Assistant</h2>
 
 <p>
-Consider an assistant for a caregiver deciding what to do when a child becomes unwell
-after normal clinic hours. This is not an AI doctor and does not attempt to make a final
-diagnosis. Its job is to progressively improve the understanding of the child's situation
-until it can provide an appropriate next step: continue home observation, contact an
-after-hours clinician, seek urgent evaluation, or call emergency services.
+The program does not need to know how an LLM provider schedules inference, how a trajectory model executes on a GPU, how a planner searches its state space, or how a verifier proves a property.
 </p>
 
-<h3>Stage 1: An Initial, Weak Understanding</h3>
+<p>
+It needs to know:
+</p>
+
+<ul>
+  <li>when that expertise matters;</li>
+  <li>what knowledge it requires;</li>
+  <li>what it can establish;</li>
+  <li>how to interpret its result;</li>
+  <li>and what authority that result may contribute.</li>
+</ul>
+
+
+<h2>7.2 A Small Runtime</h2>
+
+<p>
+We begin with a deliberately small Python representation.
+</p>
+
+<pre data-label="Python — Core Types"><code class="language-python">from dataclasses import dataclass, field
+from typing import Any, Callable
+
+
+@dataclass
+class KnowledgeObject:
+    key: str
+    value: Any
+    status: str
+    provenance: str
+
+
+@dataclass
+class ExpertResult:
+    result_type: str
+    payload: dict[str, Any]
+    epistemic_status: str
+    expert_id: str
+    provenance: list[str] = field(default_factory=list)
+
+
+@dataclass
+class Understanding:
+    subject: str
+    facts: dict[str, KnowledgeObject] = field(default_factory=dict)
+    results: list[ExpertResult] = field(default_factory=list)
+    gaps: set[str] = field(default_factory=set)
+    authority: dict[str, str] = field(default_factory=dict)
+
+    def value(self, key):
+        item = self.facts.get(key)
+        return item.value if item else None
+
+    def known(self, key):
+        return key in self.facts
+
+
+@dataclass
+class ComputationalExpert:
+    id: str
+    fn: Callable[[Understanding], ExpertResult]
+
+    def apply(self, understanding):
+        return self.fn(understanding)
+
+
+@dataclass
+class KnowledgeCapsule:
+    id: str
+    applicable_when: Callable[[Understanding], bool]
+    requires: list[str]
+    expert_id: str
+    result_type: str
+    authority_role: str = "advisory"
+</code></pre>
+
+<p>
+This is not intended as the final KnaiTai API. It exposes just enough structure to make the programming model concrete.
+</p>
+
+
+<h2>7.3 Implementing A4</h2>
+
+<p>
+The runtime can now implement the four semantic operations.
+</p>
+
+
+<h3>ACTIVATE</h3>
+
+<pre data-label="Python — ACTIVATE"><code class="language-python">def activate(capsules, understanding):
+
+    active = []
+
+    for capsule in capsules:
+
+        if not capsule.applicable_when(understanding):
+            continue
+
+        missing = [
+            requirement
+            for requirement in capsule.requires
+            if not understanding.known(requirement)
+        ]
+
+        active.append({
+            "capsule": capsule,
+            "ready": not missing,
+            "missing": missing
+        })
+
+    return active
+</code></pre>
+
+<p>
+ACTIVATE does two things.
+</p>
+
+<p>
+It determines which reusable knowledge/expertise declarations apply to the current situation, and it exposes missing requirements when relevant expertise is not yet ready to run.
+</p>
+
+
+<h3>APPLY</h3>
+
+<pre data-label="Python — APPLY"><code class="language-python">def apply(active_item, experts, understanding):
+
+    capsule = active_item["capsule"]
+
+    if not active_item["ready"]:
+        return None
+
+    expert = experts[capsule.expert_id]
+
+    return expert.apply(understanding)
+</code></pre>
+
+<p>
+APPLY knows almost nothing about the expert's implementation.
+</p>
+
+<p>
+The expert could internally call:
+</p>
+
+<pre data-label="Possible Expert Implementations" data-box="structure"><code>Claude or another frontier LLM
+PyDatalog
+OR-Tools
+a trajectory transformer
+a numerical simulator
+a constraint solver
+a model checker
+SQL
+ordinary Python
+a remote API
+a human review workflow
+</code></pre>
+
+<p>
+That heterogeneity is hidden behind the expert interface.
+</p>
+
+
+<h3>ABSORB</h3>
+
+<pre data-label="Python — ABSORB"><code class="language-python">def absorb(understanding, result):
+
+    if result is None:
+        return understanding
+
+    understanding.results.append(result)
+
+    for key, value in result.payload.items():
+
+        understanding.facts[key] = KnowledgeObject(
+            key=key,
+            value=value,
+            status=result.epistemic_status,
+            provenance=result.expert_id
+        )
+
+        understanding.gaps.discard(key)
+
+    return understanding
+</code></pre>
+
+<p>
+This first version is intentionally simple.
+</p>
+
+<p>
+A production ABSORB implementation would also preserve dependencies, supersession, conflicts, assumptions, validity scope, and richer epistemic semantics.
+</p>
+
+<p>
+The important point is conceptual:
+</p>
+
+<div class="callout">
+<strong>ABSORB is not storing another output.</strong><br>
+It changes what the running system now understands.
+</div>
+
+
+<h3>AUTHORIZE</h3>
+
+<pre data-label="Python — AUTHORIZE"><code class="language-python">def authorize(
+    understanding,
+    target,
+    requirements
+):
+
+    missing = [
+        requirement
+        for requirement in requirements
+        if not understanding.known(requirement)
+    ]
+
+    if missing:
+        understanding.authority[target] = "WITHHELD"
+
+        return {
+            "target": target,
+            "allowed": False,
+            "missing": missing
+        }
+
+    understanding.authority[target] = "ALLOWED"
+
+    return {
+        "target": target,
+        "allowed": True,
+        "missing": []
+    }
+</code></pre>
+
+<p>
+This too is deliberately minimal.
+</p>
+
+<p>
+Real authority conditions may require particular expert results, successful verification, absence of blocking constraints, human approval, or other domain-specific assurance.
+</p>
+
+
+<h2>7.4 The Generic Runtime Loop</h2>
+
+<p>
+The pieces now form a small Knowledge Native loop.
+</p>
+
+<pre data-label="Python — A4 Runtime Loop"><code class="language-python">def update(
+    understanding,
+    capsules,
+    experts,
+    authority_target=None,
+    authority_requirements=None
+):
+
+    active = activate(
+        capsules,
+        understanding
+    )
+
+    for item in active:
+
+        if not item["ready"]:
+
+            understanding.gaps.update(
+                item["missing"]
+            )
+
+            continue
+
+        result = apply(
+            item,
+            experts,
+            understanding
+        )
+
+        understanding = absorb(
+            understanding,
+            result
+        )
+
+    authority = None
+
+    if authority_target:
+
+        authority = authorize(
+            understanding,
+            authority_target,
+            authority_requirements or []
+        )
+
+    return understanding, authority
+</code></pre>
+
+<p>
+The runtime does not ask one model to perform every operation.
+</p>
+
+<p>
+It also does not prescribe a fixed chain of experts.
+</p>
+
+<p>
+Each update begins again from the current understanding.
+</p>
+
+<div class="principle-card">
+  <div class="principle-kicker">The important consequence</div>
+  <div class="principle-statement">
+    What computes next is a function of what the system understands now.
+  </div>
+</div>
+
+
+<h2>7.5 Example One: An After-Hours Caregiver Assistant</h2>
+
+<p>
+Consider a caregiver assistant for a parent trying to decide what to do when a child becomes unwell after normal clinic hours.
+</p>
+
+<p>
+The foundation model can perform most of the conversational work. It can interpret descriptions, maintain dialogue, explain terminology, and reason broadly about the situation.
+</p>
+
+<p>
+Knowledge Native architecture does not attempt to replace that capability.
+</p>
+
+<p>
+Instead, the application makes selected knowledge computationally explicit where the developer wants stronger control over the recommendation boundary.
+</p>
+
+
+<h3>Stage 1: The Caregiver's Initial Situation</h3>
 
 <blockquote>
-“My four-year-old has had a fever since yesterday and now has a rash.”
+“My six-year-old has had a fever and threw up twice. She's drinking now and watching TV. Can I just monitor her tonight?”
 </blockquote>
 
 <p>
-A language model can extract an initial representation:
+The conversational expert constructs observations:
 </p>
+
+<pre data-label="Runtime Observations"><code>subject:
+    child-17
+
+age:
+    6
+
+fever:
+    true
+
+vomiting:
+    2 episodes
+
+responsive:
+    true
+
+drinking:
+    true
+
+requested_disposition:
+    home_monitoring
+</code></pre>
 
 <div class="understanding-panel">
   <div class="understanding-title">Current understanding · U<sub>0</sub></div>
+
   <div class="understanding-grid">
+
     <div>
-      <h4>Known</h4>
-      <p>Child, age 4</p>
-      <p>Fever since yesterday</p>
-      <p>New rash</p>
+      <h4>Observed</h4>
+      <p>Fever</p>
+      <p>Two vomiting episodes</p>
+      <p>Responsive</p>
+      <p>Drinking fluids</p>
     </div>
+
     <div>
       <h4>Unknown</h4>
-      <p>Temperature and trend</p>
-      <p>Appearance of rash</p>
-      <p>Alertness and breathing</p>
-      <p>Hydration and other symptoms</p>
+      <p>Respiratory status</p>
     </div>
+
     <div>
-      <h4>Possible interpretations</h4>
-      <p>Common viral illness</p>
-      <p>Medication or allergic reaction</p>
-      <p>Other infectious process</p>
+      <h4>Requested action</h4>
+      <p>Home monitoring</p>
     </div>
+
     <div>
-      <h4>Current action</h4>
-      <p>Not yet determined</p>
+      <h4>Authority</h4>
+      <p>Not yet evaluated</p>
     </div>
+
   </div>
 </div>
 
-<p>
-A frontier model could immediately produce a plausible response. The Knowledge-Native
-program does something different: it asks which knowledge should shape this incomplete
-understanding now.
-</p>
 
-<h3>Stage 2: Semantic Knowledge Improves Meaning</h3>
+<h3>Stage 2: Declare the Critical Knowledge</h3>
 
 <p>
-A clinical terminology such as SNOMED CT can normalize the caregiver's language into
-explicit concepts. It can distinguish fever from measured temperature, rash from a
-specific rash morphology, and shortness of breath from noisy breathing. It can also expose
-related concepts that may become relevant.
+The application contains a general disposition capsule.
 </p>
-
-<pre data-label="Semantic Influence" data-box="structure"><code>Caregiver phrase
-    "fever and a rash"
-          ↓
-Normalized concepts
-    fever
-    cutaneous eruption
-    pediatric patient
-          ↓
-Related distinctions become computable
-    duration
-    distribution
-    blanching
-    associated breathing difficulty
-    altered responsiveness</code></pre>
 
 <p>
-The ontology has not made a decision. It has improved the meaning of the observations and
-made the next knowledge applicable.
+Notice that the declaration contains no reference to <code>child-17</code>.
 </p>
 
-<h3>Stage 3: Triage Knowledge Determines What Matters Next</h3>
+<pre data-label="YAML — General Disposition Capsule"><code>id: home-monitoring-readiness
 
-<p>
-Pediatric triage knowledge now shapes the computation. It does not simply provide a page
-of advice. It identifies the unresolved evidence that would materially change the next
-action.
-</p>
+scope:
+  domain: pediatric_caregiver
 
-<div class="knowledge-influence">
-  <div class="influence-label">Knowledge now influential</div>
-  <div class="influence-content">
-    <strong>Pediatric fever-and-rash triage procedure</strong>
-    <p>Prioritize breathing, responsiveness, hydration, rapid deterioration, and concerning
-    rash characteristics before discussing routine home care.</p>
-  </div>
+applicable_when:
+  requested_disposition: home_monitoring
+
+requires:
+  - responsiveness
+  - hydration_status
+  - respiratory_status
+
+expertise:
+  id: home_monitoring_evaluator
+
+result:
+  type: disposition_readiness
+
+authority:
+  role: constraining
+</code></pre>
+
+<div class="callout">
+<strong>The knowledge is general.</strong><br>
+The runtime binds it to the particular child only because the current situation makes the capsule applicable.
 </div>
 
+
+<h3>Stage 3: ACTIVATE Exposes Missing Knowledge</h3>
+
 <p>
-The understanding now contains a specific next objective:
+The caregiver has asked whether home monitoring is appropriate.
 </p>
+
+<p>
+ACTIVATE therefore considers the disposition capsule.
+</p>
+
+<pre data-label="ACTIVATE Result" data-box="structure"><code>home-monitoring-readiness
+
+applicable:
+    yes
+
+requirements:
+
+    responsiveness
+        ✓
+
+    hydration_status
+        approximately established
+
+    respiratory_status
+        UNKNOWN
+
+activation:
+    NOT_READY
+</code></pre>
 
 <div class="understanding-panel">
-  <div class="understanding-title">Improved understanding · U<sub>1</sub></div>
+  <div class="understanding-title">Updated understanding · U<sub>1</sub></div>
+
   <div class="understanding-grid">
+
     <div>
       <h4>Preserved</h4>
-      <p>Age 4</p>
-      <p>Fever since yesterday</p>
-      <p>New rash</p>
-    </div>
-    <div>
-      <h4>Priority gaps</h4>
-      <p>Breathing difficulty?</p>
-      <p>Hard to wake or unusually limp?</p>
-      <p>Rash that does not fade under pressure?</p>
-      <p>Rapid worsening?</p>
-    </div>
-    <div>
-      <h4>Constraint</h4>
-      <p>Do not give routine reassurance before red flags are resolved.</p>
-    </div>
-    <div>
-      <h4>Next computation</h4>
-      <p>Obtain the highest-value missing observations.</p>
-    </div>
-  </div>
-</div>
-
-<p>
-A language model may phrase the caregiver-facing questions naturally, but the knowledge
-determines what those questions must establish.
-</p>
-
-<pre data-label="Generated Question Shaped by Knowledge" data-box="output"><code>Is your child having any trouble breathing, unusually difficult to wake,
-or acting much less responsive than normal? Also, when you press a clear
-glass against the rash, does it fade or remain visible?</code></pre>
-
-<h3>Stage 4: New Evidence Activates Rules</h3>
-
-<p>
-Suppose the caregiver reports that the child is alert and breathing normally, but the rash
-remains visible under pressure. That observation changes the understanding.
-</p>
-
-<pre data-label="New Observation"><code>{
-  "alertness": "normal",
-  "breathing": "normal",
-  "rash_response_to_pressure": "does_not_fade",
-  "source": "caregiver"
-}</code></pre>
-
-<p>
-A safety rule now becomes influential:
-</p>
-
-<pre data-label="Rule Influence" data-box="structure"><code>IF
-    fever is present
-AND
-    rash does not fade under pressure
-THEN
-    urgent in-person assessment is required
-    routine home-care advice is no longer sufficient</code></pre>
-
-<div class="understanding-panel">
-  <div class="understanding-title">Improved understanding · U<sub>2</sub></div>
-  <div class="understanding-grid">
-    <div>
-      <h4>Established evidence</h4>
       <p>Fever</p>
-      <p>New non-fading rash</p>
-      <p>Normal breathing</p>
-      <p>Normal responsiveness</p>
+      <p>Vomiting</p>
+      <p>Responsive</p>
+      <p>Taking fluids</p>
     </div>
+
     <div>
-      <h4>Derived consequence</h4>
-      <p>Urgent in-person evaluation</p>
+      <h4>Knowledge gap</h4>
+      <p>Respiratory status</p>
     </div>
+
     <div>
-      <h4>Rejected action</h4>
-      <p>Routine home monitoring alone</p>
+      <h4>Authority</h4>
+      <p>Home monitoring withheld</p>
     </div>
+
     <div>
-      <h4>Explanation basis</h4>
-      <p>Fever plus a non-fading rash requires prompt assessment.</p>
+      <h4>Relevant expertise</h4>
+      <p>Respiratory assessment</p>
     </div>
+
   </div>
 </div>
 
 <p>
-The system can now generate a calm, direct caregiver-facing response. The final language is
-generative; the decision and its basis are knowledge-shaped.
+The crucial point is not that a frontier model is incapable of asking about breathing.
 </p>
 
-<h3>Stage 5: Other Knowledge May Become Relevant Later</h3>
-
 <p>
-If the situation instead supported home observation and the caregiver asked about fever
-relief, medication knowledge could become influential. Age, weight, current medication,
-allergy, dehydration, and contraindication knowledge would shape that computation. The
-important point is that all available knowledge is not applied at once. Different knowledge
-becomes influential as the understanding evolves.
+It very likely can.
 </p>
 
-<pre data-label="Medical Knowledge Progression" data-box="structure"><code>Language interpretation
-        ↓
-Clinical terminology
-        ↓
-Pediatric triage procedure
-        ↓
-Safety and escalation rules
-        ↓
-Medication knowledge, if needed
-        ↓
-Explanation and follow-up knowledge</code></pre>
-
-<h2>7.5 Example Two: Operational Intelligence</h2>
-
 <p>
-Now consider a completely different application: continuous operational understanding of
-a maritime area. The system receives AIS tracks, vessel metadata, geographic context,
-weather, historical patterns, and analyst reports. Its purpose is not simply to label one
-event. It must progressively improve its understanding of what vessels are doing, whether
-their activity is coordinated, and what operational interpretation is justified.
-</p>
-
-<h3>Stage 1: Atomic Events Produce an Initial Understanding</h3>
-
-<p>
-The system observes:
-</p>
-
-<ul>
-  <li>three cargo vessels slow sharply near a narrow maritime approach;</li>
-  <li>the vessels remain in the area for several hours;</li>
-  <li>their tracks form a loose line across the approach; and</li>
-  <li>one vessel intermittently loses AIS transmission.</li>
-</ul>
-
-<div class="understanding-panel">
-  <div class="understanding-title">Current understanding · U<sub>0</sub></div>
-  <div class="understanding-grid">
-    <div>
-      <h4>Observed events</h4>
-      <p>Speed reduction</p>
-      <p>Extended presence</p>
-      <p>Spatial alignment</p>
-      <p>AIS interruption</p>
-    </div>
-    <div>
-      <h4>Possible interpretations</h4>
-      <p>Congestion</p>
-      <p>Weather response</p>
-      <p>Coordinated loitering</p>
-      <p>Access interference</p>
-    </div>
-    <div>
-      <h4>Uncertainty</h4>
-      <p>Coordination unknown</p>
-      <p>Intent unknown</p>
-      <p>Environmental cause unresolved</p>
-    </div>
-    <div>
-      <h4>Current action</h4>
-      <p>Continue assessment</p>
-    </div>
-  </div>
-</div>
-
-<p>
-A language model might summarize the pattern or propose a blockade hypothesis. But the
-system does not accept a compelling narrative as understanding. It progressively brings
-different knowledge to bear.
-</p>
-
-<h3>Stage 2: Structured Maritime Knowledge Adds Context</h3>
-
-<p>
-A maritime knowledge graph identifies the vessels, their types, ownership relationships,
-flag states, recent ports, the nearby waterway, relevant jurisdictional boundaries, and
-known facilities.
-</p>
-
-<pre data-label="Relational Influence" data-box="structure"><code>Tracks and vessel identifiers
-          ↓
-Vessel registry and ownership knowledge
-          ↓
-Geographic and jurisdictional knowledge
-          ↓
-Recent port-call and association knowledge
-          ↓
-The events become an attributed operational situation</code></pre>
-
-<p>
-This may reveal that the three vessels share an operator, departed from the same port
-within a short interval, and are positioned at the only deep-water approach to a facility.
-The understanding has changed materially.
-</p>
-
-<h3>Stage 3: Learned Behavior Knowledge Tests the Pattern</h3>
-
-<p>
-A learned behavior model compares the event subgraph with previously learned templates.
-It returns scores rather than a final conclusion.
-</p>
-
-<pre data-label="Learned Model Output"><code>{
-  "extended_loitering": 0.91,
-  "coordinated_positioning": 0.82,
-  "routine_congestion": 0.28,
-  "weather_avoidance": 0.19
-}</code></pre>
-
-<p>
-These scores become explicit evidence in the understanding. They strengthen some
-hypotheses and weaken others, but do not determine intent by themselves.
-</p>
-
-<h3>Stage 4: Environmental Knowledge Challenges the Hypothesis</h3>
-
-<p>
-Weather and current models show normal conditions. Port data shows no queue. Navigational
-constraints do not explain the alignment. This knowledge removes plausible benign
-explanations.
+The stronger architectural statement is:
 </p>
 
 <div class="knowledge-influence">
-  <div class="influence-label">Knowledge now influential</div>
+  <div class="influence-label">Knowledge now consequential</div>
+
   <div class="influence-content">
-    <strong>Environmental and operational baselines</strong>
-    <p>No severe weather, port closure, navigational warning, or ordinary congestion
-    accounts for the observed pattern.</p>
+    <strong>Respiratory status is required for this authority boundary.</strong>
+    <p>The application will not authorize a home-monitoring recommendation until that knowledge is established, regardless of whether the language model happens to ask about it on its own.</p>
   </div>
 </div>
+
+
+<h3>Stage 4: APPLY Conversational Expertise</h3>
+
+<p>
+The language model remains the natural expert for asking the caregiver the required question.
+</p>
+
+<pre data-label="Generated Caregiver Question" data-box="output"><code>How is she breathing?
+
+Is it comfortable and normal for her, or is she breathing much faster
+than usual or pulling in around or between the ribs?
+</code></pre>
+
+<p>
+The caregiver answers:
+</p>
+
+<blockquote>
+“She is breathing faster than normal.”
+</blockquote>
+
+
+<h3>Stage 5: ABSORB Changes the Understanding</h3>
+
+<pre data-label="New Observation"><code>{
+  "key": "breathing_rate_description",
+  "value": "faster_than_normal",
+  "status": "caregiver_reported",
+  "provenance": "conversation:turn_2"
+}
+</code></pre>
+
+<p>
+The result is absorbed.
+</p>
+
+<p>
+That new state makes more specific respiratory expertise applicable.
+</p>
+
+<pre data-label="Runtime Transition" data-box="structure"><code>ABSORB
+
+    faster breathing
+
+        ↓
+
+understanding changed
+
+        ↓
+
+ACTIVATE
+
+    respiratory assessment expertise
+</code></pre>
+
+
+<h3>Stage 6: APPLY Again</h3>
+
+<p>
+The respiratory expert needs more discriminating information about work of breathing.
+</p>
+
+<p>
+The conversational model asks:
+</p>
+
+<pre data-label="Generated Question" data-box="output"><code>Do you see the skin pulling in between or underneath her ribs
+when she breathes?
+</code></pre>
+
+<p>
+The caregiver replies:
+</p>
+
+<blockquote>
+“Yes. I can see it pulling in a little between her ribs.”
+</blockquote>
+
+
+<h3>Stage 7: ABSORB a More Consequential Observation</h3>
+
+<pre data-label="New Observation"><code>{
+  "key": "intercostal_retractions",
+  "value": true,
+  "status": "caregiver_reported",
+  "provenance": "conversation:turn_3"
+}
+</code></pre>
 
 <div class="understanding-panel">
-  <div class="understanding-title">Improved understanding · U<sub>1</sub></div>
+  <div class="understanding-title">Updated understanding · U<sub>2</sub></div>
+
   <div class="understanding-grid">
+
     <div>
-      <h4>Stronger hypotheses</h4>
-      <p>Coordinated positioning</p>
-      <p>Deliberate access interference</p>
+      <h4>Observed</h4>
+      <p>Fever</p>
+      <p>Vomiting</p>
+      <p>Faster breathing</p>
+      <p>Intercostal retractions</p>
     </div>
+
     <div>
-      <h4>Weakened hypotheses</h4>
-      <p>Weather response</p>
-      <p>Routine congestion</p>
+      <h4>Clinical interpretation</h4>
+      <p>Respiratory-distress concern</p>
     </div>
+
     <div>
-      <h4>Supporting evidence</h4>
-      <p>Shared operator</p>
-      <p>Coordinated arrival</p>
-      <p>Strategic location</p>
-      <p>Behavior-model similarity</p>
+      <h4>Constrained action</h4>
+      <p>Routine home monitoring</p>
     </div>
+
     <div>
-      <h4>Remaining gap</h4>
-      <p>Is the pattern persistent and responsive to approaching traffic?</p>
+      <h4>Authority direction</h4>
+      <p>Escalation recommendation</p>
     </div>
+
   </div>
 </div>
 
-<h3>Stage 5: Operational Knowledge Determines the Next Computation</h3>
+
+<h3>Stage 8: AUTHORIZE the Recommendation</h3>
 
 <p>
-Operational doctrine or an analyst-authored behavior template specifies what would
-distinguish passive loitering from deliberate access interference:
+Relevant clinical escalation knowledge now contributes to the authority decision.
 </p>
 
-<ul>
-  <li>persistence across a meaningful interval;</li>
-  <li>placement relative to the navigable channel;</li>
-  <li>coordinated movement among multiple vessels;</li>
-  <li>reaction to approaching traffic; and</li>
-  <li>absence of a credible benign explanation.</li>
-</ul>
+<pre data-label="Authority Evaluation" data-box="structure"><code>target:
+    home_monitoring
+
+result:
+    BLOCKED
+
+
+target:
+    prompt_in_person_evaluation
+
+required basis:
+    respiratory distress concern
+
+result:
+    ALLOWED
+</code></pre>
 
 <p>
-That knowledge determines what the system should compute next. It may request a fresh
-satellite image, examine heading changes when another vessel approaches, or compare the
-formation against historical operational cases.
+The language model may now produce the caregiver-facing response.
 </p>
-
-<pre data-label="Next Computation Shaped by Knowledge" data-box="structure"><code>Do not merely ask:
-    "What is happening?"
-
-Compute:
-    whether the formation persists
-    whether vessels coordinate course changes
-    whether approaching traffic is displaced
-    whether benign explanations remain viable</code></pre>
-
-<h3>Stage 6: Verification Produces an Operational Assessment</h3>
 
 <p>
-Suppose subsequent observations show that the formation persists, two vessels adjust
-position together when traffic approaches, and commercial traffic diverts around them.
-A verifier checks that every required criterion is supported by traceable evidence.
+The generation is important, but it is no longer the entire computation.
 </p>
 
-<div class="understanding-panel">
-  <div class="understanding-title">Improved understanding · U<sub>2</sub></div>
-  <div class="understanding-grid">
-    <div>
-      <h4>Assessment</h4>
-      <p>Coordinated access interference</p>
-    </div>
-    <div>
-      <h4>Supporting evidence</h4>
-      <p>Persistent formation</p>
-      <p>Coordinated reaction</p>
-      <p>Traffic displacement</p>
-      <p>No credible benign cause</p>
-    </div>
-    <div>
-      <h4>Uncertainty retained</h4>
-      <p>Strategic intent not proven</p>
-      <p>Command relationship unknown</p>
-    </div>
-    <div>
-      <h4>Operational consequence</h4>
-      <p>Elevate alert and prioritize collection</p>
-    </div>
-  </div>
+<div class="callout">
+<strong>The distinction is subtle but important.</strong><br>
+The claim is not that a frontier LLM could not have reached the same conclusion. The claim is that this application chose to make selected clinical knowledge and its authority consequence explicit rather than optional behavior inside one model invocation.
 </div>
 
+
+<h2>7.6 What the Caregiver Example Demonstrates</h2>
+
 <p>
-A language model can now generate an analyst briefing, but the briefing is a view over the
-evolved understanding:
+The example contains several different kinds of intelligence:
 </p>
-
-<pre data-label="Generated Operational Brief" data-box="output"><code>Three commonly operated cargo vessels are maintaining a coordinated
-formation across the primary deep-water approach. The formation has
-persisted, adjusted collectively in response to approaching traffic,
-and caused commercial vessels to divert. Weather, port congestion,
-and navigational restrictions do not explain the activity. The current
-assessment is coordinated access interference, with strategic intent
-still unresolved.</code></pre>
-
-<pre data-label="Operational Knowledge Progression" data-box="structure"><code>Event observations
-        ↓
-Vessel, geographic, and ownership knowledge
-        ↓
-Learned behavior knowledge
-        ↓
-Environmental and operational baselines
-        ↓
-Doctrine and behavior templates
-        ↓
-Verification and collection priorities
-        ↓
-Operational explanation</code></pre>
-
-<h2>7.6 The Same Program, Twice</h2>
 
 <table>
-  <thead>
-    <tr>
-      <th>Computational role</th>
-      <th>After-hours caregiver assistant</th>
-      <th>Operational intelligence</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Subject of understanding</td>
-      <td>A child's current health situation</td>
-      <td>An evolving maritime situation</td>
-    </tr>
-    <tr>
-      <td>Initial observations</td>
-      <td>Caregiver language</td>
-      <td>Tracks, events, and reports</td>
-    </tr>
-    <tr>
-      <td>Semantic knowledge</td>
-      <td>Clinical terminology</td>
-      <td>Vessel, event, and geographic ontology</td>
-    </tr>
-    <tr>
-      <td>Procedural knowledge</td>
-      <td>Pediatric triage procedure</td>
-      <td>Collection and assessment doctrine</td>
-    </tr>
-    <tr>
-      <td>Learned knowledge</td>
-      <td>Optional risk or symptom model</td>
-      <td>Behavior classification model</td>
-    </tr>
-    <tr>
-      <td>Rules and constraints</td>
-      <td>Escalation and safe-advice rules</td>
-      <td>Alert thresholds and evidentiary criteria</td>
-    </tr>
-    <tr>
-      <td>Verification</td>
-      <td>Check required red-flag evidence</td>
-      <td>Check that each assessment criterion is supported</td>
-    </tr>
-    <tr>
-      <td>Final projection</td>
-      <td>Caregiver next-step guidance</td>
-      <td>Operational assessment and collection priority</td>
-    </tr>
-  </tbody>
+<thead>
+<tr>
+  <th>Need</th>
+  <th>Knowledge</th>
+  <th>Computational expertise</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+  <td>Interpret caregiver language</td>
+  <td>Learned language and clinical knowledge</td>
+  <td>Foundation model</td>
+</tr>
+
+<tr>
+  <td>Maintain patient situation</td>
+  <td>Current observations</td>
+  <td>Foundation model + explicit understanding state</td>
+</tr>
+
+<tr>
+  <td>Determine what must be known before disposition</td>
+  <td>Disposition requirements</td>
+  <td>Runtime applicability / requirement evaluation</td>
+</tr>
+
+<tr>
+  <td>Evaluate respiratory concern</td>
+  <td>Respiratory clinical knowledge</td>
+  <td>Clinical pathway or rule expertise</td>
+</tr>
+
+<tr>
+  <td>Communicate naturally</td>
+  <td>Current understanding</td>
+  <td>Foundation model</td>
+</tr>
+
+<tr>
+  <td>Permit or block disposition recommendation</td>
+  <td>Authority requirements</td>
+  <td>AUTHORIZE</td>
+</tr>
+
+</tbody>
 </table>
 
 <p>
-The technologies, data, and outputs differ. The computational principle is the same:
-different forms of knowledge become influential at different stages, progressively
-improving the understanding until an appropriate action becomes justified.
+Most of the system can remain neural.
 </p>
 
-<h2>7.7 What Makes This More Than a Frontier Model with Context?</h2>
+<p>
+Knowledge Native programming becomes most valuable where the developer wants a particular computational relationship to remain explicit, inspectable, revisable, or mandatory.
+</p>
+
+
+<h2>7.7 Example Two: Maritime Trajectory Prediction</h2>
 
 <p>
-A frontier model can consume a large prompt containing terminology, guidelines, histories,
-rules, and reports. That is a strong baseline. The Knowledge-Native program must therefore
-offer more than additional context.
+The second example illustrates a very different reason to activate specialized expertise.
+</p>
+
+<p>
+Here the specialized component is not primarily checking the language model.
+</p>
+
+<p>
+It performs a computation for which a general language model is not the preferred mechanism.
+</p>
+
+<p>
+Suppose the current understanding contains:
+</p>
+
+<pre data-label="Current Maritime Understanding"><code>subject:
+    vessel-204
+
+observed:
+    trajectory_window
+    timestamps
+    speed
+    heading
+    vessel_class
+
+required:
+    future_trajectory
+</code></pre>
+
+<div class="understanding-panel">
+  <div class="understanding-title">Current understanding · U<sub>0</sub></div>
+
+  <div class="understanding-grid">
+
+    <div>
+      <h4>Observed</h4>
+      <p>Recent motion history</p>
+      <p>Current speed</p>
+      <p>Current heading</p>
+    </div>
+
+    <div>
+      <h4>Known context</h4>
+      <p>Vessel class</p>
+      <p>Operating region</p>
+    </div>
+
+    <div>
+      <h4>Unknown</h4>
+      <p>Future trajectory</p>
+    </div>
+
+    <div>
+      <h4>Downstream need</h4>
+      <p>Collision assessment</p>
+    </div>
+
+  </div>
+</div>
+
+
+<h3>Declare the Predictor Capsule</h3>
+
+<pre data-label="YAML — Trajectory Prediction Capsule"><code>id: vessel-trajectory-prediction
+
+scope:
+  domain: maritime_motion
+
+applicable_when:
+  future_motion_required: true
+
+requires:
+  - trajectory_window
+  - timestamps
+  - vessel_context
+
+expertise:
+  id: trajectory_predictor
+
+result:
+  type: trajectory_prediction
+  establishes:
+    - future_trajectory
+
+authority:
+  role: advisory
+</code></pre>
+
+
+<h3>ACTIVATE</h3>
+
+<pre data-label="ACTIVATE Result" data-box="structure"><code>vessel-trajectory-prediction
+
+applicable:
+    yes
+
+requirements:
+    satisfied
+
+status:
+    ACTIVE
+</code></pre>
+
+
+<h3>APPLY Specialized Predictive Expertise</h3>
+
+<pre data-label="Python — Trajectory Expert"><code class="language-python">def predict_future_track(
+    understanding
+):
+
+    history = understanding.value(
+        "trajectory_window"
+    )
+
+    context = understanding.value(
+        "vessel_context"
+    )
+
+    prediction = trajectory_model.predict(
+        history,
+        context
+    )
+
+    return ExpertResult(
+        result_type="trajectory_prediction",
+
+        payload={
+            "future_trajectory": prediction
+        },
+
+        epistemic_status="predicted",
+
+        expert_id="trajectory_predictor",
+
+        provenance=[
+            "trajectory-model:v7"
+        ]
+    )
+</code></pre>
+
+
+<h3>ABSORB</h3>
+
+<p>
+The returned track becomes knowledge, but specifically <em>predicted knowledge</em>.
+</p>
+
+<pre data-label="ABSORB Result" data-box="structure"><code>future_trajectory
+
+status:
+    predicted
+
+provenance:
+    trajectory-model:v7
+
+depends_on:
+    trajectory_window
+
+effect:
+    collision assessment
+    becomes applicable
+</code></pre>
+
+<div class="understanding-panel">
+  <div class="understanding-title">Updated understanding · U<sub>1</sub></div>
+
+  <div class="understanding-grid">
+
+    <div>
+      <h4>Observed</h4>
+      <p>Current trajectory history</p>
+    </div>
+
+    <div>
+      <h4>Predicted</h4>
+      <p>Future vessel track</p>
+    </div>
+
+    <div>
+      <h4>Newly applicable</h4>
+      <p>Collision assessment</p>
+    </div>
+
+    <div>
+      <h4>Authority</h4>
+      <p>No maneuver authorized yet</p>
+    </div>
+
+  </div>
+</div>
+
+
+<h3>The Runtime Continues</h3>
+
+<pre data-label="Progressive Computation" data-box="structure"><code>trajectory observations
+        ↓
+ACTIVATE trajectory expertise
+        ↓
+APPLY trajectory predictor
+        ↓
+ABSORB future trajectory
+        ↓
+ACTIVATE collision expertise
+        ↓
+APPLY collision assessment
+        ↓
+ABSORB collision risk
+        ↓
+ACTIVATE planning expertise
+        ↓
+...
+</code></pre>
+
+<p>
+The output of one expert changes the understanding, and the changed understanding determines what expertise matters next.
+</p>
+
+
+<h2>7.8 Example Three: Planning and Verification</h2>
+
+<p>
+A third small example makes the authority concept especially clear.
+</p>
+
+<p>
+Suppose an autonomous system has:
+</p>
+
+<pre data-label="Planning State"><code>current_state
+goal
+action_model
+safety_specification
+</code></pre>
+
+<p>
+The runtime activates planning expertise.
+</p>
+
+<pre data-label="A4 — Planning"><code>ACTIVATE
+    planning capsule
+
+APPLY
+    planner
+
+RESULT
+    candidate_plan
+
+ABSORB
+    candidate_plan
+    status = proposed
+</code></pre>
+
+<p>
+The plan exists, but it has not earned execution authority.
+</p>
+
+<p>
+The existence of a candidate plan makes verification expertise applicable.
+</p>
+
+<pre data-label="A4 — Verification"><code>ACTIVATE
+    safety verification capsule
+
+APPLY
+    verifier
+
+RESULT
+    safety properties satisfied
+
+ABSORB
+    candidate_plan.status = verified
+</code></pre>
+
+<p>
+Only now does the runtime evaluate the execution boundary:
+</p>
+
+<pre data-label="A4 — Authority"><code>AUTHORIZE
+    execute candidate_plan
+
+requires:
+    candidate_plan
+    planning_result
+    safety_verification
+
+result:
+    ALLOWED
+</code></pre>
+
+<div class="callout">
+<strong>The planner did not “fail” because it needed a verifier.</strong><br>
+Planning and verification are different computational expertise with different responsibilities and different authority.
+</div>
+
+
+<h2>7.9 The Same Runtime, Three Very Different Applications</h2>
+
+<table>
+
+<thead>
+<tr>
+  <th>Runtime role</th>
+  <th>Caregiver assistant</th>
+  <th>Trajectory prediction</th>
+  <th>Planning system</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+  <td><strong>Current knowledge</strong></td>
+  <td>Symptoms and caregiver observations</td>
+  <td>Trajectory history and vessel context</td>
+  <td>State, goal, actions, constraints</td>
+</tr>
+
+<tr>
+  <td><strong>ACTIVATE</strong></td>
+  <td>Clinical requirement or pathway</td>
+  <td>Trajectory predictor</td>
+  <td>Planner, then verifier</td>
+</tr>
+
+<tr>
+  <td><strong>APPLY</strong></td>
+  <td>LLM / clinical evaluator</td>
+  <td>Time-series or trajectory model</td>
+  <td>Planner / formal verifier</td>
+</tr>
+
+<tr>
+  <td><strong>ABSORB</strong></td>
+  <td>Patient understanding changes</td>
+  <td>Prediction enters understanding</td>
+  <td>Plan becomes proposed, then verified</td>
+</tr>
+
+<tr>
+  <td><strong>AUTHORIZE</strong></td>
+  <td>Recommendation permitted or blocked</td>
+  <td>Later decision still withheld</td>
+  <td>Physical execution permitted or blocked</td>
+</tr>
+
+</tbody>
+
+</table>
+
+<p>
+The implementations are radically different.
+</p>
+
+<p>
+The runtime abstraction is the same.
+</p>
+
+<div class="principle-card">
+  <div class="principle-kicker">The unifying idea</div>
+  <div class="principle-statement">
+    Knowledge determines what expertise matters; expertise establishes something; the runtime absorbs it; authority determines what may follow.
+  </div>
+</div>
+
+
+<h2>7.10 Why This Is Not Multi-Agent Orchestration</h2>
+
+<p>
+At first glance, the examples might look like a workflow:
+</p>
+
+<pre data-label="Superficially Similar Workflow"><code>LLM
+  ↓
+predictor
+  ↓
+planner
+  ↓
+verifier
+</code></pre>
+
+<p>
+But that is not the abstraction.
+</p>
+
+<p>
+A workflow specifies that component B follows component A.
+</p>
+
+<p>
+The Knowledge Runtime instead represents why B becomes relevant.
+</p>
+
+<pre data-label="Knowledge Native Semantics" data-box="structure"><code>current understanding
+        ↓
+future trajectory missing
+        ↓
+trajectory expertise required
+        ↓
+prediction produced
+        ↓
+prediction absorbed
+        ↓
+collision question becomes meaningful
+        ↓
+collision expertise required
+</code></pre>
+
+<p>
+A workflow engine may still execute the calls.
+</p>
+
+<p>
+KnaiTai provides the semantics that determine why those calls exist and what their outputs mean.
 </p>
 
 <div class="comparison-grid">
+
   <div class="comparison-card">
-    <h3>Frontier-model-centric program</h3>
-    <p>Knowledge is assembled into context for a generation.</p>
-    <p>The model implicitly decides what matters.</p>
-    <p>Intermediate understanding is often transient.</p>
-    <p>Constraints are expressed mainly through instructions.</p>
-    <p>Later computations may begin from another prompt.</p>
+    <h3>Workflow / agent orchestration</h3>
+    <p>Which component executes?</p>
+    <p>Which step follows?</p>
+    <p>How are messages routed?</p>
+    <p>What retries or timeouts apply?</p>
   </div>
+
   <div class="comparison-card emphasized">
-    <h3>Knowledge-Native program</h3>
-    <p>Understanding is explicit, persistent, and revisable.</p>
-    <p>Knowledge has programmed, inspectable consequences.</p>
-    <p>Different knowledge becomes influential as needed.</p>
-    <p>Rules and verifiers can alter or reject conclusions.</p>
-    <p>Every later computation begins from improved understanding.</p>
+    <h3>Knowledge Runtime</h3>
+    <p>What needs to be established?</p>
+    <p>What expertise is applicable?</p>
+    <p>What did the result establish?</p>
+    <p>What authority follows?</p>
+  </div>
+
+</div>
+
+
+<h2>7.11 Why This Is Not Merely Tool Use</h2>
+
+<p>
+Modern LLM systems already call tools.
+</p>
+
+<p>
+An LLM may decide:
+</p>
+
+<blockquote>
+I should use the calculator.
+</blockquote>
+
+<p>
+That is valuable.
+</p>
+
+<p>
+Knowledge Native architecture supports something stronger:
+</p>
+
+<blockquote>
+For this authority boundary, this computation is required.
+</blockquote>
+
+<p>
+The requirement need not depend on whether the LLM remembers to invoke the tool.
+</p>
+
+<p>
+For example:
+</p>
+
+<pre data-label="Required Expertise" data-box="structure"><code>candidate_plan exists
+        ↓
+governing knowledge says:
+    safety verification required
+        ↓
+verification capsule ACTIVATE
+        ↓
+execution authority unavailable
+until verification result is ABSORBED
+</code></pre>
+
+<p>
+The expert can still be invoked through ordinary tool infrastructure.
+</p>
+
+<p>
+What changes is that its participation now has explicit runtime semantics.
+</p>
+
+
+<h2>7.12 Why This Is More Than Frontier AI with Context</h2>
+
+<p>
+A frontier model with rich context is a strong baseline.
+</p>
+
+<p>
+Knowledge Native AI therefore cannot define its value as simply:
+</p>
+
+<blockquote>
+Give the model more knowledge.
+</blockquote>
+
+<div class="comparison-grid">
+
+  <div class="comparison-card">
+
+    <h3>Frontier-model-centric system</h3>
+
+    <p>Context tells the model what is available.</p>
+
+    <p>The model largely decides what matters.</p>
+
+    <p>Specialized tools may be invoked through model discretion or workflow logic.</p>
+
+    <p>Intermediate reasoning may remain inside model context.</p>
+
+    <p>A strong model may correctly perform many domain checks itself.</p>
+
+  </div>
+
+  <div class="comparison-card emphasized">
+
+    <h3>Knowledge-Native system</h3>
+
+    <p>Computationally consequential knowledge has explicit semantics.</p>
+
+    <p>Understanding exists independently of any one model invocation.</p>
+
+    <p>Specialized expertise can become required by runtime state.</p>
+
+    <p>Expert results retain their epistemic roles and dependencies.</p>
+
+    <p>Authority boundaries can require particular computational grounds.</p>
+
+  </div>
+
+</div>
+
+<div class="callout">
+<strong>The distinction is not “LLM versus knowledge.”</strong><br>
+The LLM itself supplies knowledge and computational expertise. Knowledge Native AI provides an abstraction for deciding when that expertise is sufficient and when other specialized knowledge computation must participate.
+</div>
+
+
+<h2>7.13 Knowledge Capsules in the Program</h2>
+
+<p>
+The runtime examples also clarify what should and should not become a Knowledge Capsule.
+</p>
+
+<p>
+These are runtime Knowledge Objects:
+</p>
+
+<pre data-label="Runtime Knowledge Objects"><code>child has fever
+
+respiratory status unknown
+
+rib retractions reported
+
+future vessel track predicted
+
+candidate plan proposed
+
+plan verification passed
+</code></pre>
+
+<p>
+These are good candidates for reusable Knowledge Capsules:
+</p>
+
+<pre data-label="Reusable Knowledge Capsules"><code>home-monitoring readiness
+
+pediatric respiratory assessment
+
+trajectory prediction expertise
+
+collision assessment
+
+planning expertise
+
+maneuver safety verification
+</code></pre>
+
+<div class="callout">
+<strong>Do not make every observation, hypothesis, prediction, or decision a capsule.</strong><br>
+Capsules declare reusable knowledge computation. Runtime results are knowledge objects.
+</div>
+
+
+<h2>7.14 Declarative Knowledge and Runtime Binding</h2>
+
+<p>
+One of the most important properties of the programming model is separation between general knowledge and a particular case.
+</p>
+
+<p>
+The declarative knowledge says:
+</p>
+
+<pre data-label="General Knowledge"><code>if a pediatric patient has
+intercostal retractions
+
+then respiratory-distress
+assessment becomes relevant
+</code></pre>
+
+<p>
+It does not say:
+</p>
+
+<pre data-label="Incorrect Case-Specific Knowledge"><code>if child-17 has
+intercostal retractions
+
+then child-17 has
+respiratory distress
+</code></pre>
+
+<p>
+At runtime:
+</p>
+
+<pre data-label="Runtime Binding" data-box="structure"><code>general knowledge
+        +
+current subject
+        +
+current observations
+        ↓
+ACTIVATE
+        ↓
+case-specific applicability
+</code></pre>
+
+<div class="principle-card">
+  <div class="principle-kicker">Programming rule</div>
+
+  <div class="principle-statement">
+    Declare general knowledge once. Bind it to concrete situations at runtime.
   </div>
 </div>
 
-<p>
-The practical advantage is cumulative. A model-only program produces a better or worse
-output for the current invocation. A Knowledge-Native program produces an improved
-understanding that can support many later outputs, models, users, and actions.
-</p>
 
-<h2>7.8 A More Concrete Runtime Contract</h2>
+<h2>7.15 The Trace</h2>
 
 <p>
-The runtime can expose a small knowledge-centric interface:
+A Knowledge Native program should be able to expose what actually happened.
 </p>
 
-<pre data-label="Python — Knowledge-Centric Runtime"><code class="language-python">class KnowledgeRuntime:
-    def understand(self, observations) -> Understanding:
-        """Integrate new evidence into the current understanding."""
+<p>
+For the caregiver example:
+</p>
 
-    def influence(self, understanding) -> list[KnowledgeEffect]:
-        """Select and apply knowledge that can materially change it."""
+<pre data-label="Caregiver Runtime Trace" data-box="structure"><code>OBSERVE
+    fever
+    vomiting
+    responsive
+    drinking
 
-    def unresolved(self, understanding) -> list[KnowledgeGap]:
-        """Identify uncertainty that matters to the next decision."""
+ACTIVATE
+    home-monitoring-readiness
 
-    def next_computation(self, understanding) -> Computation:
-        """Choose the next operation required to improve understanding."""
+RESULT
+    respiratory_status missing
 
-    def project(self, understanding, output_type):
-        """Produce an answer, plan, prediction, alert, or explanation."""
+AUTHORIZE
+    home_monitoring → WITHHELD
 
-    def trace(self, conclusion):
-        """Show which knowledge changed the understanding and how."""
+APPLY
+    conversational expert
+
+ABSORB
+    faster breathing
+
+ACTIVATE
+    respiratory assessment
+
+APPLY
+    conversational / clinical expert
+
+ABSORB
+    intercostal retractions
+
+ACTIVATE
+    escalation expertise
+
+APPLY
+    pathway evaluator
+
+ABSORB
+    home monitoring constrained
+
+AUTHORIZE
+    prompt evaluation → ALLOWED
 </code></pre>
 
 <p>
-This interface does not prescribe one workflow. Some programs may use a single model and
-a few rules. Others may use multiple learned models, structured knowledge, simulations,
-and human review. The common requirement is that knowledge effects remain explicit.
+For the trajectory example:
 </p>
 
-<h2>7.9 Knowledge Effects</h2>
+<pre data-label="Trajectory Runtime Trace" data-box="structure"><code>OBSERVE
+    trajectory window
 
-<p>
-A useful first implementation can represent each influence as a <strong>Knowledge
-Effect</strong>. An effect records not only the knowledge that was used, but what changed
-because it was used.
-</p>
+ACTIVATE
+    trajectory predictor
 
-<pre data-label="Python — Knowledge Effect"><code class="language-python">from dataclasses import dataclass
-from typing import Any
+APPLY
+    trajectory predictor
 
-@dataclass
-class KnowledgeEffect:
-    source: str
-    target: str
-    operation: str
-    before: Any
-    after: Any
-    rationale: str
-    provenance: list[str]
+ABSORB
+    future track as prediction
+
+ACTIVATE
+    collision assessment
+
+...
 </code></pre>
 
-<pre data-label="Example Effects"><code class="language-python">KnowledgeEffect(
-    source="pediatric_triage.fever_and_rash",
-    target="understanding.next_objective",
-    operation="redirect",
-    before="offer general fever advice",
-    after="resolve urgent red flags",
-    rationale="Fever with a new rash requires red-flag assessment first",
-    provenance=["caregiver:turn_1", "triage_rule:FR-04"]
+<p>
+This trace is more valuable than a generated explanation because it records actual computational participation.
+</p>
+
+<p>
+An LLM may subsequently turn the trace into an explanation appropriate for a caregiver, engineer, analyst, auditor, or developer.
+</p>
+
+
+<h2>7.16 A Slightly Richer Runtime Interface</h2>
+
+<p>
+The implementation can now expose a compact public API.
+</p>
+
+<pre data-label="Python — KnaiTai Runtime Interface"><code class="language-python">from knaitai import Runtime
+
+
+runtime = Runtime()
+
+runtime.load_capsules(
+    "knowledge/"
 )
 
-KnowledgeEffect(
-    source="maritime_environment.current_conditions",
-    target="hypothesis.weather_avoidance",
-    operation="weaken",
-    before=0.46,
-    after=0.09,
-    rationale="Observed weather and currents do not explain the formation",
-    provenance=["weather_feed:2026-07-23T1800Z"]
+case = runtime.new_case(
+    subject="child-17"
+)
+
+
+case.observe(
+    fever=True,
+    vomiting=2,
+    responsive=True,
+    drinking=True
+)
+
+
+state = case.update()
+
+
+print(
+    state.gaps
+)
+
+print(
+    state.authority(
+        "home_monitoring"
+    )
+)
+
+print(
+    case.trace()
 )
 </code></pre>
 
 <p>
-This makes the central claim testable. For every important step, the program can answer:
+A specialized expert can be registered independently:
+</p>
+
+<pre data-label="Python — Register Specialized Expertise"><code class="language-python">from knaitai.experts import PythonExpert
+
+
+runtime.register_expert(
+
+    "trajectory_predictor",
+
+    PythonExpert(
+        predict_future_track
+    )
+)
+</code></pre>
+
+<p>
+And a declarative capsule can bind to it:
+</p>
+
+<pre data-label="YAML — Expert Binding"><code>id: vessel-trajectory-prediction
+
+applicable_when:
+  future_motion_required: true
+
+requires:
+  - trajectory_window
+  - vessel_context
+
+expertise:
+  id: trajectory_predictor
+
+result:
+  type: trajectory_prediction
+</code></pre>
+
+<p>
+The application developer does not hand-wire every expert call into one procedural chain.
+</p>
+
+<p>
+The runtime determines applicability from the evolving understanding.
+</p>
+
+
+<h2>7.17 What the Runtime Does Not Need to Build</h2>
+
+<p>
+Even this first program makes an important boundary visible.
+</p>
+
+<p>
+KnaiTai does not need to implement:
 </p>
 
 <ul>
-  <li>Which knowledge became influential?</li>
-  <li>What part of the understanding did it change?</li>
-  <li>How did it change it?</li>
-  <li>What computation occurred because of that change?</li>
-  <li>Would the result have differed without it?</li>
+  <li>foundation-model serving;</li>
+  <li>distributed task queues;</li>
+  <li>agent messaging;</li>
+  <li>workflow scheduling;</li>
+  <li>GPU allocation;</li>
+  <li>API retries;</li>
+  <li>planner internals;</li>
+  <li>trajectory-model internals;</li>
+  <li>formal-verification algorithms;</li>
+  <li>or user-interface rendering.</li>
 </ul>
 
-<h2>7.10 Knowledge Capsules Revisited</h2>
-
 <p>
-The evolving understanding can be represented through Knowledge Capsules. A capsule is
-not merely a stored fact. It is a typed, provenance-bearing unit that can participate in
-the computation.
+It can use existing infrastructure for all of these.
 </p>
 
-<pre data-label="Capsules in the Two Examples" data-box="structure"><code>Observation Capsule
-    caregiver reports fever since yesterday
-    vessel remained below three knots for four hours
-
-Entity Capsule
-    child, age four
-    cargo vessel, shared operator
-
-Hypothesis Capsule
-    common viral illness
-    coordinated access interference
-
-Knowledge-Gap Capsule
-    rash response to pressure unknown
-    reaction to approaching traffic unknown
-
-Constraint Capsule
-    do not give routine reassurance before red flags are resolved
-    do not assert strategic intent without supporting evidence
-
-Derived-Knowledge Capsule
-    urgent assessment required
-    benign congestion explanation weakened
-
-Decision Capsule
-    seek urgent in-person evaluation
-    elevate operational alert
-
-Explanation Capsule
-    evidence and knowledge effects supporting the decision</code></pre>
-
 <p>
-The capsule store therefore contains the evolving understanding, while Knowledge Effects
-record how explicit knowledge transformed it.
+Its own abstractions remain focused:
 </p>
 
-<h2>7.11 The Capability Proposition</h2>
+<pre data-label="KnaiTai Core"><code>KnowledgeObject
+
+KnowledgeCapsule
+
+ComputationalExpert
+
+UnderstandingState
+
+ACTIVATE
+APPLY
+ABSORB
+AUTHORIZE
+
+Dependencies
+
+Trace
+</code></pre>
+
+
+<h2>7.18 Where the Abstraction Pays Off</h2>
 
 <p>
-The user-facing capability is not merely “AI with knowledge.” It is:
+Suppose the trajectory predictor changes from:
+</p>
+
+<pre data-label="Implementation v1"><code>kinematic predictor
+</code></pre>
+
+<p>
+to:
+</p>
+
+<pre data-label="Implementation v2"><code>particle filter
+</code></pre>
+
+<p>
+and later:
+</p>
+
+<pre data-label="Implementation v3"><code>trained transformer
+</code></pre>
+
+<p>
+The Knowledge Native program need not fundamentally change if all three expose the same expertise contract:
+</p>
+
+<pre data-label="Stable Expertise Contract" data-box="structure"><code>requires:
+    trajectory history
+    vessel context
+
+establishes:
+    future trajectory
+
+epistemic status:
+    prediction
+</code></pre>
+
+<p>
+Likewise, an LLM provider can change without rewriting the clinical authority logic.
+</p>
+
+<p>
+A verifier can move from ordinary Python checks to a formal solver without changing why verification is required.
+</p>
+
+<div class="callout">
+<strong>This is the payoff of the abstraction.</strong><br>
+The semantics of knowledge computation can remain stable while implementations of expertise continue to improve.
+</div>
+
+
+<h2>7.19 A4 as the Programming Rhythm</h2>
+
+<p>
+The first Knowledge Native program can now be summarized in four questions.
 </p>
 
 <div class="principle-card">
-  <div class="principle-kicker">Capability</div>
+
+  <div class="principle-kicker">A4</div>
+
   <div class="principle-statement">
-    Build AI systems that become progressively better informed about a person, object,
-    process, or situation, and whose actions improve as that understanding accumulates.
+    ACTIVATE: What matters now?<br><br>
+    APPLY: What expertise should compute?<br><br>
+    ABSORB: What did it establish?<br><br>
+    AUTHORIZE: What may happen now?
   </div>
+
 </div>
 
 <p>
-In practical terms, this enables systems that:
+The loop repeats because ABSORB changes the understanding.
+</p>
+
+<pre data-label="A4 Runtime" data-box="structure"><code>UNDERSTANDING U0
+
+    ↓ ACTIVATE
+
+expertise E1
+
+    ↓ APPLY
+
+result R1
+
+    ↓ ABSORB
+
+UNDERSTANDING U1
+
+    ↓ AUTHORIZE
+
+not enough yet
+
+    ↓ ACTIVATE
+
+expertise E2
+
+    ↓ APPLY
+
+result R2
+
+    ↓ ABSORB
+
+UNDERSTANDING U2
+
+    ↓ AUTHORIZE
+
+recommend / decide / act
+</code></pre>
+
+<p>
+This is progressive understanding expressed as computation.
+</p>
+
+
+<h2>7.20 The Capability Proposition</h2>
+
+<div class="principle-card">
+
+  <div class="principle-kicker">Capability</div>
+
+  <div class="principle-statement">
+    Build AI systems in which knowledge determines what computational expertise matters as a situation evolves, and in which recommendations, decisions, and actions earn authority from that computation.
+  </div>
+
+</div>
+
+<p>
+In practical terms, this supports systems that:
 </p>
 
 <ul>
-  <li>do not restart from an empty prompt each time;</li>
-  <li>bring the right knowledge to bear at the right stage;</li>
-  <li>retain competing explanations and unresolved uncertainty;</li>
-  <li>change direction when new knowledge invalidates an earlier interpretation;</li>
-  <li>produce multiple outputs from one coherent understanding; and</li>
-  <li>show exactly how knowledge changed a conclusion or action.</li>
+  <li>use frontier neural intelligence wherever it is sufficient;</li>
+
+  <li>bring specialized expertise to bear only where it adds real computational value;</li>
+
+  <li>maintain an explicit evolving understanding across computations;</li>
+
+  <li>represent missing knowledge rather than silently assuming it;</li>
+
+  <li>preserve the difference between observations, hypotheses, predictions, plans, and verified properties;</li>
+
+  <li>revise dependent understanding when upstream knowledge changes;</li>
+
+  <li>require selected computation before consequential authority is granted;</li>
+
+  <li>and expose a trace of what actually participated.</li>
 </ul>
 
 <p>
-The result is not guaranteed omniscience or perfect reasoning. It is a system designed to
-improve its understanding deliberately rather than merely generate another plausible
-response.
+Knowledge Native AI does not promise perfect understanding.
 </p>
 
-<h2>Knowledge-Native Thinking</h2>
+<p>
+It provides a programming model for making heterogeneous knowledge and expertise participate deliberately in producing better-grounded and more trustworthy system behavior.
+</p>
+
+
+<h2>7.21 Knowledge-Native Thinking</h2>
 
 <blockquote>
-Do not begin by asking which model, graph, rules engine, or agent framework the application
-requires. Begin by asking: What must the system progressively understand? Which forms of
-knowledge can materially improve that understanding? At what stage should each become
-influential? What changes because it did?
+Do not begin by asking which model, graph, rule engine, planner, or agent framework the application requires. Begin with the evolving situation. What is known? What needs to be established? What expertise is appropriate for establishing it? What did that computation actually establish? And what recommendation, decision, or action has now earned authority?
 </blockquote>
+
+<p>
+The answer may sometimes be:
+</p>
+
+<blockquote>
+Let the foundation model handle it.
+</blockquote>
+
+<p>
+That is entirely compatible with Knowledge Native AI.
+</p>
+
+<p>
+The abstraction matters when the system needs to know that a particular piece of knowledge or expertise must participate, that a result has a particular epistemic meaning, or that a consequential boundary cannot be crossed without it.
+</p>
+
 
 <h2>Chapter Summary</h2>
 
-<p>
-A Knowledge-Native program is centered on an explicit, evolving understanding of a subject.
-Language models, ontologies, knowledge graphs, learned models, procedures, rules, physical
-models, verifiers, and humans can all contribute, but each must do more than supply context.
-It must produce a computational consequence.
-</p>
+<ul>
 
-<p>
-The after-hours caregiver assistant progressively improved its understanding of a child's
-situation through clinical terminology, pediatric triage knowledge, safety rules, and
-possibly medication knowledge. The operational-intelligence system progressively improved
-its understanding of a maritime situation through relational knowledge, learned behavior
-models, environmental baselines, doctrine, and verification. In both cases, different
-knowledge became influential at different stages.
-</p>
+  <li>A Knowledge Native program maintains an explicit evolving understanding rather than centering execution on a single model output.</li>
 
-<p>
-This gives us the foundational pattern for the rest of Part III:
-<strong>knowledge shapes understanding; understanding shapes what the system computes and
-does next.</strong>
-</p>
+  <li>The minimal programming abstractions are Knowledge Objects, Knowledge Capsules, Computational Experts, an Understanding State, and the Knowledge Runtime.</li>
+
+  <li>Knowledge Objects represent runtime observations, hypotheses, predictions, plans, verification results, and other case-specific knowledge.</li>
+
+  <li>Knowledge Capsules declare reusable knowledge computation and should not wrap every runtime object.</li>
+
+  <li>Computational Experts perform bounded computations and may be implemented by LLMs, predictors, planners, solvers, simulators, verifiers, ordinary code, services, or humans.</li>
+
+  <li>The runtime is organized around four foundational semantics: <strong>ACTIVATE, APPLY, ABSORB, and AUTHORIZE</strong>.</li>
+
+  <li>ACTIVATE determines what knowledge and expertise matter given the current understanding.</li>
+
+  <li>Missing requirements become explicit knowledge gaps.</li>
+
+  <li>APPLY invokes the appropriate computational expertise without requiring KnaiTai to own its internal implementation.</li>
+
+  <li>ABSORB interprets what an expert result established and changes the understanding accordingly.</li>
+
+  <li>AUTHORIZE evaluates whether the current understanding has sufficient computational grounds for a recommendation, decision, or action.</li>
+
+  <li>The caregiver example shows specialized knowledge governing an authority boundary even when the foundation model may reason correctly on its own.</li>
+
+  <li>The trajectory example shows specialized expertise performing a computation for which a language model is not the preferred mechanism.</li>
+
+  <li>The planning example shows different expertise contributing sequentially before autonomous execution earns authority.</li>
+
+  <li>Knowledge Native AI is distinct from multi-agent orchestration because its abstraction concerns why expertise participates and what its result means, not merely which component executes next.</li>
+
+  <li>Knowledge Native AI is distinct from ordinary tool use because required computation need not depend on an LLM deciding to invoke a tool.</li>
+
+  <li>General knowledge should be declared independently of runtime subjects and bound to concrete cases only when applicable.</li>
+
+  <li>Runtime traces record actual computational participation and can support later explanation, debugging, auditing, and revision.</li>
+
+  <li>The abstraction allows implementations of expertise to evolve without forcing the surrounding knowledge semantics to be rewritten.</li>
+
+  <li>The core programming rhythm is <strong>ACTIVATE → APPLY → ABSORB → AUTHORIZE</strong>.</li>
+
+</ul>
+
 
 <h2>Discussion Questions</h2>
 
 <ol>
-  <li>What should count as “understanding” in an application you know well?</li>
-  <li>Which parts of that understanding should be explicit rather than left inside a model context?</li>
-  <li>What distinct computational consequence should each knowledge source produce?</li>
-  <li>How should a system decide that its understanding is sufficient for action?</li>
-  <li>What evidence would demonstrate that knowledge improved the computation rather than merely decorating the prompt?</li>
+
+  <li>What makes the caregiver example Knowledge Native if a frontier model could reach the same recommendation?</li>
+
+  <li>Why should missing respiratory status be represented as a knowledge gap rather than simply left for the model to notice?</li>
+
+  <li>What makes trajectory prediction a form of computational expertise rather than merely another tool?</li>
+
+  <li>Why does a candidate plan not automatically carry execution authority?</li>
+
+  <li>What is gained by preserving the distinction among observations, hypotheses, predictions, plans, and verified properties?</li>
+
+  <li>How does ACTIVATE differ from a model router choosing among tools?</li>
+
+  <li>Why should a general capsule avoid containing identifiers such as <code>child-17</code>?</li>
+
+  <li>Which parts of the three examples could be delegated entirely to foundation models?</li>
+
+  <li>Which parts gain enough computational value from explicit knowledge or specialized expertise to justify representation outside the model?</li>
+
+  <li>What parts of this architecture should existing workflow or agent infrastructure handle?</li>
+
+  <li>How would changing one expert implementation affect the rest of the Knowledge Native program?</li>
+
+  <li>What should be present in a runtime trace before you would trust it as a basis for explanation?</li>
+
 </ol>
+
 
 <h2>Exercises</h2>
 
-<h3>Exercise 7.1: Define the Subject of Understanding</h3>
+
+<h3>Exercise 7.1: Implement the Core Types</h3>
+
 <p>
-Choose an application and define the person, object, process, or situation the system must
-progressively understand. List observations, hypotheses, uncertainties, constraints, and
-possible actions.
+Implement <code>KnowledgeObject</code>, <code>KnowledgeCapsule</code>, <code>ComputationalExpert</code>, <code>ExpertResult</code>, and <code>Understanding</code>.
 </p>
 
-<h3>Exercise 7.2: Map Knowledge to Effects</h3>
+
+<h3>Exercise 7.2: Implement A4</h3>
+
 <p>
-Identify four forms of knowledge available to the application. For each, specify exactly
-what it should expand, constrain, challenge, verify, or redirect.
+Implement minimal versions of:
 </p>
 
-<h3>Exercise 7.3: Design the Loop</h3>
+<pre data-label="A4"><code>ACTIVATE
+APPLY
+ABSORB
+AUTHORIZE
+</code></pre>
+
 <p>
-Draw three successive versions of the understanding: initial, intermediate, and sufficient
-for action. Show which knowledge effect caused each transition.
+Keep specialized computation outside the runtime implementation.
 </p>
 
-<h3>Exercise 7.4: Compare Against a Frontier-Model Baseline</h3>
+
+<h3>Exercise 7.3: Load Declarative Knowledge</h3>
+
 <p>
-Give the same observations and all available background material to a frontier model in one
-context. Compare its result with the staged Knowledge-Native computation. Evaluate not only
-the final answer, but unresolved uncertainty, constraint adherence, provenance, and reuse of
-the resulting understanding.
+Move one capsule definition into YAML or JSON and load it into the runtime without changing the application code.
 </p>
 
-<h3>Exercise 7.5: Implement a Knowledge Effect</h3>
+
+<h3>Exercise 7.4: Bind General Knowledge at Runtime</h3>
+
 <p>
-Implement one explicit effect that changes a hypothesis, knowledge gap, constraint, next
-objective, or action. Record its source, target, before-and-after values, rationale, and
-provenance.
+Create two subjects and demonstrate that the same capsule can become applicable to one, both, or neither depending on their current understanding.
 </p>
+
+
+<h3>Exercise 7.5: Integrate a Foundation Model</h3>
+
+<p>
+Use a foundation model as a Computational Expert that turns free-form user language into typed observations or proposes a natural-language question. Preserve the model result as a typed Expert Result.
+</p>
+
+
+<h3>Exercise 7.6: Integrate Specialized Expertise</h3>
+
+<p>
+Create a non-LLM computational expert such as a predictor, logical rule evaluator, solver, or verifier and bind it through the same expert interface.
+</p>
+
+
+<h3>Exercise 7.7: Model a Knowledge Gap</h3>
+
+<p>
+Create a capsule that becomes applicable but is not ready because one required item of knowledge is missing. Show how satisfying the gap changes subsequent activation.
+</p>
+
+
+<h3>Exercise 7.8: Preserve Epistemic Status</h3>
+
+<p>
+Create one observation, one LLM-generated hypothesis, one prediction, and one verification result. Show that ABSORB preserves their different epistemic meanings.
+</p>
+
+
+<h3>Exercise 7.9: Define an Authority Boundary</h3>
+
+<p>
+Choose one recommendation or action and require at least two specific pieces of knowledge or expert results before AUTHORIZE permits it.
+</p>
+
+
+<h3>Exercise 7.10: Replace an Expert</h3>
+
+<p>
+Replace one expert implementation while preserving the capsule declaration and runtime semantics. Identify exactly what application code did and did not need to change.
+</p>
+
+
+<h3>Exercise 7.11: Build a Runtime Trace</h3>
+
+<p>
+Record a complete sequence:
+</p>
+
+<pre data-label="Runtime Trace"><code>OBSERVE
+    ↓
+ACTIVATE
+    ↓
+APPLY
+    ↓
+ABSORB
+    ↓
+AUTHORIZE
+    ↓
+ACTIVATE again
+</code></pre>
+
+<p>
+For every step, record why it occurred and what changed.
+</p>
+
+
+<h3>Exercise 7.12: Compare Against a Frontier Model</h3>
+
+<p>
+Give the same task and background knowledge directly to a capable frontier model.
+</p>
+
+<p>
+Do not assume the model will fail. Compare instead:
+</p>
+
+<ul>
+  <li>the final recommendation or result;</li>
+
+  <li>whether required expertise actually participated;</li>
+
+  <li>whether missing knowledge was explicitly represented;</li>
+
+  <li>whether result types and provenance remain distinguishable;</li>
+
+  <li>whether authority conditions can be independently tested;</li>
+
+  <li>and whether the resulting understanding can be revised incrementally.</li>
+</ul>
+
+
 <nav class="chapter-nav">
-  <a href="chapter-06.html">← Chapter 6</a>
+  <a href="chapter-06.html">← Chapter 6: The Knowledge Runtime</a>
   <a href="chapter-08.html">Chapter 8 →</a>
 </nav>
+
 </article>
 </main>
-<footer>Published as part of the KnaiTai Open Initiative.</footer>
+
+<footer>
+Published as part of the KnaiTai Open Initiative.
+</footer>
+
 
 <script>
+
 document.addEventListener("DOMContentLoaded", () => {
+
   document.querySelectorAll("pre").forEach((pre) => {
+
     if (pre.closest(".code-box")) return;
+
     const code = pre.querySelector("code");
+
     if (!code) return;
 
     const box = document.createElement("div");
+
     box.className = "code-box";
-    if (pre.dataset.box === "output") box.classList.add("output-box");
-    if (pre.dataset.box === "structure") box.classList.add("structure-box");
+
+    if (pre.dataset.box === "output") {
+      box.classList.add("output-box");
+    }
+
+    if (pre.dataset.box === "structure") {
+      box.classList.add("structure-box");
+    }
 
     const header = document.createElement("div");
+
     header.className = "code-box-header";
 
     const title = document.createElement("span");
+
     title.className = "code-box-title";
-    title.textContent = pre.dataset.label ||
-      (code.classList.contains("language-python") ? "Python" : "Code");
+
+    title.textContent =
+      pre.dataset.label ||
+      (
+        code.classList.contains("language-python")
+          ? "Python"
+          : "Code"
+      );
 
     const button = document.createElement("button");
+
     button.className = "copy-code-button";
     button.type = "button";
-    button.setAttribute("aria-label", `Copy ${title.textContent.toLowerCase()} to clipboard`);
+
+    button.setAttribute(
+      "aria-label",
+      `Copy ${title.textContent.toLowerCase()} to clipboard`
+    );
+
     button.innerHTML = `
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <rect x="9" y="9" width="10" height="10" rx="2"></rect>
-        <path d="M15 9V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
-      </svg><span>Copy</span>`;
+        <rect
+          x="9"
+          y="9"
+          width="10"
+          height="10"
+          rx="2">
+        </rect>
 
-    pre.parentNode.insertBefore(box, pre);
-    box.appendChild(header);
-    header.appendChild(title);
-    header.appendChild(button);
-    box.appendChild(pre);
+        <path
+          d="M15 9V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2">
+        </path>
+      </svg>
 
-    button.addEventListener("click", async () => {
-      const label = button.querySelector("span");
-      const done = () => {
-        button.classList.add("copied"); label.textContent = "Copied";
-        setTimeout(() => { button.classList.remove("copied"); label.textContent = "Copy"; }, 1500);
-      };
-      try { await navigator.clipboard.writeText(code.textContent); done(); }
-      catch (_) {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        range.selectNodeContents(code); selection.removeAllRanges(); selection.addRange(range);
-        const copied = document.execCommand("copy"); selection.removeAllRanges();
-        if (copied) done();
+      <span>Copy</span>
+    `;
+
+    pre.parentNode.insertBefore(
+      box,
+      pre
+    );
+
+    box.appendChild(
+      header
+    );
+
+    header.appendChild(
+      title
+    );
+
+    header.appendChild(
+      button
+    );
+
+    box.appendChild(
+      pre
+    );
+
+    button.addEventListener(
+      "click",
+      async () => {
+
+        const label =
+          button.querySelector("span");
+
+        const done = () => {
+
+          button.classList.add(
+            "copied"
+          );
+
+          label.textContent =
+            "Copied";
+
+          setTimeout(
+            () => {
+
+              button.classList.remove(
+                "copied"
+              );
+
+              label.textContent =
+                "Copy";
+
+            },
+            1500
+          );
+        };
+
+        try {
+
+          await navigator.clipboard.writeText(
+            code.textContent
+          );
+
+          done();
+
+        }
+
+        catch (_) {
+
+          const selection =
+            window.getSelection();
+
+          const range =
+            document.createRange();
+
+          range.selectNodeContents(
+            code
+          );
+
+          selection.removeAllRanges();
+
+          selection.addRange(
+            range
+          );
+
+          const copied =
+            document.execCommand(
+              "copy"
+            );
+
+          selection.removeAllRanges();
+
+          if (copied) {
+            done();
+          }
+        }
       }
-    });
+    );
   });
 });
+
 </script>
 
 </body>
