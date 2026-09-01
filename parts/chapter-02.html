@@ -42,7 +42,7 @@
 <h1 class="page-title">Knowledge as a Computational Primitive</h1>
 
 <p class="lead">
-Chapter 1 argued that Knowledge Native AI puts knowledge to work at runtime. This chapter develops the first half of that idea: what it means to make knowledge itself a programmable computational primitive. The objective is not to force every form of knowledge into one representation, but to give a running system enough semantics to determine what is known, where it applies, how it may participate, and what computational expertise it can activate or shape.
+Chapter 1 argued that Knowledge Native AI puts knowledge to work at runtime. This chapter develops that idea into a programming abstraction. The objective is not to force every form of knowledge into one representation, but to give a running system enough semantics to determine what is known, what matters now, what computational expertise should be brought to bear, what its result establishes, and what the system is consequently permitted to recommend, decide, or do.
 </p>
 
 
@@ -65,7 +65,8 @@ The distinction is between knowledge that is merely available and knowledge that
 </p>
 
 <p>
-More precisely, a Knowledge Native program asks continuously: <em>What is known now? What does that knowledge make relevant? What must be computed next? What expertise should perform that computation?</em>
+More precisely, a Knowledge Native program asks continuously:
+<em>What is known now? What does that knowledge make relevant? What must be computed next? What expertise should perform that computation? What did the result establish? What may the system now do?</em>
 </p>
 
 <div class="callout">
@@ -82,9 +83,10 @@ For knowledge to become active, a system may need to determine:
   <li>where it came from;</li>
   <li>when and where it applies;</li>
   <li>what epistemic status it has;</li>
-  <li>what computation it can support, require, parameterize, constrain, or verify;</li>
-  <li>what computational expertise is associated with it;</li>
-  <li>and how resulting knowledge changes later computation.</li>
+  <li>what computation it can shape or require;</li>
+  <li>what computational expertise can put it to work;</li>
+  <li>what the resulting computation establishes;</li>
+  <li>and how that result changes what happens next.</li>
 </ul>
 
 <p>
@@ -112,15 +114,28 @@ A number without arithmetic is little more than a symbol. A relation without rel
 </div>
 
 <p>
-The same principle applies to knowledge. If knowledge is to become a first-class computational primitive, a system must be able to identify it, inspect it, select it, test its applicability, combine it, challenge it, revise it, trace its consequences, and use it to determine what other computation should occur.
+The same principle applies to knowledge. If knowledge is to become a first-class computational primitive, the system must know how knowledge participates in computation.
 </p>
 
 <p>
-This last capability is especially important. Knowledge may participate directly through an operation such as <em>support</em> or <em>constrain</em>, but it may also participate by activating computational expertise: a planner, predictor, solver, simulator, verifier, LLM, database operation, ordinary algorithm, or human judgment.
+But this does not require a large vocabulary of special-purpose knowledge operators. Support, challenge, prediction, planning, constraint checking, optimization, and verification are different kinds of computation. They need not each become primitive runtime operations.
 </p>
 
 <p>
-This does not require every kind of knowledge to share one physical representation. A compiler invariant, clinical guideline, sensor observation, learned model, planning domain, and trajectory history are structurally different. The abstraction lies in their computational semantics, not in flattening them into a common storage format.
+Instead, Knowledge Native AI can expose a much smaller computational interface around them.
+</p>
+
+<div class="callout">
+<strong>The A4 operators:</strong><br><br>
+
+<strong>ACTIVATE</strong> — determine what knowledge and expertise matter now.<br>
+<strong>APPLY</strong> — put the appropriate knowledge and expertise to work.<br>
+<strong>ABSORB</strong> — incorporate what the computation established into the evolving understanding.<br>
+<strong>AUTHORIZE</strong> — determine what may now be recommended, decided, or done.
+</div>
+
+<p>
+These four operations form the minimal computational vocabulary developed in this book.
 </p>
 
 
@@ -165,7 +180,7 @@ A knowledge object may be realized as a class, graph fragment, typed record, log
 </p>
 
 <p>
-A knowledge object may originate from a database, sensor, human expert, scientific publication, simulation, specialized model, or foundation model. Some knowledge objects are relatively static, such as guidelines and specifications. Others belong to the evolving runtime understanding, such as observations, hypotheses, predictions, plans, and verification results.
+Some knowledge objects are relatively static, such as guidelines, constraints, planning domains, and specifications. Others belong to the evolving runtime understanding, such as observations, hypotheses, predictions, plans, and verification results.
 </p>
 
 <p>
@@ -180,12 +195,12 @@ A minimal conceptual structure might be written as:
     scope
     epistemic_status
     applicability
-    computational_roles
+    computational_role
     dependencies
 </code></pre>
 
 <p>
-This is not intended as a universal schema. It identifies categories of information that commonly determine how knowledge may participate in computation.
+This is not intended as a universal schema. It identifies information that commonly determines how knowledge may participate in computation.
 </p>
 
 
@@ -202,8 +217,13 @@ Without identity, it becomes difficult to preserve provenance, represent disagre
 </p>
 
 <p>
-For example, <code>observation:fever:child-17:2026-07-18T21:10</code> identifies one runtime observation. By contrast, <code>guideline:respiratory-distress:retractions</code> can identify general clinical knowledge whose applicability is evaluated against a particular patient only at runtime. General knowledge should not be duplicated or hard-coded for each subject.
+For example, <code>observation:fever:child-17:2026-07-18T21:10</code> identifies one runtime observation. By contrast, <code>guideline:respiratory-distress:retractions</code> can identify general clinical knowledge whose applicability is evaluated against a particular patient only at runtime.
 </p>
+
+<div class="callout">
+<strong>General knowledge is declared once.</strong>
+Runtime state binds that knowledge to the particular entities and situation to which it currently applies.
+</div>
 
 
 <h3>Content</h3>
@@ -225,7 +245,7 @@ Content may take many forms:
   <li>a probability distribution;</li>
   <li>a model or model reference;</li>
   <li>a formal specification;</li>
-  <li>or a prediction produced by statistical or neural computation.</li>
+  <li>or a result produced by statistical or neural computation.</li>
 </ul>
 
 <p>
@@ -242,12 +262,10 @@ The <em>type</em> identifies what kind of knowledge the object represents. Examp
 <ul>
   <li>observation;</li>
   <li>claim;</li>
-  <li>definition;</li>
   <li>constraint;</li>
   <li>rule;</li>
   <li>prediction;</li>
   <li>procedure;</li>
-  <li>policy;</li>
   <li>hypothesis;</li>
   <li>model;</li>
   <li>specification;</li>
@@ -257,18 +275,18 @@ The <em>type</em> identifies what kind of knowledge the object represents. Examp
 </ul>
 
 <p>
-Type matters because different forms of knowledge admit different operations. An observation may update state. A constraint may eliminate a candidate. A hypothesis may accumulate support or challenge. A planning model may be consumed by a planner. A specification may be consumed by a verifier.
+Type matters because different forms of knowledge participate differently. An observation may change state. A constraint may eliminate a candidate. A planning model may become input to a planner. A specification may become input to a verifier.
 </p>
 
 
 <h3>Provenance</h3>
 
 <p>
-<em>Provenance</em> records where the object came from and how it entered the system. Its source may be a database, document, sensor, model, human expert, external service, or previous derivation.
+<em>Provenance</em> records where the object came from and how it entered the system. Its source may be a database, document, sensor, model, human expert, external service, or previous computation.
 </p>
 
 <p>
-Provenance is more than citation. It may affect authority, trust, reproducibility, conflict resolution, and auditability. Two objects with identical content but different derivations are not necessarily computationally interchangeable.
+Provenance is more than citation. It may affect authority, reproducibility, conflict resolution, and auditability.
 </p>
 
 <p>
@@ -283,7 +301,7 @@ A clinical hypothesis proposed by an LLM and the same hypothesis established by 
 </p>
 
 <p>
-Scope may be temporal, geographic, organizational, legal, task-specific, population-specific, version-specific, operating-regime-specific, or tied to a model's validated domain.
+Scope may be temporal, geographic, organizational, task-specific, population-specific, version-specific, operating-regime-specific, or tied to a model's validated domain.
 </p>
 
 <p>
@@ -302,7 +320,7 @@ It may be observed, asserted, inferred, predicted, assumed, disputed, verified, 
 </p>
 
 <p>
-Confidence may be one component of epistemic status, but it is not the whole of it. A high-confidence prediction remains a prediction. A formally verified property is different from a model's high-confidence judgment. An authoritative rule may have no probabilistic confidence score at all.
+Confidence may be one component of epistemic status, but it is not the whole of it. A high-confidence prediction remains a prediction. A formally verified property is different from a model's high-confidence judgment. An authoritative constraint may have no probabilistic confidence score at all.
 </p>
 
 
@@ -317,34 +335,26 @@ A clinical guideline may apply to a particular age range and symptom pattern. A 
 </p>
 
 <p>
-Applicability is what turns potentially relevant knowledge into knowledge that may actually influence runtime computation.
+Applicability is what allows general knowledge to become computationally active in a particular runtime situation.
 </p>
 
 
-<h3>Computational Roles</h3>
+<h3>Computational Role</h3>
 
 <p>
-A knowledge object should expose or imply what role it may play. It may:
+A knowledge object may also indicate what it can do computationally or what kind of expertise can put it to work.
 </p>
-
-<ul>
-  <li>support or challenge a conclusion;</li>
-  <li>constrain a state, plan, or action;</li>
-  <li>satisfy or expose a requirement;</li>
-  <li>parameterize another computation;</li>
-  <li>activate computational expertise;</li>
-  <li>serve as input to an expert;</li>
-  <li>verify or invalidate a result;</li>
-  <li>revise prior understanding;</li>
-  <li>or contribute evidence to an explanation or authority decision.</li>
-</ul>
 
 <p>
-This is the important departure from passive context. Knowledge can change what computation occurs and what consequences that computation is permitted to have.
+A constraint may restrict a candidate action. Historical trajectories may provide input to a predictor. A planning domain may provide the action semantics required by a planner. A clinical guideline may determine that a particular condition must be evaluated. A formal specification may be consumed by a verifier.
+</p>
+
+<p>
+These are roles of knowledge. They are not additional top-level runtime operators.
 </p>
 
 
-<h2>2.5 Knowledge Objects and Computational Expertise</h2>
+<h2>2.5 Knowledge and Computational Expertise</h2>
 
 <p>
 Knowledge and computational expertise are closely related, but they should not be collapsed into one abstraction.
@@ -356,15 +366,31 @@ Knowledge and computational expertise are closely related, but they should not b
 </div>
 
 <p>
-A trajectory history is knowledge; predicting the future trajectory is expertise. Actions, preconditions, effects, and goals are knowledge; searching them for a feasible plan is expertise. A formal specification is knowledge; establishing that a candidate satisfies it is verification expertise.
+A trajectory history is knowledge; predicting the future trajectory is expertise.
 </p>
 
 <p>
-The distinction remains useful even when knowledge is embodied in a trained model. A trajectory transformer contains learned knowledge about motion patterns, while its computational expertise is the capability to map an appropriate trajectory history to a future-motion prediction. A foundation model contains enormous learned knowledge while providing broad expertise in interpretation, synthesis, reasoning, and generation.
+Actions, preconditions, effects, and goals are knowledge; searching them for a feasible plan is expertise.
 </p>
 
 <p>
-A computational expert can therefore be described through an interface such as:
+A formal specification is knowledge; establishing whether a candidate satisfies it is verification expertise.
+</p>
+
+<p>
+A set of clinical findings and guidelines is knowledge; applying a clinical pathway to determine what must be evaluated next is expertise.
+</p>
+
+<p>
+The distinction remains useful even when knowledge is embodied in a trained model. A trajectory transformer contains learned knowledge about motion patterns, while its computational expertise is the capability to map an appropriate trajectory history to a future-motion prediction.
+</p>
+
+<p>
+Likewise, a foundation model contains enormous learned knowledge while providing broad computational expertise in interpretation, synthesis, reasoning, and generation.
+</p>
+
+<p>
+A computational expert can therefore expose an interface such as:
 </p>
 
 <pre><code>ComputationalExpert
@@ -379,164 +405,274 @@ A computational expert can therefore be described through an interface such as:
 </code></pre>
 
 <p>
-The implementation behind that interface might be an LLM, predictor, planner, rule engine, solver, simulator, optimizer, verifier, API, Python function, or human service.
+The implementation behind that interface might be:
 </p>
 
+<ul>
+  <li>an LLM;</li>
+  <li>a predictor;</li>
+  <li>a planner;</li>
+  <li>a rule engine;</li>
+  <li>a solver;</li>
+  <li>a simulator;</li>
+  <li>an optimizer;</li>
+  <li>a verifier;</li>
+  <li>an ordinary algorithm or function;</li>
+  <li>an external service;</li>
+  <li>or a human expert.</li>
+</ul>
+
 <p>
-This abstraction prevents KnaiTai from becoming tied to any one implementation technology. The Knowledge Runtime can reason about <em>what expertise is required</em> while existing execution infrastructure handles <em>how that expert is actually invoked</em>.
+The Knowledge Runtime can reason about <em>what expertise is needed and why</em> without requiring all expertise to be implemented in the same way.
 </p>
 
 
-<h2>2.6 Knowledge Operations</h2>
+<h2>2.6 The A4 Knowledge Operations</h2>
 
 <p>
-Representing knowledge as an object is only half of the abstraction. A computational primitive becomes useful through the operations defined over it.
+The objective of a foundational operator set should be to do more with less. Knowledge Native AI therefore distinguishes a small number of general operations from the many domain-specific computations that may occur underneath them.
 </p>
 
 <div class="definition">
-<strong>Definition 2.2 (Knowledge Operation).</strong>
-A <em>knowledge operation</em> is a typed computational action through which knowledge changes the system's knowledge state, evolving understanding, required computation, or permitted decision or action.
+<strong>Definition 2.2 (A4 Knowledge Operations).</strong>
+The core runtime operations of Knowledge Native AI are <em>ACTIVATE</em>, <em>APPLY</em>, <em>ABSORB</em>, and <em>AUTHORIZE</em>.
+</div>
+
+
+<h3>ACTIVATE</h3>
+
+<p>
+<em>ACTIVATE</em> determines what knowledge and computational expertise matter in the current state.
+</p>
+
+<p>
+Activation evaluates such things as scope, applicability, prerequisites, current observations, unresolved questions, and the decision or action presently under consideration.
+</p>
+
+<p>
+For example:
+</p>
+
+<pre><code>ACTIVATE(current_understanding)
+
+→ respiratory_distress_guideline
+→ respiratory_assessment_expertise
+</code></pre>
+
+<p>
+Activation does not necessarily execute anything. It establishes that some knowledge or expertise has become computationally relevant, eligible, or required.
+</p>
+
+<p>
+Retrieval, indexing, graph search, semantic search, and filtering may help implement activation, but they are mechanisms rather than additional foundational operators.
+</p>
+
+
+<h3>APPLY</h3>
+
+<p>
+<em>APPLY</em> puts activated knowledge and appropriate computational expertise to work.
+</p>
+
+<p>
+The actual computation may be extremely simple or highly specialized.
+</p>
+
+<pre><code>APPLY clinical_rule
+    → CONSTRAINS home_monitoring
+
+APPLY trajectory_predictor
+    → PREDICTS future_position
+
+APPLY planner
+    → PROPOSES maneuver_plan
+
+APPLY formal_verifier
+    → VERIFIES maneuver_plan
+
+APPLY llm
+    → PROPOSES diagnostic_hypothesis
+</code></pre>
+
+<p>
+The uppercase terms on the right are not additional Knowledge Runtime operators. They describe the <em>computational role of the result</em>.
+</p>
+
+<p>
+This distinction is important. KnaiTai does not need a primitive called <code>PREDICT</code>, another called <code>PLAN</code>, another called <code>VERIFY</code>, and another called <code>CONSTRAIN</code>. Those capabilities belong to different computational experts.
+</p>
+
+<p>
+The common runtime operation is simply:
+</p>
+
+<blockquote>
+Apply this knowledge or expertise to the current problem.
+</blockquote>
+
+<p>
+Likewise, the mechanics of calling a model endpoint, Python function, planner, tool, or agent belong to execution infrastructure. They need not become separate knowledge operators.
+</p>
+
+
+<h3>ABSORB</h3>
+
+<p>
+<em>ABSORB</em> incorporates what a computation established into the system's evolving understanding.
+</p>
+
+<div class="definition">
+<strong>Definition 2.3 (ABSORB).</strong>
+<em>ABSORB</em> incorporates a computational result into the evolving understanding according to its epistemic status, provenance, dependencies, and computational role.
 </div>
 
 <p>
-Some operations act directly on knowledge. Others connect knowledge to computational expertise.
-</p>
-
-
-<h3>Construct</h3>
-
-<p>
-Create a knowledge object from an observation, document, database record, rule, model output, computation result, or human assertion. Construction assigns the identity and contextual structure required for later use.
-</p>
-
-
-<h3>Retrieve</h3>
-
-<p>
-Locate knowledge potentially relevant to a task. Retrieval may be lexical, semantic, relational, graph-based, temporal, spatial, rule-driven, or programmatic.
+Absorption is not merely collection or ingestion.
 </p>
 
 <p>
-Retrieval produces candidates. It does not establish applicability or authority.
+A result may:
 </p>
 
-
-<h3>Activate</h3>
+<ul>
+  <li>add a new observation or conclusion;</li>
+  <li>strengthen or weaken a hypothesis;</li>
+  <li>replace a previous prediction;</li>
+  <li>invalidate a dependent conclusion;</li>
+  <li>establish that a constraint is satisfied;</li>
+  <li>introduce a candidate plan;</li>
+  <li>verify a property;</li>
+  <li>or change what knowledge and expertise become applicable next.</li>
+</ul>
 
 <p>
-Determine whether knowledge or computational expertise becomes eligible in the current state. Activation evaluates scope, prerequisites, current evidence, and other applicability conditions.
+For example:
 </p>
 
-<p>
-Activation can therefore occur at two related levels: a knowledge object may become active, and active knowledge may make particular computational expertise eligible or required.
-</p>
+<pre><code>expert:
+    trajectory_predictor
 
+result:
+    crossing_probability = 0.87
 
-<h3>Support</h3>
+role:
+    PREDICTION
 
-<p>
-Increase the justification for a claim or hypothesis. Support may be logical, empirical, statistical, causal, or authority-based.
-</p>
+ABSORB(result)
 
-
-<h3>Challenge</h3>
-
-<p>
-Introduce knowledge that weakens, qualifies, or conflicts with a claim. A challenge need not prove the claim false. It may expose uncertainty, a missing assumption, or a competing explanation.
-</p>
-
-
-<h3>Constrain</h3>
+understanding:
+    potential_crossing = supported
+    collision_assessment = now_applicable
+</code></pre>
 
 <p>
-Restrict permissible states, conclusions, plans, recommendations, or actions. A constraint may be evaluated directly or through specialized constraint-solving or verification expertise.
-</p>
-
-
-<h3>Transform</h3>
-
-<p>
-Convert knowledge from one representation into another while preserving identity and provenance where appropriate. Examples include entity grounding, normalization, feature construction, abstraction, and translation into the input representation expected by specialized expertise.
-</p>
-
-
-<h3>Derive</h3>
-
-<p>
-Produce new knowledge from existing knowledge through an identified computation. The derivation should retain links to its inputs and to the expert or operation that produced it.
-</p>
-
-
-<h3>Require</h3>
-
-<p>
-Declare that some evidence, state, or computation must exist before a later result may acquire a specified status or authority.
+The important transition is not that another piece of information has been gathered. The system's computational understanding has changed.
 </p>
 
 <p>
-For example, a caregiver application may require respiratory status before a home-monitoring recommendation can be authorized. An autonomous system may require collision verification before a maneuver can execute.
+Revision, reconciliation, dependency propagation, and invalidation may all occur as part of absorption. They are consequences or implementation mechanisms of this single semantic operation rather than independent foundational operators.
 </p>
 
 
-<h3>Invoke</h3>
+<h3>AUTHORIZE</h3>
 
 <p>
-Request computational expertise whose applicability and requirements have been satisfied. The Knowledge Runtime need not implement the underlying scheduler, agent protocol, API transport, retry policy, or compute platform. Invocation is the semantic transition from <em>this expertise is required</em> to <em>execute the bound capability</em>.
-</p>
-
-
-<h3>Assimilate</h3>
-
-<p>
-Interpret a computational result in terms of what it establishes and incorporate that result into the evolving understanding.
+<em>AUTHORIZE</em> determines what the current understanding permits the system to recommend, decide, or do.
 </p>
 
 <p>
-A predictor's numerical output may become a prediction object. A planner's output may become a candidate plan with explicit assumptions. A verifier's result may establish that a property holds. An LLM interpretation may become a hypothesis rather than an accepted fact.
+Authorization may depend on:
+</p>
+
+<ul>
+  <li>required evidence being present;</li>
+  <li>particular expertise having been applied;</li>
+  <li>constraints being satisfied;</li>
+  <li>a verification result;</li>
+  <li>provenance or confidence requirements;</li>
+  <li>absence of unresolved blocking conditions;</li>
+  <li>or human approval.</li>
+</ul>
+
+<p>
+For example:
+</p>
+
+<pre><code>AUTHORIZE(home_monitoring)
+
+requires:
+    respiratory_status_assessed
+    no_active_red_flag
+
+result:
+    DENIED
+    missing: respiratory_status_assessed
+</code></pre>
+
+<p>
+Or:
+</p>
+
+<pre><code>AUTHORIZE(execute_maneuver)
+
+requires:
+    feasible_plan
+    collision_check_passed
+    dynamics_check_passed
+
+result:
+    ALLOWED
+</code></pre>
+
+<p>
+Authorization is not equivalent to confidence. A model may be highly confident while a mandatory computation has not occurred. Conversely, an action may be authorized under uncertainty when the governing knowledge explicitly permits it.
 </p>
 
 
-<h3>Reconcile</h3>
+<h2>2.7 Why Four Operators Are Enough</h2>
 
 <p>
-Resolve, prioritize, or explicitly preserve disagreement among knowledge objects and expert results. Reconciliation may use source authority, recency, scope, specificity, confidence, formal guarantees, or domain-specific precedence.
-</p>
-
-
-<h3>Revise</h3>
-
-<p>
-Modify the knowledge state when evidence, assumptions, or context change. Revision may update an object, supersede it, invalidate it, or propagate changed status to dependent conclusions and authority decisions.
-</p>
-
-
-<h3>Authorize</h3>
-
-<p>
-Determine whether accumulated knowledge and computational results satisfy the requirements for a recommendation, decision, or action to cross a defined authority boundary.
+Many useful verbs arise naturally when describing intelligent systems:
 </p>
 
 <p>
-Authorization is not equivalent to confidence. It may depend on the participation of required expertise, satisfaction of constraints, completion of verification, provenance requirements, human approval, or other explicit conditions.
+retrieve, construct, support, challenge, constrain, transform, derive, predict, plan, verify, invoke, reconcile, revise, explain, and others.
 </p>
 
-
-<h3>Explain</h3>
+<p>
+These are real operations in software systems. But making all of them foundational Knowledge Native operators would confuse three different levels of abstraction.
+</p>
 
 <p>
-Expose the knowledge objects, expert invocations, results, and operations that contributed to a result. Explanation should be grounded in the computational trace rather than reconstructed solely as plausible prose.
+First, there are <strong>runtime semantics</strong>. These are captured by A4.
+</p>
+
+<p>
+Second, there are <strong>forms of computational expertise and result semantics</strong>. Prediction, planning, deduction, optimization, constraint solving, and verification belong here.
+</p>
+
+<p>
+Third, there are <strong>execution and infrastructure mechanisms</strong>. Retrieval, indexing, API invocation, scheduling, retries, caching, routing, serialization, and logging belong here.
 </p>
 
 <div class="callout">
-<strong>Research Question.</strong>
-What is the smallest useful set of composable operations through which knowledge can activate and govern heterogeneous computation at runtime?
+<strong>A4 deliberately sits above both specialized computation and execution machinery.</strong><br><br>
+
+ACTIVATE determines what matters.<br>
+APPLY performs the appropriate computation.<br>
+ABSORB changes the understanding.<br>
+AUTHORIZE determines what may follow.
 </div>
 
+<p>
+This separation allows the same runtime abstraction to survive changes in models, algorithms, storage systems, agent frameworks, and orchestration technologies.
+</p>
 
-<h2>2.7 Relevance, Applicability, and Requirement</h2>
+
+<h2>2.8 Relevance, Applicability, and Requirement</h2>
 
 <p>
-One of the most important distinctions in knowledge-aware computation is the difference among information that is related to a problem, knowledge that may legitimately participate, and knowledge or expertise that is actually required.
+Activation requires an important distinction among information that is related to a problem, knowledge that may legitimately participate, and knowledge or expertise that is actually required.
 </p>
 
 <p>
@@ -544,7 +680,7 @@ A retrieved document may discuss the correct topic but refer to an obsolete soft
 </p>
 
 <div class="definition">
-<strong>Definition 2.3 (Applicability).</strong>
+<strong>Definition 2.4 (Applicability).</strong>
 Knowledge or computational expertise is <em>applicable</em> when its scope, validity conditions, prerequisites, and status permit it to participate in the current computation.
 </div>
 
@@ -555,25 +691,28 @@ Applicability may require checks such as:
 <ul>
   <li>Does it concern the correct entity or class of entities?</li>
   <li>Is it valid at the relevant time?</li>
-  <li>Does it apply in the current environment, population, jurisdiction, version, or operating regime?</li>
+  <li>Does it apply in the current environment, population, version, or operating regime?</li>
   <li>Are its prerequisites satisfied?</li>
   <li>Are the expert's required inputs available?</li>
-  <li>Is its source or validation sufficient for the intended computational role?</li>
   <li>Has it been superseded, contradicted, or invalidated?</li>
 </ul>
 
 <p>
-But applicable does not necessarily mean required. Several experts may be capable of addressing a problem while only one is necessary. Conversely, governance knowledge may state that a particular verification is mandatory before authority can be granted.
+But applicable does not necessarily mean required.
+</p>
+
+<p>
+Several experts may be capable of addressing a problem while none is mandatory. Conversely, governing knowledge may establish that a particular computation must occur before a recommendation or action can be authorized.
 </p>
 
 <div class="callout">
 <strong>Relevant</strong> means related.<br>
 <strong>Applicable</strong> means legitimately usable now.<br>
-<strong>Required</strong> means the computation cannot cross a specified authority boundary without it.
+<strong>Required</strong> means an authority boundary cannot be crossed without it.
 </div>
 
 
-<h2>2.8 Presence Is Not Participation</h2>
+<h2>2.9 Presence Is Not Participation</h2>
 
 <p>
 Modern language-model and agent systems can assemble rich contexts containing user messages, retrieved passages, tool outputs, predictions, policies, and intermediate results. This is enormously useful. But placing information in a context window does not specify the computational role that information played.
@@ -591,25 +730,27 @@ Suppose a prompt contains:
 </ul>
 
 <p>
-A language model may reason correctly over all four. But the surrounding application may still need to know that the forecast supported increased ordering, the capacity limit constrained the feasible quantity, the delay changed the plan, and an optimizer was required to compute the allocation.
+A language model may reason correctly over all four. But the surrounding application may still need to know that the forecast supported increased ordering, the capacity limit restricted feasible quantities, the supplier delay changed the situation, and an optimizer was required before a recommendation could be made.
 </p>
 
-<pre><code>knowledge:
-    demand_forecast_18
-    warehouse_capacity_04
-    supplier_delay_07
+<pre><code>ACTIVATE
+    demand_forecast
+    capacity_constraint
+    inventory_optimizer
 
-required_expertise:
-    inventory_optimizer_03
+APPLY
+    inventory_optimizer
 
-expert_result:
-    phased_order_plan_03
+    → proposes phased_order_plan
 
-constrained_by:
-    warehouse_capacity_04
+ABSORB
+    phased_order_plan
+    capacity_check
 
-authority:
-    recommendation_allowed
+AUTHORIZE
+    recommendation
+
+    → ALLOWED
 </code></pre>
 
 <div class="callout">
@@ -622,110 +763,67 @@ This is not an argument against prompting or LLM reasoning. Often the LLM will p
 </p>
 
 
-<h2>2.9 A Minimal Knowledge Runtime</h2>
+<h2>2.10 A Minimal Knowledge Runtime</h2>
 
 <p>
-A minimal Knowledge Native program can now be understood as a runtime loop over knowledge, evolving understanding, and computational expertise.
+The A4 operations provide a compact model of the Knowledge Runtime.
 </p>
 
-<pre><code>OBSERVATIONS / REQUEST / CURRENT STATE
-                 ↓
-          CONSTRUCT / UPDATE
-              KNOWLEDGE
-                 ↓
-       WHAT IS APPLICABLE NOW?
-                 ↓
-       WHAT MUST BE ESTABLISHED?
-                 ↓
-     WHAT EXPERTISE IS REQUIRED?
-                 ↓
-       requirements satisfied?
-          /              \
-        no                yes
-        ↓                  ↓
- expose/acquire       REQUEST INVOCATION
- missing knowledge         ↓
-                    [existing workflow /
-                     agent / tool layer]
-                           ↓
-                    EXPERT RESULT
-                           ↓
-                       ASSIMILATE
-                           ↓
-                  EVOLVING UNDERSTANDING
-                           ↓
-              support / challenge / constrain /
-                revise / verify / require
-                           ↓
-                AUTHORITY CONDITIONS MET?
-                    /              \
-                  no                yes
-                  ↓                  ↓
-            continue runtime    recommend /
-                                decide / act
+<pre><code>CURRENT UNDERSTANDING
+        ↓
+     ACTIVATE
+        ↓
+What knowledge and expertise
+matter now?
+        ↓
+       APPLY
+        ↓
+Perform the appropriate
+computation
+        ↓
+      ABSORB
+        ↓
+What has now been established?
+How has understanding changed?
+        ↓
+    AUTHORIZE
+        ↓
+What may now be recommended,
+decided, or done?
+        ↓
+UPDATED UNDERSTANDING
+        ↺
 </code></pre>
 
 <p>
-The Knowledge Runtime does not need to own the mechanics of agent coordination, scheduling, queues, retries, model routing, or service invocation. Existing infrastructure can execute the requested computation.
+The cycle is intentionally recursive.
 </p>
 
 <p>
-Its responsibility is semantic:
+Absorbing a result changes the current understanding. That change may activate new knowledge or expertise. A prediction may activate a risk model. A detected risk may activate a planner. A proposed plan may activate a verifier. Verification may finally provide sufficient authority for execution.
 </p>
-
-<ol>
-  <li><strong>Represent</strong> knowledge and runtime state.</li>
-  <li><strong>Determine applicability</strong> of knowledge and expertise.</li>
-  <li><strong>Identify requirements</strong> created by the current understanding and intended decision or action.</li>
-  <li><strong>Activate expertise</strong> when its semantic conditions are met.</li>
-  <li><strong>Request invocation</strong> through an implementation binding or external orchestration layer.</li>
-  <li><strong>Assimilate</strong> what the result establishes into the evolving understanding.</li>
-  <li><strong>Revise</strong> affected knowledge and dependencies.</li>
-  <li><strong>Evaluate authority</strong> for recommendations, decisions, or actions.</li>
-  <li><strong>Preserve a trace</strong> of why each consequential computation occurred.</li>
-</ol>
 
 <p>
-In simplified pseudocode:
+A simplified runtime can therefore be expressed as:
 </p>
 
-<pre><code>state = update_knowledge_state(
-    observations,
-    request
-)
+<pre><code>state = initial_understanding(input)
 
 while not finished(state):
 
-    active_knowledge = applicable_knowledge(state)
+    active = ACTIVATE(state)
 
-    requirements = determine_requirements(
-        state,
-        active_knowledge
+    results = APPLY(
+        active,
+        state
     )
 
-    experts = applicable_expertise(
+    state = ABSORB(
         state,
-        requirements
+        results
     )
 
-    for expert in experts:
-
-        if requirements_satisfied(expert, state):
-
-            result = request_execution(
-                expert,
-                inputs=bind_inputs(expert, state)
-            )
-
-            state = assimilate(
-                state,
-                expert,
-                result
-            )
-
-    state = apply_knowledge_operations(state)
-
-    authority = evaluate_authority(state)
+    authority = AUTHORIZE(state)
 
     if authority.allows_output():
         return emit(
@@ -733,28 +831,26 @@ while not finished(state):
             authority,
             trace=True
         )
-
-    state = acquire_or_expose_missing_knowledge(state)
 </code></pre>
 
 <p>
-This pseudocode deliberately leaves execution infrastructure abstract. <code>request_execution</code> might call an ordinary Python function, LangGraph node, MCP tool, remote model service, planner, solver, ROS component, workflow engine, or human task.
+This is intentionally abstract. <code>APPLY</code> might result in an LLM call, database query, Python function, neural predictor, planner, theorem prover, optimizer, simulator, verifier, or human task.
 </p>
 
 <p>
-The Knowledge Native abstraction is concerned with why that expertise became necessary, what knowledge it consumed, what its result established, and what changed as a consequence.
+The runtime does not need to implement all of those systems. It needs to know why they became relevant, what they require, what they establish, and what authority their results carry.
 </p>
 
 
-<h2>2.10 Knowledge, Expertise, and Orchestration</h2>
+<h2>2.11 Knowledge, Expertise, and Orchestration</h2>
 
 <p>
-The distinction among these three concerns is important.
+The distinction among knowledge, computational expertise, and orchestration is fundamental.
 </p>
 
 <div class="callout">
 <strong>Knowledge</strong> represents what is known and the semantics of its use.<br>
-<strong>Computational expertise</strong> represents what specialized computation can establish.<br>
+<strong>Computational expertise</strong> performs specialized computation with appropriate knowledge.<br>
 <strong>Orchestration</strong> executes and coordinates the underlying components.
 </div>
 
@@ -767,49 +863,19 @@ Those are useful capabilities, but they address a different problem.
 </p>
 
 <p>
-The Knowledge Runtime asks why a pharmacy contraindication check is required, what evidence it needs, what its result establishes, and whether the treatment recommendation can proceed without it. The expert that performs the check could be an agent, rule engine, database query, or ordinary function.
+The Knowledge Runtime asks why a contraindication check became required, what knowledge it consumes, what result it establishes, how that result changes the current understanding, and whether the treatment recommendation may now proceed.
 </p>
 
 <p>
-Agents are therefore one possible delivery mechanism for computational expertise. They are not the Knowledge Native abstraction.
+The component performing the check could be an agent, rule engine, database query, LLM, or ordinary function.
 </p>
 
 <p>
-Similarly, KnaiTai need not become a universal expert router. Routing asks which available component should receive a request. Knowledge Native activation asks what the evolving state implies must be established and what kind of expertise has the semantics and authority to establish it.
-</p>
-
-
-<h2>2.11 Granularity and Composition</h2>
-
-<p>
-A practical issue is deciding what should count as one knowledge object.
+Agents are therefore one possible carrier of computational expertise. They are not the Knowledge Native abstraction.
 </p>
 
 <p>
-A full policy or guideline may be too coarse because individual provisions have different scopes and effects. At the other extreme, treating every token, sentence, or graph edge as an independent object may obscure coherent meaning and make computation unwieldy.
-</p>
-
-<p>
-A useful knowledge object usually satisfies three conditions:
-</p>
-
-<ul>
-  <li><strong>Coherent applicability.</strong> Its conditions of use can be evaluated meaningfully as a unit.</li>
-  <li><strong>Coherent computational role.</strong> The system can identify what the object may do or what expertise it may participate in.</li>
-  <li><strong>Coherent provenance.</strong> Its source or derivation can be preserved without ambiguity.</li>
-</ul>
-
-<p>
-Granularity may change during computation. A document may enter as one resource and then be decomposed into claims, constraints, definitions, or procedures. Several fine-grained objects may later be composed into a larger hypothesis, state estimate, plan, or explanation.
-</p>
-
-<div class="definition">
-<strong>Definition 2.4 (Knowledge Composition).</strong>
-<em>Knowledge composition</em> is the construction of a larger knowledge object or understanding from smaller objects while preserving the identities, roles, dependencies, and provenance of the contributing parts.
-</div>
-
-<p>
-Composition is important because intelligent computation moves across levels of abstraction. A system may reason over observations, intermediate hypotheses, predictions, constraints, plans, and aggregate conclusions within the same task.
+Similarly, KnaiTai need not become a universal expert router. Routing asks which available component should receive a request. Knowledge Native activation asks what the evolving understanding makes computationally relevant or required.
 </p>
 
 
@@ -820,7 +886,7 @@ The phrase <em>knowledge object</em> should not be interpreted as a guarantee of
 </p>
 
 <p>
-An intelligent system must represent uncertain observations, competing hypotheses, model predictions, disputed claims, expired policies, provisional plans, assumptions, and assertions later shown to be false.
+An intelligent system must represent uncertain observations, competing hypotheses, model predictions, disputed claims, provisional plans, assumptions, and assertions later shown to be false.
 </p>
 
 <p>
@@ -829,26 +895,30 @@ What makes these objects suitable for knowledge-aware computation is not certain
 
 <div class="callout">
 <strong>Knowledge Native AI does not require every knowledge object to be accepted as true.</strong>
-It requires the system to represent what kind of object it is, why it is available, and how it may legitimately be used.
+It requires the system to know what kind of object it is, why it is available, and how it may legitimately participate.
 </div>
 
 <p>
-This is especially important once specialized expertise participates. A predictor produces a prediction, not an observation. A planner produces a candidate plan, not proof of feasibility. An LLM may produce a hypothesis. A verifier may subsequently establish a stronger property about one of those results.
+This becomes especially important when heterogeneous expertise participates.
 </p>
 
 <p>
-Preserving these distinctions prevents an evolving understanding from collapsing heterogeneous computational products into an undifferentiated collection of “facts.”
+A predictor produces a prediction, not an observation. A planner produces a candidate plan, not proof of feasibility. An LLM may produce a hypothesis. A verifier may subsequently establish a stronger property about one of those results.
+</p>
+
+<p>
+ABSORB must preserve these distinctions rather than collapsing heterogeneous computational products into an undifferentiated collection of facts.
 </p>
 
 
 <h2>2.13 Knowledge Capsules</h2>
 
 <p>
-Individual knowledge objects are useful primitives, but practical systems often need a larger portable unit that packages related knowledge with its computational semantics.
+Individual knowledge objects are useful primitives, but practical systems often need a larger portable unit that packages related knowledge with the semantics needed for runtime computation.
 </p>
 
 <p>
-A <em>knowledge capsule</em> can group knowledge, scope, applicability, requirements, expert bindings, outputs, authority semantics, and provenance without requiring the underlying computational implementation to live physically inside the capsule.
+A <em>knowledge capsule</em> can group knowledge, scope, applicability, requirements, computational expertise bindings, result semantics, authority conditions, and provenance without requiring the underlying implementation to live physically inside the capsule.
 </p>
 
 <pre><code>KnowledgeCapsule
@@ -864,16 +934,78 @@ A <em>knowledge capsule</em> can group knowledge, scope, applicability, requirem
 </code></pre>
 
 <p>
-For example, a clinical capsule might contain general respiratory-distress knowledge and bind it to a pathway evaluator. A trajectory capsule might describe the scope and requirements of a trained predictor and bind to a model service. A verification capsule might package a specification and bind to a formal checker.
+For example, a clinical capsule might contain general respiratory-distress knowledge and bind it to pathway evaluation expertise. A trajectory capsule might describe the scope and requirements of a trained predictor and bind to a model service. A verification capsule might package a specification and bind to a formal checker.
 </p>
 
 <p>
-The capsule therefore provides a declarative boundary between <em>what the runtime needs to know about a capability</em> and <em>how that capability is implemented and executed</em>.
+The capsule therefore provides a declarative boundary between <em>what the Knowledge Runtime needs to know about a capability</em> and <em>how that capability is implemented and executed</em>.
 </p>
 
 <p>
-Later chapters develop this abstraction in greater detail.
+The A4 operators act over these abstractions:
 </p>
+
+<pre><code>ACTIVATE(capsule, understanding)
+
+APPLY(capsule.expertise, knowledge)
+
+ABSORB(result, understanding)
+
+AUTHORIZE(action, understanding)
+</code></pre>
+
+<p>
+Later chapters develop the capsule and runtime abstractions in greater detail.
+</p>
+
+
+<h2>2.14 Why the Abstraction Matters</h2>
+
+<p>
+The value of A4 is not the four names themselves. The value is the separation they create.
+</p>
+
+<p>
+Application developers should not need to hard-code every possible combination of model, rule, predictor, planner, verifier, and decision boundary into one growing procedural workflow.
+</p>
+
+<p>
+Nor should KnaiTai attempt to standardize every form of intelligence into one universal reasoner.
+</p>
+
+<p>
+Instead, the runtime can operate over a stable abstraction:
+</p>
+
+<pre><code>What matters?
+    → ACTIVATE
+
+What computation should occur?
+    → APPLY
+
+What did it establish?
+    → ABSORB
+
+What does that now permit?
+    → AUTHORIZE
+</code></pre>
+
+<p>
+Everything beneath <code>APPLY</code> may continue to evolve.
+</p>
+
+<p>
+Today's frontier LLM may be replaced by tomorrow's. A trajectory predictor may be retrained. A symbolic planner may be exchanged for a neural planner. A verifier may move from handcrafted constraints to a formal solver. An external service may replace a local implementation.
+</p>
+
+<p>
+The Knowledge Native semantics need not change simply because the implementation of expertise changes.
+</p>
+
+<div class="callout">
+<strong>This is the abstraction boundary.</strong><br>
+KnaiTai programs the participation of knowledge and expertise, not the internal implementation of every expert.
+</div>
 
 
 <h2>Knowledge Native Thinking</h2>
@@ -886,13 +1018,22 @@ When encountering a source of knowledge, ask not only what it contains, but what
 A document is not yet an instruction. A graph edge is not automatically a constraint. A model is not automatically applicable. A prediction is not an observation. A planner's output is not automatically executable. A human note is not automatically authoritative.
 </p>
 
+<p>
+Instead, ask four questions:
+</p>
+
 <div class="callout">
-<strong>Knowledge Native Question.</strong>
-What does this knowledge mean computationally: when does it apply, what can it establish or require, what expertise can put it to work, and what should change after that computation occurs?
+<strong>ACTIVATE:</strong> Does this knowledge or expertise matter now?<br><br>
+
+<strong>APPLY:</strong> What computation should be performed with it?<br><br>
+
+<strong>ABSORB:</strong> What did that computation establish, and how does it change the current understanding?<br><br>
+
+<strong>AUTHORIZE:</strong> What may the system now recommend, decide, or do?
 </div>
 
 <p>
-Once that question is asked, the design problem changes. The objective is no longer merely to move information into a model or pipeline. It is to program the semantics through which knowledge activates computation and through which computational results become new knowledge in an evolving understanding.
+These four questions provide the basic computational rhythm of a Knowledge Native program.
 </p>
 
 
@@ -900,34 +1041,61 @@ Once that question is asked, the design problem changes. The objective is no lon
 
 <ul>
   <li>Knowledge may exist in a system without participating explicitly in computation.</li>
+
   <li>A computational primitive is defined both by representation and by meaningful operations.</li>
-  <li>Knowledge is intentionally broad: it may be declarative, situational, historical, structural, procedural, formal, learned, or human.</li>
-  <li>A knowledge object represents content together with computationally relevant identity, provenance, scope, epistemic status, applicability, roles, and dependencies.</li>
-  <li>General domain knowledge should remain distinct from runtime bindings to particular entities or situations.</li>
-  <li>Knowledge and computational expertise are related but distinct: knowledge is what is known; expertise is a bounded capability for putting relevant knowledge to work.</li>
-  <li>Computational experts may include LLMs, predictors, planners, rule engines, solvers, simulators, optimizers, verifiers, algorithms, services, and humans.</li>
-  <li>Knowledge operations include construction, retrieval, activation, support, challenge, constraint, transformation, derivation, requirement, invocation, assimilation, reconciliation, revision, authorization, and explanation.</li>
-  <li>Relevance, applicability, and requirement are distinct concepts.</li>
-  <li>Presence of information in an LLM context is not the same as known computational participation.</li>
-  <li>The Knowledge Runtime determines what knowledge and expertise are applicable, assimilates computational results, and evaluates authority as understanding evolves.</li>
-  <li>Existing workflow and multi-agent infrastructure can execute computations; KnaiTai need not replace it.</li>
-  <li>A knowledge capsule can provide a declarative unit connecting knowledge to applicability, expertise, result semantics, and authority.</li>
+
+  <li>Knowledge may be declarative, situational, historical, structural, procedural, formal, learned, or human.</li>
+
+  <li>A knowledge object represents content together with computationally relevant identity, provenance, scope, epistemic status, applicability, role, and dependencies.</li>
+
+  <li>General domain knowledge should remain distinct from runtime bindings to particular entities and situations.</li>
+
+  <li>Knowledge and computational expertise are distinct: knowledge is what is known; expertise is the bounded capability to put appropriate knowledge to work.</li>
+
+  <li>Computational expertise may be provided by LLMs, predictors, planners, solvers, simulators, optimizers, verifiers, algorithms, external services, or humans.</li>
+
+  <li>Knowledge Native AI uses four foundational runtime operations: <strong>ACTIVATE, APPLY, ABSORB, and AUTHORIZE</strong>.</li>
+
+  <li>ACTIVATE determines what knowledge and expertise matter in the current understanding.</li>
+
+  <li>APPLY puts the appropriate knowledge and expertise to work.</li>
+
+  <li>ABSORB incorporates what the computation established into the evolving understanding.</li>
+
+  <li>AUTHORIZE determines what the resulting understanding permits the system to recommend, decide, or do.</li>
+
+  <li>Support, challenge, prediction, planning, constraint checking, optimization, and verification are computational roles or forms of expertise rather than additional foundational operators.</li>
+
+  <li>Retrieval, invocation, scheduling, routing, caching, and retries are execution mechanisms rather than foundational knowledge operations.</li>
+
+  <li>Existing workflow and multi-agent infrastructure can therefore execute computations without becoming the Knowledge Native abstraction itself.</li>
+
+  <li>A knowledge capsule provides a declarative boundary connecting knowledge, applicability, expertise, result semantics, and authority.</li>
 </ul>
 
 
 <h2>Discussion Questions</h2>
 
 <ol>
+  <li>Are ACTIVATE, APPLY, ABSORB, and AUTHORIZE sufficient to describe the essential knowledge semantics of an intelligent system?</li>
+
   <li>Which properties of a knowledge object appear universal, and which are necessarily domain-specific?</li>
-  <li>How is a knowledge object different from a typed record containing metadata?</li>
+
+  <li>How is a knowledge object different from an ordinary typed record containing metadata?</li>
+
   <li>When should a learned model itself be represented as knowledge, and when should it be represented as computational expertise?</li>
-  <li>Can the same knowledge participate in more than one kind of computational expertise?</li>
-  <li>What is the difference between an applicable expert and a required expert?</li>
-  <li>Which knowledge operations belong in the runtime itself, and which should be delegated to specialized experts?</li>
-  <li>How should an expert's result declare what it has actually established?</li>
-  <li>What authority should be assigned to predictions, plans, LLM hypotheses, formal proofs, and human judgments?</li>
-  <li>How should KnaiTai interoperate with an existing agent or workflow framework without duplicating orchestration?</li>
-  <li>What is the appropriate boundary between an individual knowledge object and a knowledge capsule?</li>
+
+  <li>Can the same knowledge participate in several different computational experts?</li>
+
+  <li>What is the difference between expertise that is applicable and expertise that is required?</li>
+
+  <li>What information must a computational result expose for ABSORB to interpret it correctly?</li>
+
+  <li>When should AUTHORIZE depend on a particular computation having occurred rather than merely on the final result?</li>
+
+  <li>Which mechanisms belong below APPLY rather than in the Knowledge Runtime itself?</li>
+
+  <li>How should KnaiTai interoperate with an existing workflow or agent framework without duplicating orchestration?</li>
 </ol>
 
 
@@ -943,7 +1111,7 @@ Choose a familiar software or AI system. Identify at least five pieces of knowle
 <h3>Exercise 2.2: Separate General Knowledge from Runtime State</h3>
 
 <p>
-Choose a general rule or guideline and represent it independently of any particular subject. Then create a runtime observation for one concrete subject and show how the general knowledge becomes applicable to that subject without duplicating or rewriting the rule.
+Choose a general rule or guideline and represent it independently of any particular subject. Then create a runtime observation for one concrete subject and show how ACTIVATE can make the general knowledge applicable to that subject without duplicating or rewriting the rule.
 </p>
 
 
@@ -954,38 +1122,53 @@ Classify each of the following into knowledge, computational expertise, or both:
 </p>
 
 
-<h3>Exercise 2.4: Separate Relevance, Applicability, and Requirement</h3>
+<h3>Exercise 2.4: APPLY Different Expertise</h3>
 
 <p>
-Suppose a system has access to ten potentially relevant knowledge objects and four computational experts. Design a procedure that determines which knowledge is applicable and which expertise is merely available, applicable, or mandatory before a specified action may proceed.
+Choose one problem that requires at least three different forms of computational expertise. For each expert, identify the knowledge it consumes, what computation it performs, and the semantic role of the result it produces.
 </p>
 
 
-<h3>Exercise 2.5: Specify an Expert Interface</h3>
+<h3>Exercise 2.5: ABSORB a Result</h3>
 
 <p>
-Choose a predictor, planner, solver, simulator, verifier, or LLM capability. Specify its identity, capability, scope, requirements, knowledge inputs, implementation binding, result type, and authority.
+Construct a case in which a new computational result does more than add information. Show how absorbing it changes a hypothesis, invalidates a prior conclusion, or activates additional expertise.
 </p>
 
 
-<h3>Exercise 2.6: Trace a Runtime Cycle</h3>
+<h3>Exercise 2.6: Define an Authority Boundary</h3>
 
 <p>
-Construct a short trace in which an observation activates general knowledge, that knowledge requires specialized expertise, the expert returns a result, and the result changes what may happen next. Identify each knowledge object and operation in the trace.
+Choose one consequential recommendation or action. Specify what knowledge and computational results must exist before AUTHORIZE permits it to proceed.
 </p>
 
 
-<h3>Exercise 2.7: Separate Semantics from Orchestration</h3>
+<h3>Exercise 2.7: Trace an A4 Cycle</h3>
 
 <p>
-Sketch a system that uses an LLM, one specialized expert, and one verifier. Mark which decisions belong to the Knowledge Runtime and which mechanics belong to an existing workflow or agent framework.
+Construct a short computational trace:
+</p>
+
+<pre><code>ACTIVATE
+    ↓
+APPLY
+    ↓
+ABSORB
+    ↓
+AUTHORIZE
+    ↓
+ACTIVATE ...
+</code></pre>
+
+<p>
+Identify exactly what changes at each step and why the next step follows.
 </p>
 
 
-<h3>Exercise 2.8: Define an Authority Boundary</h3>
+<h3>Exercise 2.8: Separate Semantics from Orchestration</h3>
 
 <p>
-Choose one recommendation or action. Specify the knowledge and expert results that must exist before it is advisory, recommendable, decidable, or executable. Explain why confidence alone is insufficient.
+Sketch a system using an LLM, one specialized computational expert, and one verifier. Identify the A4 semantics separately from the workflow mechanics used to call and coordinate those components.
 </p>
 
 
