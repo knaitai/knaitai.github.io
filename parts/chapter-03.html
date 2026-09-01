@@ -70,8 +70,9 @@
 <h1 class="page-title">Thinking in Knowledge</h1>
 
 <p class="lead">
-How problem formulation changes when explicit knowledge and generative models work together to build, test, and progressively improve an understanding.
+How problem formulation changes when knowledge becomes a first-class runtime abstraction: shaping what computational expertise should be brought to bear, how its results change an evolving understanding, and what the system may consequently recommend, decide, or do.
 </p>
+
 
 <h2>3.1 Abstractions Change How We Think</h2>
 
@@ -104,17 +105,18 @@ we also ask:
 </p>
 
 <blockquote>
-What is the system currently trying to understand? What observations, explicit knowledge, and model-generated interpretations shape that understanding? What remains uncertain? What should the system observe, infer, retrieve, verify, or ask next?
+What is known now? What remains unresolved? What knowledge matters to the current situation? What computational expertise should be brought to bear? What will its result establish? And what may the system do after that result is absorbed?
 </blockquote>
 
 <div class="definition">
 <strong>Definition 3.1 (Thinking in Knowledge).</strong>
-<em>Thinking in knowledge</em> is the practice of formulating computational problems around an evolving understanding: how observations, generative interpretations, explicit knowledge, constraints, uncertainty, and revision progressively change what the system believes about the subject of reasoning.
+<em>Thinking in knowledge</em> is the practice of formulating computational problems around the runtime evolution of knowledge: what is currently known, what remains unresolved, what expertise becomes applicable, what its computation establishes, how the result changes understanding, and what authority consequently follows.
 </div>
 
 <p>
-This does not eliminate ordinary computation. Algorithms, data structures, databases, and models remain essential. The shift is that they are treated as participants in a larger process through which the system constructs, tests, and revises an operational understanding of a person, object, situation, process, or phenomenon.
+This does not eliminate ordinary computation. Algorithms, data structures, databases, learned models, planners, solvers, simulators, and foundation models remain essential. The shift is that they are treated as computational experts participating within a larger knowledge process.
 </p>
+
 
 <h2>3.2 Representation Exposes Computation</h2>
 
@@ -136,16 +138,31 @@ Representation does not merely preserve information. It exposes a particular spa
 </div>
 
 <p>
-The same principle applies to knowledge. When knowledge exists only implicitly in prose, application code, model parameters, prompts, or developer assumptions, the system may make use of it without being able to inspect or manipulate it directly. It may be unable to identify the source of a claim, compare it with competing claims, determine its scope, trace which conclusions depend upon it, or revise those conclusions when the claim changes.
+The same principle applies to knowledge.
 </p>
 
 <p>
-Once computationally important knowledge is represented explicitly, additional operations become possible. A model-generated interpretation can be grounded. A claim can be connected to evidence. A constraint can be checked against a proposed action. Two sources can be reconciled. A knowledge gap can determine the next question. A changed observation can propagate to affected conclusions.
+When computationally important knowledge exists only implicitly in prose, application code, model parameters, prompts, or developer assumptions, the system may still make use of it. But the surrounding architecture may be unable to determine its scope, track its dependencies, know when it should activate another computation, or control what consequences it is allowed to have.
 </p>
 
 <p>
-This does not require all knowledge to be symbolic or stored in a graph. The essential requirement is that the aspects of knowledge that materially affect computation become accessible to the system.
+Once important knowledge becomes computationally accessible, additional possibilities emerge:
 </p>
+
+<ul>
+  <li>a clinical requirement can determine that more evidence must be gathered;</li>
+  <li>a physical constraint can determine that an action is inadmissible;</li>
+  <li>a trajectory history can activate a specialized predictor;</li>
+  <li>a planning domain can become input to a planner;</li>
+  <li>a formal specification can require verification;</li>
+  <li>a new observation can invalidate dependent conclusions;</li>
+  <li>and one expert's result can activate different expertise next.</li>
+</ul>
+
+<p>
+This does not require all knowledge to be symbolic or stored in a graph. The essential requirement is that knowledge whose computational role matters becomes accessible enough for the runtime to use it correctly.
+</p>
+
 
 <h2>3.3 From Values to Knowledge-Bearing Values</h2>
 
@@ -155,11 +172,11 @@ Traditional programs manipulate values:
 
 <pre><code># Caregiver observation
 temperature = 39.2
-rash_present = True
+rib_retractions = True
 
 # Operational observation
 speed = 1.8
-location = "protected_zone_14"</code></pre>
+heading = 137.0</code></pre>
 
 <p>
 In an ordinary program, the surrounding code supplies the interpretation. The programmer knows what each variable refers to, where it came from, when it was measured, and what operations are appropriate.
@@ -173,10 +190,11 @@ In knowledge-intensive computation, the value alone may be inadequate. The syste
   <li>where the value originated;</li>
   <li>when it was observed or computed;</li>
   <li>which entity and situation it concerns;</li>
-  <li>how reliable or authoritative it is;</li>
+  <li>whether it is observed, predicted, inferred, or assumed;</li>
   <li>whether it remains valid;</li>
-  <li>which assumptions were used to produce it; and</li>
-  <li>which later conclusions depend upon it.</li>
+  <li>which computational expert produced it;</li>
+  <li>which assumptions were used to produce it;</li>
+  <li>and which later conclusions or authority decisions depend upon it.</li>
 </ul>
 
 <div class="definition">
@@ -185,17 +203,19 @@ A <em>knowledge-bearing value</em> is a value represented together with enough s
 </div>
 
 <div class="example-block">
-<p><strong>Caregiver assistance.</strong> The value <code>39.2°C</code> becomes more useful when represented together with the child's age, the time of observation, the measurement method, and the fact that it was reported by a caregiver rather than measured in a clinic.</p>
-<p><strong>Operational intelligence.</strong> The value <code>1.8 knots</code> becomes meaningful when connected to a particular vessel, a protected-zone location, a seventy-four-minute duration, the AIS source, prevailing weather, and a current hypothesis of loitering.</p>
+<p><strong>Caregiver assistance.</strong> The value <code>39.2°C</code> becomes more useful when represented together with the child's age, time of observation, measurement source, and status as a caregiver-reported observation.</p>
+
+<p><strong>Trajectory prediction.</strong> The value <code>1.8 knots</code> becomes meaningful when connected to a particular vessel, timestamp, trajectory history, sensor source, geographic context, and operating regime.</p>
 </div>
 
 <p>
-A knowledge-bearing value need not contain every imaginable annotation. It contains the contextual information required by the computations in which it participates. Depending on the problem, that may include provenance, time, confidence, scope, evidence, authority, validity conditions, or dependencies.
+A knowledge-bearing value need not contain every imaginable annotation. It contains the contextual information required by the computations in which it participates.
 </p>
 
 <p>
-This resembles the distinction between an untyped memory location and a typed value. The raw bits may be identical, but the type constrains their interpretation and the operations that may be applied. Knowledge-bearing values extend this idea beyond type to computational meaning.
+This resembles the distinction between an untyped memory location and a typed value. Knowledge-bearing values extend this idea beyond type to provenance, scope, epistemic status, dependencies, and computational consequence.
 </p>
+
 
 <h2>3.4 From Program State to Understanding State</h2>
 
@@ -204,12 +224,12 @@ Programs evolve by changing state. Variables are assigned, objects are modified,
 </p>
 
 <p>
-Knowledge Native systems also maintain what is currently observed, believed, supported, uncertain, contradicted, constrained, or unresolved about the subject being addressed.
+Knowledge Native systems also maintain what is currently observed, inferred, predicted, proposed, constrained, verified, unresolved, or assumed about the subject being addressed.
 </p>
 
 <div class="definition">
 <strong>Definition 3.3 (Knowledge State).</strong>
-A <em>knowledge state</em> is the system's current structured representation of the entities, observations, claims, hypotheses, constraints, uncertainties, and unresolved questions relevant to a computational task.
+A <em>knowledge state</em> is the system's current structured representation of knowledge available to a computational task.
 </div>
 
 <p>
@@ -218,69 +238,79 @@ A knowledge state may contain far more than is relevant to one immediate problem
 
 <div class="definition">
 <strong>Definition 3.4 (Understanding State).</strong>
-An <em>understanding state</em> is the task-focused organization of current observations, interpretations, hypotheses, evidence, constraints, uncertainties, and knowledge gaps concerning a particular subject of reasoning.
+An <em>understanding state</em> is the task-focused organization of what is currently established, unresolved, predicted, proposed, constrained, or verified about a particular subject of reasoning.
 </div>
 
-<pre><code>Observations
-      ↓
-Generative Interpretation
-      ↓
+<pre><code>Observations / Current State
+        ↓
 Current Understanding
-      ↓
-Knowledge Operations
-      ↓
+        ↓
+ACTIVATE
+        ↓
+Applicable Knowledge + Expertise
+        ↓
+APPLY
+        ↓
+Computational Result
+        ↓
+ABSORB
+        ↓
 Revised Understanding
-      ↓
-Further Inquiry or Projection</code></pre>
+        ↓
+AUTHORIZE
+        ↓
+Recommend / Decide / Act</code></pre>
 
 <div class="example-block">
+
 <p><strong>Caregiver assistance.</strong></p>
-<pre><code>Observation:
-fever + rash
 
-Current understanding:
-acute febrile illness;
-cause and severity unresolved
+<pre><code>Current understanding:
+    fever observed
+    vomiting observed
+    child responsive
+    hydration partially assessed
+    respiratory status unknown
 
-Knowledge gaps:
-breathing difficulty?
-hydration?
-rash character?
-vaccination status?
+Current consequence:
+    home monitoring not yet authorized
 
-Next computation:
-generate targeted caregiver questions</code></pre>
+Relevant next expertise:
+    respiratory assessment</code></pre>
 
-<p><strong>Operational intelligence.</strong></p>
-<pre><code>Observation:
-repeated low-speed movement
+<p><strong>Autonomous navigation.</strong></p>
 
-Current understanding:
-possible loitering;
-intent unresolved
+<pre><code>Current understanding:
+    vessel approaching crossing geometry
+    future encounter uncertain
 
-Knowledge gaps:
-weather conditions?
-nearby vessels?
-protected-area status?
-historical behavior?
+Relevant next expertise:
+    trajectory prediction
 
-Next computation:
-retrieve discriminating evidence</code></pre>
+Possible later expertise:
+    collision assessment
+    planning
+    maneuver verification</code></pre>
+
 </div>
 
 <p>
-This formulation changes the role of computation. A new observation does not merely produce another output. It changes the context within which earlier and later interpretations must be evaluated.
+A new observation therefore does more than produce another output. It changes the state against which earlier and later knowledge and expertise become applicable.
 </p>
 
-<h2>3.5 Decomposing Problems Through Knowledge Operations</h2>
+
+<h2>3.5 Decomposing Problems Through A4</h2>
 
 <p>
-Chapter 2 introduced operations such as construction, retrieval, activation, support, challenge, constraint, transformation, derivation, reconciliation, revision, and explanation. Thinking in knowledge means using those operations as a vocabulary for decomposing how an understanding should evolve.
+Chapter 2 introduced a deliberately small operator set:
 </p>
 
+<div class="callout">
+<strong>ACTIVATE → APPLY → ABSORB → AUTHORIZE</strong>
+</div>
+
 <p>
-The design problem is no longer simply to decide which model to call or which prompt to construct. It is to determine how candidate interpretations enter the system, what makes them applicable, what supports or challenges them, how conflicts are reconciled, and how the resulting understanding may later be revised.
+Thinking in knowledge means using these four operations as the stable vocabulary for decomposing how intelligent computation proceeds.
 </p>
 
 <table class="comparison-table">
@@ -290,46 +320,68 @@ The design problem is no longer simply to decide which model to call or which pr
   <th>Knowledge Native formulation</th>
 </tr>
 </thead>
+
 <tbody>
+
 <tr>
-  <td>Classify the case</td>
-  <td>Construct and test competing interpretations</td>
+  <td>Choose a model or tool</td>
+  <td><strong>ACTIVATE:</strong> determine what knowledge and expertise matter now</td>
 </tr>
+
 <tr>
-  <td>Retrieve relevant text</td>
-  <td>Retrieve potentially applicable knowledge and determine what activates</td>
+  <td>Run the model</td>
+  <td><strong>APPLY:</strong> put the appropriate expertise to work</td>
 </tr>
+
 <tr>
-  <td>Generate an answer</td>
-  <td>Project an answer from the current understanding</td>
+  <td>Consume the output</td>
+  <td><strong>ABSORB:</strong> determine what the result established and revise understanding</td>
 </tr>
+
+<tr>
+  <td>Return an answer or execute</td>
+  <td><strong>AUTHORIZE:</strong> determine what the resulting understanding permits</td>
+</tr>
+
 <tr>
   <td>Handle missing input</td>
-  <td>Represent a knowledge gap and determine what to ask or observe next</td>
+  <td>Represent the missing knowledge and allow it to affect activation or authorization</td>
 </tr>
+
 <tr>
   <td>Re-run after a change</td>
-  <td>Revise the affected region of understanding incrementally</td>
+  <td>Reconsider only the affected understanding, dependencies, and expertise</td>
 </tr>
+
 <tr>
   <td>Explain the result</td>
-  <td>Expose the knowledge trace that actually produced it</td>
+  <td>Expose the trace of what actually activated, computed, changed, and authorized</td>
 </tr>
+
 </tbody>
 </table>
 
 <div class="callout">
 <strong>Abstraction Criterion.</strong>
-A useful knowledge abstraction exposes a small set of stable operations while hiding unnecessary representational detail.
+A useful knowledge abstraction exposes a small set of stable operations while hiding unnecessary representational and implementation detail.
 </div>
 
 <p>
-Different implementations may represent a claim as a graph fragment, a typed record, a logical expression, or a structured document. The knowledge-level operation should preserve its conceptual meaning across these representations.
+A4 therefore does not attempt to make <em>predict</em>, <em>plan</em>, <em>verify</em>, <em>constrain</em>, <em>deduce</em>, or <em>optimize</em> into separate foundational operators.
 </p>
 
 <p>
-The aim is therefore not to scatter knowledge-related behavior across prompts, model calls, database queries, and conditionals. It is to make the role of knowledge visible and programmable across the entire computation.
+Those are different forms of computational expertise.
 </p>
+
+<p>
+Likewise, retrieval, API invocation, scheduling, retries, caching, routing, and message passing are execution mechanisms rather than foundational knowledge operations.
+</p>
+
+<p>
+The abstraction remains stable above both.
+</p>
+
 
 <h2>3.6 Knowledge Dependencies and Incremental Understanding</h2>
 
@@ -338,36 +390,46 @@ Dependency is already a central computational idea. Build systems record which a
 </p>
 
 <p>
-Understanding also has dependencies. A conclusion may depend on several observations. A behavioral hypothesis may depend on environmental assumptions. A recommendation may depend on both a derived claim and a policy constraint. An explanation may depend on the continued availability of the evidence that supported the original result.
+Understanding also has dependencies.
+</p>
+
+<p>
+A conclusion may depend on several observations. A prediction may depend on a particular history window. A plan may depend on state estimates and action assumptions. An authority decision may depend on both a proposed result and a verification result.
 </p>
 
 <div class="definition">
 <strong>Definition 3.5 (Knowledge Dependency).</strong>
-A <em>knowledge dependency</em> records that the validity, applicability, confidence, or interpretation of one knowledge object depends upon another.
+A <em>knowledge dependency</em> records that the validity, applicability, status, interpretation, or authority of one knowledge object or result depends upon another.
 </div>
 
 <div class="example-block">
+
 <p><strong>Caregiver assistance.</strong></p>
-<pre><code>Caregiver observation
-        ↓
-Evidence of dehydration
-        ↓
-Severity assessment
-        ↓
-Triage recommendation</code></pre>
 
-<p>If “normal urination” is revised to “no urination for ten hours,” the downstream severity assessment and triage recommendation must be reconsidered.</p>
+<pre><code>reported reduced urination
+        ↓
+hydration concern
+        ↓
+home-monitoring assessment</code></pre>
 
-<p><strong>Operational intelligence.</strong></p>
-<pre><code>AIS observations
-        ↓
-Loitering hypothesis
-        ↓
-Possible rendezvous behavior
-        ↓
-Operational alert</code></pre>
+<p>If the caregiver later corrects the history and reports recent urination, the hydration-related understanding should change. An independently established respiratory concern should not.</p>
 
-<p>If newly retrieved weather data explains the low-speed movement, the loitering hypothesis weakens and the downstream alert may no longer be justified.</p>
+<p><strong>Autonomous navigation.</strong></p>
+
+<pre><code>trajectory history
+        ↓
+trajectory prediction
+        ↓
+collision estimate
+        ↓
+candidate maneuver
+        ↓
+verification
+        ↓
+execution authority</code></pre>
+
+<p>If new trajectory observations materially change the prediction, the downstream collision estimate, plan, verification, and authority decision may need reconsideration.</p>
+
 </div>
 
 <p>
@@ -375,140 +437,324 @@ Explicit dependencies make revision computationally manageable. The system need 
 </p>
 
 <p>
-This connection to incremental computation is important. Knowledge reasoning is sometimes presented as separate from conventional systems research. In practice, many of its challenges resemble familiar problems in view maintenance, dependency tracking, invalidation, caching, and change propagation.
+This connection to incremental computation is important. Many Knowledge Native problems resemble familiar systems problems in dependency tracking, invalidation, caching, view maintenance, and change propagation.
 </p>
 
-<h2>3.7 Knowledge Roles in a Generative Architecture</h2>
+
+<h2>3.7 Knowledge and Computational Expertise</h2>
 
 <p>
-Knowledge in a modern AI system is rarely located in one place. It may be distributed across databases, documents, learned models, graphs, rules, source code, external services, sensors, simulations, and human judgment.
-</p>
-
-<p>
-A Knowledge Native architecture does not require these sources to become identical. Instead, it makes their roles in constructing, testing, revising, and using knowledge explicit.
-</p>
-
-<div class="definition">
-<strong>Definition 3.6 (Knowledge Role).</strong>
-A <em>knowledge role</em> describes how a computational component contributes to the creation, interpretation, storage, transformation, validation, revision, or projection of knowledge.
-</div>
-
-<p>
-A database may serve as persistent memory. A graph may represent relationships and dependencies. A rule engine may activate constraints. A numerical model may estimate an unknown quantity. A simulator may test counterfactual conditions. A human reviewer may resolve ambiguity or supply authoritative judgment.
-</p>
-
-<p>
-A foundation model may occupy several roles within the same process. It may:
-</p>
-
-<ul>
-  <li>interpret natural-language or multimodal observations;</li>
-  <li>propose candidate hypotheses;</li>
-  <li>identify possible knowledge gaps;</li>
-  <li>formulate the next question or tool call;</li>
-  <li>translate between human and structured representations; and</li>
-  <li>project explanations, recommendations, or plans from the current understanding.</li>
-</ul>
-
-<p>
-Explicit knowledge then grounds those interpretations, checks applicability, activates constraints, challenges unsupported hypotheses, preserves dependencies, and controls what becomes part of the evolving understanding.
+Knowledge and computational expertise are closely connected, but they are not the same thing.
 </p>
 
 <div class="callout">
-<strong>Architectural Shift.</strong>
-The foundation model is neither the entire reasoner nor merely a user interface. It is a flexible computational component whose interpretations and projections are shaped by an explicit knowledge process.
+<strong>Knowledge is what is known.</strong><br>
+<strong>Computational expertise is the capability to put appropriate knowledge to work for a particular computational purpose.</strong>
 </div>
 
 <p>
-The components need not compete to become the sole reasoning mechanism. They occupy complementary roles within a shared process of understanding.
+A clinical guideline is knowledge. Applying a pathway to a patient state is expertise.
 </p>
 
-<h2>3.8 Revision, Versioning, and Time</h2>
+<p>
+A trajectory history, context, and learned motion patterns are knowledge. Predicting future motion is expertise.
+</p>
+
+<p>
+Actions, preconditions, effects, and goals are knowledge. Searching them for a feasible plan is expertise.
+</p>
+
+<p>
+A formal specification is knowledge. Establishing that a design or plan satisfies it is verification expertise.
+</p>
+
+<p>
+A foundation model contains enormous learned knowledge while also providing broad computational expertise in interpretation, synthesis, reasoning, and generation.
+</p>
+
+<p>
+The system may therefore have access to many kinds of computational experts:
+</p>
+
+<pre><code>Foundation Model
+Predictor
+Planner
+Logical Reasoner
+Constraint Solver
+Optimizer
+Simulator
+Verifier
+Database Computation
+Human Expert</code></pre>
+
+<p>
+The important design question is not which of these becomes the universal intelligence.
+</p>
+
+<p>
+It is:
+</p>
+
+<blockquote>
+Which expertise is appropriate for the computation that matters now?
+</blockquote>
+
+
+<h2>3.8 The Knowledge Runtime</h2>
+
+<p>
+The Knowledge Runtime connects evolving understanding to computational expertise.
+</p>
+
+<p>
+Its role is semantic rather than primarily logistical.
+</p>
+
+<p>
+At runtime it should be able to determine:
+</p>
+
+<ul>
+  <li>what knowledge is currently relevant;</li>
+  <li>what expertise is applicable;</li>
+  <li>what evidence or inputs that expertise requires;</li>
+  <li>what computation should now occur;</li>
+  <li>what the result establishes;</li>
+  <li>how the understanding should change;</li>
+  <li>what becomes relevant next;</li>
+  <li>and what authority the resulting state supports.</li>
+</ul>
+
+<pre><code>CURRENT UNDERSTANDING
+        ↓
+ACTIVATE
+        ↓
+knowledge / expertise required
+        ↓
+APPLY
+        ↓
+specialized computation
+        ↓
+ABSORB
+        ↓
+updated understanding
+        ↓
+AUTHORIZE
+        ↓
+continue / recommend / decide / act
+        ↓
+        ↺</code></pre>
+
+<p>
+This cycle produces progressive understanding for a concrete computational reason: each result can change the state enough that different knowledge and expertise become relevant next.
+</p>
+
+
+<h2>3.9 Runtime Semantics Are Not Orchestration</h2>
+
+<p>
+Modern AI systems increasingly use workflow engines, agent frameworks, tool protocols, model routers, schedulers, and distributed services.
+</p>
+
+<p>
+Knowledge Native AI should leverage this infrastructure rather than attempt to replace it.
+</p>
+
+<div class="callout">
+<strong>The Knowledge Runtime determines why a computation matters and what its result means.</strong><br>
+<strong>Execution infrastructure determines how that computation is called, scheduled, retried, routed, or distributed.</strong>
+</div>
+
+<p>
+For example, the runtime may determine:
+</p>
+
+<ul>
+  <li>a trajectory prediction is now required;</li>
+  <li>the predictor's necessary inputs are available;</li>
+  <li>its output must be treated as a prediction rather than an observation;</li>
+  <li>the result may activate collision assessment;</li>
+  <li>and execution cannot be authorized until verification succeeds.</li>
+</ul>
+
+<p>
+An existing workflow or agent framework may then:
+</p>
+
+<ul>
+  <li>call the predictor service;</li>
+  <li>manage credentials;</li>
+  <li>retry on failure;</li>
+  <li>parallelize independent work;</li>
+  <li>route a model call;</li>
+  <li>and invoke the verifier.</li>
+</ul>
+
+<p>
+Similarly, an agent is one possible carrier of computational expertise. It is not the abstraction itself.
+</p>
+
+<p>
+A computational expert may instead be a planner, transformer, SQL query, theorem prover, Python function, simulation, external service, or human.
+</p>
+
+<div class="callout">
+<strong>Knowledge Native AI is not multi-agent orchestration.</strong><br>
+It provides an abstraction over the knowledge semantics of heterogeneous computation.
+</div>
+
+
+<h2>3.10 Revision, Versioning, and Time</h2>
 
 <p>
 Software systems already treat change as a first-class concern. Databases provide transactions. Version-control systems preserve histories. Event-sourced architectures record transitions. Distributed systems reason about ordering, consistency, and stale replicas.
 </p>
 
 <p>
-Knowledge changes as well. Observations become outdated. Sources are corrected. Assumptions cease to hold. New evidence strengthens or weakens earlier interpretations.
+Knowledge changes as well. Observations become outdated. Sources are corrected. Assumptions cease to hold. Models are replaced. New evidence strengthens or weakens earlier interpretations.
 </p>
 
 <div class="definition">
-<strong>Definition 3.7 (Knowledge Revision).</strong>
-<em>Knowledge revision</em> is the controlled modification of a knowledge state or understanding state in response to new evidence, changed assumptions, corrected sources, or altered context.
+<strong>Definition 3.6 (Knowledge Revision).</strong>
+<em>Knowledge revision</em> is the controlled modification of an understanding in response to new evidence, changed assumptions, corrected sources, or new computational results.
 </div>
+
+<p>
+Revision is primarily a consequence of ABSORB.
+</p>
 
 <div class="example-block">
-<p><strong>Caregiver assistance.</strong> A caregiver initially reports no breathing difficulty, then observes labored breathing. The earlier low-risk assessment should not merely be overwritten. The system should preserve what was previously believed, revise the affected severity interpretation, and propagate that change to the escalation recommendation.</p>
 
-<p><strong>Operational intelligence.</strong> A vessel initially appears to be loitering, but newly retrieved weather data shows severe currents. The system should weaken the behavioral hypothesis while retaining why it was previously considered plausible.</p>
+<p><strong>Caregiver assistance.</strong> A caregiver initially reports no urination since morning, then later learns that the child urinated several hours ago. Absorbing the corrected observation should revise the hydration-related understanding without disturbing unrelated respiratory evidence.</p>
+
+<p><strong>Trajectory prediction.</strong> A predictor initially estimates a crossing trajectory. New motion observations arrive and the predictor is applied again. The new result supersedes the previous prediction and may invalidate downstream collision estimates and plans.</p>
+
 </div>
 
 <p>
-Revision is therefore not equivalent to assigning a new value. If one claim supported other claims, changing it may invalidate conclusions, reduce confidence, reopen a question, or require additional evidence.
+Revision is therefore not equivalent to assigning a new value. Dependencies determine which parts of understanding are affected.
 </p>
 
 <p>
-Versioning becomes part of reasoning. An explanation of a past decision should be grounded in the knowledge available when that decision was made, not only in what the system knows now.
+Versioning becomes part of reasoning. An explanation of a past recommendation or action should be grounded in the knowledge and computational results available at the time, not only in what the system knows now.
 </p>
 
-<p>
-The analogy with source control remains useful. A mature Knowledge Native system may need to preserve historical states, alternative interpretations, branches of inquiry, reconciliations, and the consequences of each revision.
-</p>
 
-<h2>3.9 Knowledge Gaps and Productive Uncertainty</h2>
+<h2>3.11 Knowledge Gaps and Productive Uncertainty</h2>
 
 <p>
 Traditional programs are often designed around complete inputs. When a required value is absent, the program may fail, return a null value, or apply a default.
 </p>
 
 <p>
-Knowledge-intensive systems routinely operate under incomplete information. Missing knowledge is not merely an exceptional condition. It may determine what the system should do next.
+Knowledge-intensive systems routinely operate under incomplete information. Missing knowledge may itself determine what computation should happen next.
 </p>
 
 <div class="definition">
-<strong>Definition 3.8 (Knowledge Gap).</strong>
-A <em>knowledge gap</em> is an explicitly represented absence of information whose resolution may affect the validity, confidence, applicability, or direction of an understanding.
+<strong>Definition 3.7 (Knowledge Gap).</strong>
+A <em>knowledge gap</em> is an explicitly represented absence whose resolution may affect applicability, understanding, computational requirements, or authority.
 </div>
 
 <p>
-A knowledge gap is more informative than an unknown value. It may specify what is missing, why it matters, which hypotheses depend upon it, and how it could be resolved.
+A knowledge gap is more informative than an unknown value.
 </p>
-
-<pre><code>Unknown hydration status
-        ↓
-Generate caregiver question
-
-Unknown nearby-vessel relationship
-        ↓
-Retrieve encounter history
-
-Conflicting model interpretations
-        ↓
-Seek discriminating evidence</code></pre>
 
 <p>
-This is a natural point of interplay between explicit knowledge and generative AI. A language model may formulate a fluent question, but explicit knowledge determines which gap matters, why it matters, and what answer would materially change the current understanding.
+It may specify:
 </p>
+
+<ul>
+  <li>what is missing;</li>
+  <li>why it matters;</li>
+  <li>which expertise depends upon it;</li>
+  <li>which recommendation or action is blocked by it;</li>
+  <li>and how it could be resolved.</li>
+</ul>
+
+<pre><code>respiratory_status = UNKNOWN
+        ↓
+home_monitoring authorization blocked
+        ↓
+ACTIVATE respiratory assessment
+        ↓
+APPLY conversational / clinical expertise
+        ↓
+ABSORB new observation</code></pre>
+
+<p>
+Or:
+</p>
+
+<pre><code>future_trajectory = UNKNOWN
+        ↓
+collision assessment cannot proceed
+        ↓
+ACTIVATE trajectory prediction
+        ↓
+APPLY predictor
+        ↓
+ABSORB prediction</code></pre>
 
 <div class="callout">
 <strong>Productive Uncertainty.</strong>
-A well-represented uncertainty is not merely a limitation. It is a computational instruction about what should be observed, retrieved, verified, or asked next.
+A well-represented unknown is not merely a limitation. It can become a computational requirement.
 </div>
 
-<h2>3.10 Knowledge Traces and Explanation</h2>
+
+<h2>3.12 Computational Authority</h2>
+
+<p>
+Producing a result and having authority to rely upon that result are different things.
+</p>
+
+<p>
+A foundation model may propose a recommendation. A predictor may estimate a future state. A planner may produce a candidate plan. A verifier may establish that a required property holds.
+</p>
+
+<p>
+Those outputs need not carry identical authority.
+</p>
+
+<div class="definition">
+<strong>Definition 3.8 (Computational Authority).</strong>
+<em>Computational authority</em> is the permission granted to a computational result to inform, recommend, decide, constrain, authorize, or execute at a specified boundary within the system.
+</div>
+
+<p>
+The amount and type of expertise required before authority is granted depends on the consequence of the outcome.
+</p>
+
+<p>
+For a low-consequence conversational task, foundation-model reasoning alone may be enough.
+</p>
+
+<p>
+For a clinical recommendation, selected guideline, contraindication, or safety expertise may be required.
+</p>
+
+<p>
+For an autonomous action, prediction, planning, physical constraints, and independent verification may all need to participate before execution authority is granted.
+</p>
+
+<div class="callout">
+<strong>Trust is earned.</strong><br>
+In a Knowledge Native system, some of that trust can be earned computationally before a recommendation, decision, or action crosses its authority boundary.
+</div>
+
+
+<h2>3.13 Knowledge Traces and Explanation</h2>
 
 <p>
 An output alone rarely reveals the structure of the computation that produced it. Conventional systems address this through logs, stack traces, provenance records, and execution plans.
 </p>
 
 <p>
-Knowledge Native systems require an analogous mechanism for reasoning.
+Knowledge Native systems require an analogous record of actual computational participation.
 </p>
 
 <div class="definition">
 <strong>Definition 3.9 (Knowledge Trace).</strong>
-A <em>knowledge trace</em> is a structured record of the knowledge objects, dependencies, operations, and revisions that contributed to a computational result.
+A <em>knowledge trace</em> is a structured record of the knowledge, computational expertise, results, dependencies, A4 transitions, and authority decisions that materially contributed to an outcome.
 </div>
 
 <p>
@@ -516,11 +762,43 @@ A knowledge trace is not necessarily a natural-language explanation. It is the c
 </p>
 
 <p>
-A model-generated rationale is also not automatically a knowledge trace. It may be plausible prose without corresponding to the actual objects and operations that influenced the result.
+A model-generated rationale is also not automatically a knowledge trace. It may be plausible prose without corresponding to the computations that actually occurred.
 </p>
 
 <p>
-A proper trace records what truly participated: which observations were constructed, which knowledge was retrieved and activated, which hypotheses were supported or challenged, which constraints fired, and which revisions changed the result. A language model may then render that trace into language appropriate for a caregiver, analyst, engineer, scientist, or auditor.
+A proper trace might record:
+</p>
+
+<pre><code>ACTIVATE
+    respiratory_assessment
+
+APPLY
+    clinical_conversation_expert
+
+RESULT
+    rib_retractions = observed
+
+ABSORB
+    respiratory_distress = supported
+
+ACTIVATE
+    escalation_guideline
+
+APPLY
+    guideline_evaluator
+
+RESULT
+    home_monitoring = constrained
+
+ABSORB
+    escalation_requirement
+
+AUTHORIZE
+    home_monitoring
+    → DENIED</code></pre>
+
+<p>
+This is not merely explainability. It is the execution history of knowledge participating in computation.
 </p>
 
 <p>
@@ -529,18 +807,16 @@ Knowledge traces support:
 
 <ul>
   <li>debugging incorrect conclusions;</li>
-  <li>identifying stale or weak evidence;</li>
+  <li>identifying stale or weak inputs;</li>
   <li>comparing alternative derivations;</li>
   <li>auditing consequential decisions;</li>
-  <li>generating audience-appropriate explanations; and</li>
-  <li>revising affected conclusions when knowledge changes.</li>
+  <li>revising affected conclusions;</li>
+  <li>testing authority boundaries;</li>
+  <li>and generating audience-appropriate explanations.</li>
 </ul>
 
-<p>
-Explanation therefore becomes part of the computational design rather than a narrative improvised after the fact.
-</p>
 
-<h2>3.11 Selective Explicitness</h2>
+<h2>3.14 Selective Explicitness</h2>
 
 <p>
 Treating knowledge as first-class does not mean representing everything explicitly. Such a goal would be unnecessary, expensive, and often counterproductive.
@@ -548,128 +824,412 @@ Treating knowledge as first-class does not mean representing everything explicit
 
 <div class="definition">
 <strong>Definition 3.10 (Selective Explicitness).</strong>
-<em>Selective explicitness</em> is the principle that knowledge should be represented explicitly when its provenance, scope, uncertainty, constraints, dependencies, or consequences materially affect computation.
+<em>Selective explicitness</em> is the principle that knowledge should be represented explicitly when its provenance, scope, applicability, dependencies, computational role, or authority materially affect system behavior.
 </div>
 
 <p>
-A practical criterion is to make knowledge explicit when it can change:
+This principle becomes more important, not less, as foundation models improve.
+</p>
+
+<p>
+If a capable foundation model can reliably maintain ordinary conversational state, interpret a straightforward observation, or apply routine background knowledge, there may be little value in reimplementing all of that reasoning elsewhere.
+</p>
+
+<p>
+Use neural intelligence aggressively where it is sufficient.
+</p>
+
+<p>
+Make knowledge explicit where doing so provides important computational leverage:
 </p>
 
 <ul>
-  <li>what a model is allowed to infer;</li>
-  <li>what evidence should be gathered;</li>
-  <li>which hypotheses remain viable;</li>
-  <li>which actions are permissible;</li>
-  <li>what must be revised after new information arrives; or</li>
-  <li>what must be explained afterward.</li>
+  <li>it determines what expertise must run;</li>
+  <li>it defines the valid scope of a specialized computation;</li>
+  <li>it establishes required evidence;</li>
+  <li>it constrains or blocks an action;</li>
+  <li>it defines dependencies that must survive revision;</li>
+  <li>it must remain stable across model upgrades;</li>
+  <li>or it has consequences too important to leave entirely to model discretion.</li>
 </ul>
 
+<div class="callout">
+<strong>The objective is not to externalize everything a model knows.</strong><br>
+It is to make computationally consequential knowledge explicit where the system benefits from controlling its role.
+</div>
+
+
+<h2>3.15 A Method for Thinking Like a Knowledge Native Programmer</h2>
+
 <p>
-A temporary loop counter is ordinarily just data. A model-generated classification that triggers a costly or consequential action may need to be represented as a claim with provenance, evidence, status, and dependencies. A fixed arithmetic constant may remain ordinary code. A policy that varies across jurisdictions or time may require explicit scope and versioning.
+A conventional programmer often begins by asking which data structures, algorithms, models, databases, tools, or services are required.
 </p>
 
 <p>
-The objective is not to convert the entire world into a knowledge graph. It is to expose the knowledge structures that give the system computational leverage: structures that materially affect reliability, adaptability, and accountable action.
+A Knowledge Native programmer asks those questions, but begins one level earlier.
 </p>
 
-<h2>3.12 A Method for Thinking Like a Knowledge Native Programmer</h2>
+
+<h3>1. Identify the Subject and Intended Outcome</h3>
 
 <p>
-A conventional programmer often begins by asking which data structures, algorithms, models, databases, or services are required. A Knowledge Native programmer asks those questions, but begins one level earlier.
+What person, object, process, situation, or phenomenon is the system reasoning about?
 </p>
-
-<h3>1. Identify the Subject of Understanding</h3>
 
 <p>
-What person, object, process, situation, or phenomenon is the system trying to understand?
+What might the system ultimately need to predict, recommend, decide, plan, verify, or do?
 </p>
+
 
 <h3>2. Describe the Current Understanding</h3>
 
 <p>
-What is presently observed, believed, hypothesized, constrained, contradicted, or unresolved?
+What is presently observed, inferred, predicted, proposed, assumed, constrained, verified, or unresolved?
 </p>
 
-<h3>3. Identify Knowledge Sources and Computational Roles</h3>
+
+<h3>3. Identify the Knowledge</h3>
 
 <p>
-What comes from observations, databases, documents, learned models, rules, simulations, external services, and humans? What role does each source play?
+What relevant knowledge exists?
 </p>
 
-<h3>4. Identify Gaps and Competing Interpretations</h3>
+<ul>
+  <li>situational;</li>
+  <li>historical;</li>
+  <li>declarative;</li>
+  <li>structural;</li>
+  <li>procedural;</li>
+  <li>formal;</li>
+  <li>learned;</li>
+  <li>or human.</li>
+</ul>
+
+
+<h3>4. Identify the Computational Expertise</h3>
 
 <p>
-What is missing? Which alternatives remain viable? What evidence would distinguish among them?
+What expertise is appropriate for the computations that matter?
 </p>
 
-<h3>5. Specify How Understanding May Change</h3>
+<ul>
+  <li>foundation model;</li>
+  <li>predictor;</li>
+  <li>planner;</li>
+  <li>logical reasoner;</li>
+  <li>solver;</li>
+  <li>simulator;</li>
+  <li>optimizer;</li>
+  <li>verifier;</li>
+  <li>database computation;</li>
+  <li>ordinary algorithm;</li>
+  <li>or human expert.</li>
+</ul>
 
 <p>
-What can support, challenge, constrain, derive, reconcile, or revise the current understanding?
+Do not introduce specialized computation simply because it exists. Use it where its expertise matters.
 </p>
 
-<h3>6. Specify Projections from Understanding</h3>
+
+<h3>5. Define Activation</h3>
 
 <p>
-What dialogue, prediction, plan, recommendation, alert, action, or explanation may be produced from the current understanding?
+Under what conditions does each item of knowledge or expertise matter?
 </p>
+
+<p>
+What must be true before it should participate?
+</p>
+
+
+<h3>6. Define What APPLY Establishes</h3>
+
+<p>
+When the expert runs, what kind of result does it produce?
+</p>
+
+<p>
+Is it:
+</p>
+
+<ul>
+  <li>an observation;</li>
+  <li>a hypothesis;</li>
+  <li>a prediction;</li>
+  <li>a candidate plan;</li>
+  <li>a constraint result;</li>
+  <li>a verified property;</li>
+  <li>or a human judgment?</li>
+</ul>
+
+
+<h3>7. Define How ABSORB Changes Understanding</h3>
+
+<p>
+What new knowledge becomes established?
+</p>
+
+<p>
+What is strengthened, weakened, superseded, invalidated, or made newly applicable?
+</p>
+
+
+<h3>8. Define the Authority Boundary</h3>
+
+<p>
+What may the system now do?
+</p>
+
+<p>
+What additional evidence or expertise is required before it may:
+</p>
+
+<ul>
+  <li>inform;</li>
+  <li>recommend;</li>
+  <li>decide;</li>
+  <li>approve;</li>
+  <li>or act autonomously?</li>
+</ul>
+
 
 <div class="example-block">
-<p><strong>Caregiver assistant.</strong> The subject is the child's present condition. The current understanding contains fever and rash but unresolved severity. The important gaps concern hydration, breathing, and rash character. Explicit triage knowledge determines which questions matter and which observations activate escalation. A language model conducts the dialogue and expresses the resulting recommendation.</p>
 
-<p><strong>Operational intelligence.</strong> The subject is the evolving behavior of a vessel group. The current understanding contains low-speed movement and repeated proximity, but several interpretations remain viable. Environmental data, geographic knowledge, vessel history, and operational rules support or challenge those interpretations. A model helps synthesize the observations and project an analyst-facing explanation.</p>
+<p><strong>Caregiver assistant.</strong> A foundation model may conduct the conversation and perform much of the clinical interpretation. The runtime need not duplicate all of that capability. Selected clinical knowledge may instead determine that respiratory status is required before home monitoring can be authorized. If respiratory concerns appear, more specialized clinical expertise becomes applicable.</p>
+
+<p><strong>Trajectory prediction.</strong> The current state contains recent motion history and contextual knowledge. When future position becomes consequential, the runtime activates specialized trajectory expertise. The predictor's result is absorbed as a prediction, which may then activate collision analysis or planning.</p>
+
+<p><strong>Autonomous planning.</strong> A goal and current state may activate planning expertise. The resulting candidate plan is absorbed as a proposal, not yet as an executable action. Verification expertise may then become required before AUTHORIZE grants execution authority.</p>
+
 </div>
 
+
+<h2>3.16 Thinking Beyond the Next Model Call</h2>
+
 <p>
-This method changes decomposition. A problem is no longer divided only into ingestion, model inference, business logic, and output generation. It is decomposed into observation, interpretation, grounding, activation, derivation, validation, revision, inquiry, and projection.
+The deeper shift is in decomposition.
 </p>
 
 <p>
-Thinking in knowledge exposes assumptions that would otherwise remain embedded in prompts, code, workflows, or human procedures. Once exposed, those assumptions can be tested, revised, shared, and reused.
+A problem need not be divided only into:
+</p>
+
+<pre><code>ingestion
+    ↓
+prompt
+    ↓
+model
+    ↓
+tools
+    ↓
+output</code></pre>
+
+<p>
+Nor should every problem be reframed as a collection of cooperating agents.
+</p>
+
+<p>
+Instead, Knowledge Native decomposition asks:
+</p>
+
+<pre><code>What is known?
+        ↓
+What matters now?
+        ↓
+ACTIVATE
+        ↓
+What expertise should compute?
+        ↓
+APPLY
+        ↓
+What did it establish?
+        ↓
+ABSORB
+        ↓
+What may happen now?
+        ↓
+AUTHORIZE
+</code></pre>
+
+<p>
+The result of ABSORB may immediately change what becomes relevant, causing the cycle to continue.
+</p>
+
+<p>
+This is where progressive understanding becomes computational rather than rhetorical.
+</p>
+
+
+<h2>3.17 The Abstraction Boundary</h2>
+
+<p>
+Knowledge Native AI is not an attempt to build one universal reasoning engine.
+</p>
+
+<p>
+It is an abstraction over heterogeneous knowledge computation.
+</p>
+
+<pre><code>                    APPLICATION
+                         ↓
+
+                 KNOWLEDGE RUNTIME
+
+             ACTIVATE
+             APPLY
+             ABSORB
+             AUTHORIZE
+
+                         ↓
+
+              COMPUTATIONAL EXPERTISE
+
+    LLM   Predictor   Planner   Solver   Verifier
+     |        |          |        |         |
+     +--------+----------+--------+---------+
+
+                         ↓
+
+             EXISTING EXECUTION /
+             ORCHESTRATION LAYER</code></pre>
+
+<p>
+The application should be able to reason about:
+</p>
+
+<ul>
+  <li>what is known;</li>
+  <li>what expertise exists;</li>
+  <li>when it applies;</li>
+  <li>what it establishes;</li>
+  <li>how its result changes understanding;</li>
+  <li>and what authority follows;</li>
+</ul>
+
+<p>
+without requiring the Knowledge Native abstraction to define the internal implementation of every LLM, predictor, planner, solver, simulator, verifier, or workflow engine.
 </p>
 
 <div class="callout">
-<strong>Central Thesis.</strong>
-Knowledge Native AI is not primarily about adding knowledge to AI. It is about programming how explicit knowledge and generative models jointly construct and progressively improve an understanding.
+<strong>This is the abstraction.</strong><br>
+Knowledge Native programming defines the semantics of heterogeneous knowledge computation while hiding unnecessary implementation detail beneath the expert interface.
 </div>
+
+
+<h2>Knowledge Native Thinking</h2>
+
+<p>
+When approaching an intelligent system, resist starting with:
+</p>
+
+<blockquote>
+Which model should we use?
+</blockquote>
+
+<p>
+Instead ask:
+</p>
+
+<ul>
+  <li>What do we know?</li>
+  <li>What remains unresolved?</li>
+  <li>What knowledge matters now?</li>
+  <li>What computational expertise is appropriate?</li>
+  <li>What should that computation establish?</li>
+  <li>How should the result change the understanding?</li>
+  <li>What does the system now have authority to recommend, decide, or do?</li>
+</ul>
+
+<div class="callout">
+<strong>Thinking in knowledge means thinking beyond the next model call.</strong><br>
+It means programming how knowledge activates computation, how computation becomes new knowledge, and how an evolving understanding earns authority.
+</div>
+
+<p>
+That shift is the starting point for programming Knowledge Native AI.
+</p>
+
 
 <h2>Chapter Summary</h2>
 
 <ul>
   <li>Programming abstractions change how computational problems are formulated.</li>
-  <li>Representation determines which knowledge operations become possible, natural, and reliable.</li>
-  <li>Knowledge-bearing values extend ordinary values with computationally relevant meaning and context.</li>
-  <li>Knowledge state records what is available; understanding state organizes what is currently believed about a particular subject.</li>
-  <li>Knowledge operations provide a vocabulary for programming how understanding evolves.</li>
-  <li>Knowledge dependencies make revision and consequence propagation incremental.</li>
-  <li>Foundation models, databases, graphs, rules, simulations, and humans can occupy distinct knowledge roles within one architecture.</li>
-  <li>Revision, versioning, uncertainty, and explanation are part of the computation itself.</li>
-  <li>Knowledge gaps can determine the next observation, retrieval, verification, or question.</li>
+
+  <li>Representation determines which forms of knowledge computation become possible and natural.</li>
+
+  <li>Knowledge-bearing values extend ordinary values with computationally relevant provenance, scope, status, dependencies, and consequence.</li>
+
+  <li>Knowledge state records what is available; understanding state organizes what currently matters to a particular task or situation.</li>
+
+  <li>Knowledge Native computation can be formulated through four foundational operations: <strong>ACTIVATE, APPLY, ABSORB, and AUTHORIZE</strong>.</li>
+
+  <li>ACTIVATE determines what knowledge and computational expertise matter now.</li>
+
+  <li>APPLY puts the appropriate expertise to work.</li>
+
+  <li>ABSORB determines what the computation established and updates the evolving understanding.</li>
+
+  <li>AUTHORIZE determines what the resulting understanding permits the system to recommend, decide, or do.</li>
+
+  <li>Knowledge and computational expertise are distinct: knowledge is what is known; expertise is the capability to compute with appropriate knowledge for a particular purpose.</li>
+
+  <li>Foundation models provide powerful general computational expertise and may remain primary in many applications.</li>
+
+  <li>Specialized expertise may include predictors, planners, logical reasoners, solvers, simulators, optimizers, verifiers, database computations, and humans.</li>
+
+  <li>The Knowledge Runtime determines the semantics of computational participation; existing workflow and agent systems may handle execution mechanics.</li>
+
+  <li>Knowledge dependencies support incremental revision rather than complete recomputation.</li>
+
+  <li>Knowledge gaps can become explicit runtime requirements.</li>
+
+  <li>Computational authority distinguishes producing a result from earning permission to rely upon or act on it.</li>
+
   <li>Knowledge traces record actual computational participation rather than merely plausible rationale.</li>
-  <li>Selective explicitness keeps Knowledge Native systems practical.</li>
-  <li>Thinking in knowledge begins by asking what is being understood, what shapes that understanding, and how it should change next.</li>
+
+  <li>Selective explicitness keeps Knowledge Native systems practical as neural reasoning continues to improve.</li>
+
+  <li>The central abstraction is over heterogeneous knowledge computation.</li>
 </ul>
+
 
 <h2>Discussion Questions</h2>
 
 <ol>
-  <li>How does treating understanding as computational state change the formulation of an AI problem?</li>
+  <li>How does treating understanding as runtime state change the formulation of an AI problem?</li>
+
   <li>Why is knowledge representation a computational decision rather than merely a storage decision?</li>
+
   <li>How does a knowledge-bearing value differ from an ordinary typed value?</li>
-  <li>What is the difference between a broad knowledge state and a task-focused understanding state?</li>
-  <li>How do explicit knowledge and generative models play different but complementary roles?</li>
+
+  <li>What is the difference between knowledge and computational expertise?</li>
+
+  <li>Why might a foundation model be the correct computational expert for one part of a problem but not another?</li>
+
+  <li>How do ACTIVATE, APPLY, ABSORB, and AUTHORIZE differ from ordinary workflow steps?</li>
+
+  <li>Why should a predictor's output, planner's output, and verifier's output have different epistemic status?</li>
+
   <li>How do knowledge dependencies support incremental revision?</li>
-  <li>When should a model output become an explicit knowledge object?</li>
+
+  <li>How can a knowledge gap become a computational requirement?</li>
+
+  <li>What is computational authority, and how is it different from confidence?</li>
+
   <li>Why is a model-generated rationale not necessarily a knowledge trace?</li>
-  <li>How can a knowledge gap determine the next computation?</li>
-  <li>What are the risks of making too much information explicit?</li>
+
+  <li>How should a Knowledge Runtime complement rather than replace a multi-agent or workflow system?</li>
+
+  <li>What knowledge should remain implicit inside models, and what should become explicit?</li>
 </ol>
+
 
 <h2>Exercises</h2>
 
 <ol>
+
   <li>
-    Choose a familiar AI system and identify the person, object, process, or situation it is actually trying to understand. Describe its current understanding state.
+    Choose a familiar AI application. First describe it conventionally in terms of models, data, tools, and outputs. Then reformulate it in terms of current understanding, knowledge, computational expertise, activation, absorption, and authority.
   </li>
 
   <li>
@@ -677,29 +1237,39 @@ Knowledge Native AI is not primarily about adding knowledge to AI. It is about p
   </li>
 
   <li>
-    Construct a small dependency graph for a clinical, operational, scientific, educational, or financial application. Show how one changed observation propagates to at least two downstream conclusions.
+    Identify three computations in an application that a foundation model can reasonably perform and three that would benefit from specialized computational expertise. Explain why.
   </li>
 
   <li>
-    Identify the knowledge roles played by a language model, a database, a graph, a rule engine, and a human reviewer in one application.
+    Construct one complete A4 cycle. Show what knowledge is present before ACTIVATE, what expertise is used in APPLY, what new understanding results from ABSORB, and what changes at AUTHORIZE.
   </li>
 
   <li>
-    Describe a knowledge gap that should trigger a question, retrieval, observation, or verification step rather than a default value.
+    Construct a small dependency graph for a clinical, operational, scientific, engineering, or financial application. Show how one changed observation propagates to at least two downstream results.
   </li>
 
   <li>
-    Take an application from your own domain and reformulate it using the six-step method in Section 3.12.
+    Describe a knowledge gap that should trigger a question, retrieval, prediction, simulation, or verification rather than a default assumption.
   </li>
 
   <li>
-    Design a knowledge trace for one consequential recommendation. Distinguish the trace itself from the natural-language explanation shown to the user.
+    Choose one consequential recommendation or action and specify which expertise may propose it, what evidence must exist, what additional computation is required, and when AUTHORIZE should permit it.
   </li>
+
+  <li>
+    Sketch an architecture containing a foundation model, one specialized computational expert, a verifier, and an orchestration framework. Separate the responsibilities of the Knowledge Runtime from those of the execution infrastructure.
+  </li>
+
+  <li>
+    Choose five kinds of knowledge in an application. Decide which should remain embodied in a model, which should remain ordinary data, which should become explicit knowledge, and which should participate in an authority condition.
+  </li>
+
 </ol>
 
+
 <nav class="chapter-nav">
-  <a href="../contents.html">← Contents</a>
-  <a href="../contents.html">Return to book structure</a>
+  <a href="chapter-02.html">← Chapter 2: Knowledge as a Computational Primitive</a>
+  <a href="chapter-04.html">Chapter 4 →</a>
 </nav>
 
 </article>
